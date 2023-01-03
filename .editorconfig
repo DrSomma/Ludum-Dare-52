@@ -1,0 +1,13 @@
+
+[*]
+
+# Microsoft .NET properties
+csharp_style_var_elsewhere = false:suggestion
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = false:suggestion
+
+# ReSharper properties
+resharper_braces_for_foreach = required
+resharper_braces_for_ifelse = required
+resharper_for_simple_types = use_explicit_type
+resharper_object_creation_when_type_not_evident = explicitly_typed
