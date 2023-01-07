@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767ea628cc81450c80f203beba779c35, type: 3}
   m_Name: PlayerAnimator
   m_EditorClassIdentifier: 
-  delayBetweenFrames: 0.4
+  delayBetweenFrames: 0.3
   upFrames:
   - {fileID: 546264774, guid: c844c48d5c628634989496c9301a62ef, type: 3}
   - {fileID: -1501522548, guid: c844c48d5c628634989496c9301a62ef, type: 3}
