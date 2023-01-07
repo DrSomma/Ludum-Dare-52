@@ -13,6 +13,7 @@ namespace Amazeit.Utilities
                 Destroy(gameObject);
                 return;
             }
+
             Instance = this as T;
         }
 
@@ -32,6 +33,7 @@ namespace Amazeit.Utilities
                 Destroy(gameObject);
                 return;
             }
+
             DontDestroyOnLoad(gameObject);
             base.Awake();
         }

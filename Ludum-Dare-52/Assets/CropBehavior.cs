@@ -1,15 +1,17 @@
 using System.Collections;
 using LudumDare52.Crops.ScriptableObject;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class CropBehavior : UnityEngine.MonoBehaviour
+public class CropBehavior : MonoBehaviour
 {
+    [FormerlySerializedAs("renderer")]
+    [SerializeField]
+    private SpriteRenderer Renderer;
+
     public Crop Crop { get; set; }
 
     public bool IsHarvestable { get; private set; }
-
-    [SerializeField]
-    private SpriteRenderer renderer;
 
     private void Start()
     {
@@ -19,13 +21,22 @@ public class CropBehavior : UnityEngine.MonoBehaviour
 
     private IEnumerator Grow()
     {
-        float timeStage = Crop.growtimeInSeconds / Crop.stages.Length;
-        foreach (Sprite stage in Crop.stages)
+        float timeStage = Mathf.Max(a: Crop.growtimeInSeconds / (Crop.stages.Length - 1), b: 0);
+        for (int i = 0; i < Crop.stages.Length; i++)
         {
-            renderer.sprite = stage;
-            yield return new WaitForSeconds(timeStage);
+            Renderer.sprite = Crop.stages[i];
+
+            if (i < Crop.stages.Length - 1)
+            {
+                yield return new WaitForSeconds(timeStage);
+            }
         }
 
         IsHarvestable = true;
+    }
+
+    public void Harvest()
+    {
+        Destroy(gameObject);
     }
 }
