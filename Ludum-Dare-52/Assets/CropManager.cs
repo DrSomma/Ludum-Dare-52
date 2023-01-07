@@ -20,7 +20,7 @@ public class CropManager : Singleton<CropManager>
         }
 
         GameObject newCropObj = Instantiate(cropPrefab);
-        newCropObj.transform.position = pos - Vector2.up * 0.5f;
+        newCropObj.transform.position = pos - Vector2.up * 0.2f;
         CropBehavior cropBehavior = newCropObj.GetComponent<CropBehavior>();
         cropBehavior.Crop = crop;
         _crops.Add(key: pos, value: cropBehavior);

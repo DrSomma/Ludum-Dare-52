@@ -22,19 +22,20 @@ namespace LudumDare52.Player
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F) && _nearest.HasValue)
+            if (!_nearest.HasValue)
             {
-                Vector2 nearestWithOffset = _nearest.Value + Vector2.up * 0.3f;
-                //Todo: Crop auswählen!
+                return;
+            }
+            
+            //Todo: Crop auswählen!
 
-                if (CropManager.Instance.CanPlantOnPos(nearestWithOffset))
-                {
-                    CropManager.Instance.PlantCrop(pos: nearestWithOffset, crop: ResourceSystem.Instance.CropsList[0]);
-                }
-                else if (CropManager.Instance.CanHarvestOnPos(nearestWithOffset))
-                {
-                    CropManager.Instance.HarvestCrop(nearestWithOffset);
-                }
+            if (Input.GetMouseButtonDown(0) && CropManager.Instance.CanPlantOnPos(_nearest.Value))
+            {
+                CropManager.Instance.PlantCrop(pos: _nearest.Value, crop: ResourceSystem.Instance.CropsList[0]);
+            }
+            else if (Input.GetMouseButtonDown(1) && CropManager.Instance.CanHarvestOnPos(_nearest.Value))
+            {
+                CropManager.Instance.HarvestCrop(_nearest.Value);
             }
         }
 

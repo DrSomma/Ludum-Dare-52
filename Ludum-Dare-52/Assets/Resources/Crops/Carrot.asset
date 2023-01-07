@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3588852ae01c4923bc9cae11cc427404, type: 3}
   m_Name: Carrot
   m_EditorClassIdentifier: 
-  growtimeInSeconds: 10
+  growtimeInSeconds: 3
   stages:
   - {fileID: -2007380888, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
   - {fileID: -782055084, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
