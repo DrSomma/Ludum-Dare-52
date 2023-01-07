@@ -75,10 +75,5 @@ namespace LudumDare52.Player
         {
             rb.MovePosition(rb.position + _movement.normalized * (moveSpeed * Time.fixedDeltaTime));
         }
-
-        private void OnDestroy()
-        {
-            GameManager.Instance.OnStateUpdate -= OnGameStateUpdate;
-        }
     }
 }

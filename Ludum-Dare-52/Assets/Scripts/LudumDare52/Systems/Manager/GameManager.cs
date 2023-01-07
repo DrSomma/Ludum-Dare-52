@@ -24,6 +24,7 @@ namespace LudumDare52.Systems.Manager
         {
             base.Awake();
             OnStateUpdate = null;
+            OnRespawn = null;
             State = GameState.Init;
         }
 

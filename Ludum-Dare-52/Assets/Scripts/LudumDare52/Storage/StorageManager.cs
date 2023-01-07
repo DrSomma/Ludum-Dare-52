@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Amazeit.Utilities;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;
 
 namespace LudumDare52.Storage
@@ -22,23 +23,23 @@ namespace LudumDare52.Storage
 
     public class StorageManager : Singleton<StorageManager>
     {
-        [SerializeField]
-        private int maxStorage;
+        private static int MaxStorage => StoragePositionManager.Instance.PositonList.Count;
         
         public Action<IStorageable> OnAddToStorage;
         public Action<IStorageable> OnRemoveFromStorage;
 
         public List<IStorageable> Storage { get; private set; }
-        public bool HasSpace => maxStorage >= Storage.Count;
+        public bool HasSpace => MaxStorage > Storage.Count;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
             Storage = new List<IStorageable>();
         }
-
+        
         public void AddToStorage(IStorageable newItem)
         {
-            if (HasSpace)
+            if (!HasSpace)
             {
                 return;
             }

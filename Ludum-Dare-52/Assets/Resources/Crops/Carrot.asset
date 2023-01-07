@@ -18,4 +18,4 @@ MonoBehaviour:
   - {fileID: -782055084, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
   - {fileID: 1862869328, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
   price: 20
-  displaySpriteUi: {fileID: 0}
+  displaySpriteUi: {fileID: -1093577764, guid: 0122c541e7d0a7f4f8c1e7a79521a123, type: 3}

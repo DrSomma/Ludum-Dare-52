@@ -32,9 +32,9 @@ namespace LudumDare52.Crops
         public void HarvestCrop(Vector2 pos)
         {
             Debug.Log("HarvestCrop");
-            if (!CanHarvestOnPos(pos) || CanHarvestHaveStorageLeft() || !_crops.TryGetValue(key: pos, value: out CropBehavior crop))
+            if (!CanHarvestOnPos(pos) || !CanHarvestHaveStorageLeft() || !_crops.TryGetValue(key: pos, value: out CropBehavior crop))
             {
-                Debug.Log("Can't harvest.");
+                Debug.Log($"Can't harvest. Crop:{CanHarvestOnPos(pos)} Storage:{CanHarvestHaveStorageLeft()}");
                 return;
             }
 

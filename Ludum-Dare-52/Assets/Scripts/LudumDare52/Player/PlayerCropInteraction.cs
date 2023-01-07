@@ -2,6 +2,7 @@ using System.Collections;
 using LudumDare52.Crops;
 using LudumDare52.Systems;
 using LudumDare52.Systems.Manager;
+using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;
 
 namespace LudumDare52.Player
