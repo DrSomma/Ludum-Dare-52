@@ -7,7 +7,8 @@ namespace AmazeIt.SpriteAnimator
 {
     public class CharacterAnimator : BaseAnimator
     {
-        [SerializeField] private CharacterAnimation characterAnimation;
+        [SerializeField]
+        private CharacterAnimation characterAnimation;
 
         private Vector2 _lastDir;
         private Dictionary<string, Sprite[]> _animationWalkDic;
@@ -37,7 +38,11 @@ namespace AmazeIt.SpriteAnimator
 
         public void SetAnimation(Vector2 movement)
         {
-            if (movement == _lastDir) return;
+            if (movement == _lastDir)
+            {
+                return;
+            }
+
             GetAnimationString(movement);
         }
 
@@ -45,11 +50,15 @@ namespace AmazeIt.SpriteAnimator
         {
             string animationString;
             if (movement == Vector2.zero)
+            {
                 animationString = GetMoveDirString(_lastDir) + "_idle";
+            }
             else
+            {
                 animationString = GetMoveDirString(movement);
+            }
 
-            PlayLoop(animationString, _animationWalkDic[animationString], characterAnimation.delayBetweenFrames, false);
+            PlayLoop(id: animationString, frames: _animationWalkDic[animationString], delayBetweenFrames: characterAnimation.delayBetweenFrames, yoyo: false);
 
             _lastDir = movement;
         }
@@ -59,16 +68,26 @@ namespace AmazeIt.SpriteAnimator
             if (Math.Abs(dir.y) >= Math.Abs(dir.x))
             {
                 if (dir.y > 0)
+                {
                     return "up";
+                }
+
                 if (dir.y < 0)
+                {
                     return "down";
+                }
             }
             else
             {
                 if (dir.x > 0)
+                {
                     return "right";
+                }
+
                 if (dir.x < 0)
+                {
                     return "left";
+                }
             }
 
             return "down";

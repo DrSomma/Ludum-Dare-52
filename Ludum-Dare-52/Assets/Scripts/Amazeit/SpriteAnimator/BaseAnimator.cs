@@ -7,11 +7,18 @@ namespace AmazeIt.SpriteAnimator
     [RequireComponent(typeof(SpriteRenderer))]
     public class BaseAnimator : MonoBehaviour
     {
-        [SerializeField] protected SpriteRenderer _renderer;
+        [SerializeField]
+        protected SpriteRenderer _renderer;
+
         private Coroutine _runningRoutine;
         private string _currentPlayingId = string.Empty;
-        
-        protected void PlayLoop(string id, Sprite[] frames, float delayBetweenFrames, bool yoyo, float delayBetweenLoops = 0f)
+
+        protected void PlayLoop(
+            string id,
+            Sprite[] frames,
+            float delayBetweenFrames,
+            bool yoyo,
+            float delayBetweenLoops = 0f)
         {
             if (_currentPlayingId == id)
             {
@@ -20,14 +27,31 @@ namespace AmazeIt.SpriteAnimator
 
             Stop();
             _currentPlayingId = id;
-            _runningRoutine = StartCoroutine(Animate(true,yoyo, frames, delayBetweenFrames, delayBetweenLoops));
+            _runningRoutine = StartCoroutine(
+                Animate(
+                    loop: true,
+                    yoyo: yoyo,
+                    frames: frames,
+                    delayBetweenFrames: delayBetweenFrames,
+                    delayBetweenLoops: delayBetweenLoops));
         }
 
-        protected void PlayOneTime(string id,Sprite[] frames, float delayBetweenFrames, Action callback = null)
+        protected void PlayOneTime(
+            string id,
+            Sprite[] frames,
+            float delayBetweenFrames,
+            Action callback = null)
         {
             Stop();
             _currentPlayingId = id;
-            _runningRoutine = StartCoroutine(Animate(false, false,frames, delayBetweenFrames, 0f, callback));
+            _runningRoutine = StartCoroutine(
+                Animate(
+                    loop: false,
+                    yoyo: false,
+                    frames: frames,
+                    delayBetweenFrames: delayBetweenFrames,
+                    delayBetweenLoops: 0f,
+                    callback: callback));
         }
 
         private void Stop()
@@ -36,7 +60,8 @@ namespace AmazeIt.SpriteAnimator
             {
                 return;
             }
-            _currentPlayingId = String.Empty;
+
+            _currentPlayingId = string.Empty;
             StopCoroutine(_runningRoutine);
         }
 
@@ -49,14 +74,20 @@ namespace AmazeIt.SpriteAnimator
         {
             StopAllCoroutines();
         }
-        
-        IEnumerator Animate(bool loop,bool yoyo,Sprite[] frames,  float delayBetweenFrames,float delayBetweenLoops, Action callback = null)
+
+        private IEnumerator Animate(
+            bool loop,
+            bool yoyo,
+            Sprite[] frames,
+            float delayBetweenFrames,
+            float delayBetweenLoops,
+            Action callback = null)
         {
-            WaitForSeconds delay = new WaitForSeconds(delayBetweenFrames);
-            WaitForSeconds delayLoop = new WaitForSeconds(delayBetweenLoops);
+            WaitForSeconds delay = new(delayBetweenFrames);
+            WaitForSeconds delayLoop = new(delayBetweenLoops);
             while (true)
             {
-                for (var index = 0; index < frames.Length; index++)
+                for (int index = 0; index < frames.Length; index++)
                 {
                     _renderer.sprite = frames[index];
                     yield return delay;
@@ -65,13 +96,13 @@ namespace AmazeIt.SpriteAnimator
                 if (yoyo)
                 {
                     yield return delayLoop;
-                    for (var index = frames.Length-1; index >= 0; index--)
+                    for (int index = frames.Length - 1; index >= 0; index--)
                     {
                         _renderer.sprite = frames[index];
                         yield return delay;
                     }
                 }
-                
+
                 if (!loop)
                 {
                     break;
@@ -79,10 +110,8 @@ namespace AmazeIt.SpriteAnimator
 
                 yield return delayLoop;
             }
+
             callback?.Invoke();
         }
-
-
-
     }
 }

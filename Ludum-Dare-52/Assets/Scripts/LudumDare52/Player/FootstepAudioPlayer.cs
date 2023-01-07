@@ -29,12 +29,14 @@ namespace LudumDare52.Player
         private void PlayAudio()
         {
             _deltaDistance = Vector2.Distance(a: _laspos, b: _newpos);
-            if (_deltaDistance > minDis)
+            if (!(_deltaDistance > minDis))
             {
-                AudioClip sound = foodsteps[Random.Range(minInclusive: 0, maxExclusive: foodsteps.Length)];
-                AudioSystem.Instance.PlaySound(clip: sound, vol: 0.3f);
-                _laspos = transform.position;
+                return;
             }
+
+            AudioClip sound = foodsteps[Random.Range(minInclusive: 0, maxExclusive: foodsteps.Length)];
+            AudioSystem.Instance.PlaySound(clip: sound, vol: 0.3f);
+            _laspos = transform.position;
         }
     }
 }
