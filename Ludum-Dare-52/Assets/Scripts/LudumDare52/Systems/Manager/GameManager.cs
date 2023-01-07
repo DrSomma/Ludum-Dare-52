@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace LudumDare52.Systems
+namespace LudumDare52.Systems.Manager
 {
     public enum GameState
     {
