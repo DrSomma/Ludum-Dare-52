@@ -1,4 +1,5 @@
 using System;
+using Amazeit.Utilities;
 using UnityEngine;
 
 namespace LudumDare52.Systems.Manager
@@ -11,23 +12,17 @@ namespace LudumDare52.Systems.Manager
         GameOver
     }
 
-    public class GameManager : MonoBehaviour
-    {
-        public static GameManager Instance { get; private set; }
 
+    public class GameManager : Singleton<GameManager>
+    {
         public GameState State { get; private set; }
 
         public Action<GameState> OnStateUpdate;
         public Action<Vector2> OnRespawn;
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance != null)
-            {
-                Destroy(this);
-            }
-
-            Instance = this;
+            base.Awake();
             OnStateUpdate = null;
             State = GameState.Init;
         }
