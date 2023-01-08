@@ -5,7 +5,7 @@ using UnityEngine;
 namespace LudumDare52.Player
 {
     //TODO: maby refactor with PlayerCropInteraction some methods are the same 
-    public class PlayerCustomerInteraction : MonoBehaviour
+    public class PlayerInteraction : MonoBehaviour
     {
         [SerializeField]
         private float minDistance;
@@ -33,6 +33,9 @@ namespace LudumDare52.Player
             if (Input.GetMouseButtonDown(0))
             {
                 _nearest.TriggerLeftClick();
+            }else if (Input.GetMouseButtonDown(1))
+            {
+                _nearest.TriggerRightClick();
             }
         }
 

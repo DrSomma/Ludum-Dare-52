@@ -1643,6 +1643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 804622436}
   centerTile: {fileID: 1612291680, guid: 03fc78c5390e8834b93d476a635ae8a4, type: 3}
+  cropPrefab: {fileID: 5145622625642754355, guid: 595207aeffe97e741b40d495443efb11, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -7875,6 +7876,7 @@ GameObject:
   - component: {fileID: 1080418884}
   - component: {fileID: 1080418883}
   - component: {fileID: 1080418882}
+  - component: {fileID: 1080418886}
   m_Layer: 5
   m_Name: CropCanvas
   m_TagString: Untagged
@@ -7964,6 +7966,18 @@ RectTransform:
   m_AnchoredPosition: {x: 1.127, y: 1.96}
   m_SizeDelta: {x: 1920, y: 1080.2463}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1080418886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080418881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db87d0807b5c429a89fdaf9fb50d3d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1115495768
 GameObject:
   m_ObjectHideFlags: 0
@@ -10159,7 +10173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368f19328fe479a4a9d3296e692dd448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayLengthInSeconds: 30
+  dayLengthInSeconds: 300
 --- !u!1 &1328712329
 GameObject:
   m_ObjectHideFlags: 0
@@ -10205,6 +10219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cropPrefab: {fileID: 5145622625642754355, guid: 595207aeffe97e741b40d495443efb11, type: 3}
+  _cropBehavior: {fileID: 0}
 --- !u!1 &1413866063
 GameObject:
   m_ObjectHideFlags: 0

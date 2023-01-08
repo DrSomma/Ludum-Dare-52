@@ -11,7 +11,10 @@ GameObject:
   - component: {fileID: 5145622625642754353}
   - component: {fileID: 5145622625642754352}
   - component: {fileID: 5681701288435245078}
-  m_Layer: 0
+  - component: {fileID: -2882317535241198584}
+  - component: {fileID: 5754724098035427656}
+  - component: {fileID: -5396754580335909029}
+  m_Layer: 7
   m_Name: CropPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,3 +101,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 5145622625642754352}
+--- !u!114 &-2882317535241198584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5145622625642754355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73caf9ae6a6343cdb44170d56d47348b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: {fileID: 5754724098035427656}
+  behavior: {fileID: 5681701288435245078}
+--- !u!114 &5754724098035427656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5145622625642754355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e1a7f0b488043619b97b25a8caf9710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &-5396754580335909029
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5145622625642754355}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

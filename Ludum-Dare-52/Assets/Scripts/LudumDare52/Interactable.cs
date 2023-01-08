@@ -8,6 +8,7 @@ namespace LudumDare52
         public Action OnPlayerIsClose;
         public Action OnPlayerLeft;
         public Action OnLeftClick;
+        public Action OnRightClick;
         public Action<bool> OnCanInteractChanged;
         private bool _canInteract;
 
@@ -32,6 +33,11 @@ namespace LudumDare52
         public void TriggerLeftClick()
         {
             OnLeftClick?.Invoke();
+        }
+        
+        public void TriggerRightClick()
+        {
+            OnRightClick?.Invoke();
         }
     }
 }

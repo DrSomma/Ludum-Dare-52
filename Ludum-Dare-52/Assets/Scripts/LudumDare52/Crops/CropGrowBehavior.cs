@@ -5,15 +5,16 @@ using UnityEngine;
 
 namespace LudumDare52.Crops
 {
-    public class CropBehavior : MonoBehaviour
+    public class CropGrowBehavior : MonoBehaviour
     {
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
-        private bool _isGrowing;
+        private int _currentStage;
 
         private float _currentStageGrowTime;
-        private int _currentStage;
+
+        private bool _isGrowing;
         private float _timeStage;
 
         public Crop Crop { get; set; }
@@ -22,12 +23,9 @@ namespace LudumDare52.Crops
 
         private void Start()
         {
-            IsHarvestable = false;
-            _isGrowing = true;
-            spriteRenderer.sprite = Crop.stages[0];
-            
+            ClearCrop();
+
             GameManager.Instance.OnStateUpdate += OnStateUpdate;
-            _timeStage = Mathf.Max(a: Crop.growtimeInSeconds / (Crop.stages.Length - 1), b: 0);
         }
 
         private void Update()
@@ -46,7 +44,7 @@ namespace LudumDare52.Crops
             _currentStageGrowTime = 0;
             _currentStage++;
             spriteRenderer.sprite = Crop.stages[_currentStage];
-            if (_currentStage == Crop.stages.Length - 1)
+            if (_currentStage >= Crop.stages.Length - 1)
             {
                 _isGrowing = false;
                 IsHarvestable = true;
@@ -55,18 +53,43 @@ namespace LudumDare52.Crops
 
         private void OnDestroy()
         {
-            GameManager.Instance.OnStateUpdate -= OnStateUpdate;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnStateUpdate -= OnStateUpdate;
+            }
+        }
+
+        private void ClearCrop()
+        {
+            IsHarvestable = false;
+            _isGrowing = false;
+            Crop = null;
+            spriteRenderer.sprite = null;
         }
 
         private void OnStateUpdate(GameState state)
         {
+            if (Crop == null)
+            {
+                return;
+            }
+
             _isGrowing = state == GameState.Running;
+        }
+
+        public void PlantNewCrop(Crop newCrop)
+        {
+            Crop = newCrop;
+            spriteRenderer.sprite = Crop.stages[0];
+            _timeStage = Mathf.Max(a: Crop.growtimeInSeconds / (Crop.stages.Length - 1), b: 0);
+            _isGrowing = true;
         }
 
 
         public void Harvest()
         {
-            transform.DOScale(endValue: 0, duration: 0.3f).OnComplete(() => { Destroy(gameObject); });
+            IsHarvestable = false;
+            transform.DOScale(endValue: 0, duration: 0.3f).OnComplete(() => { ClearCrop(); });
         }
     }
 }
