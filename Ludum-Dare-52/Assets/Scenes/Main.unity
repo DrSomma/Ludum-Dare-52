@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayMin: 2
-  delayMax: 3
+  delayMax: 8
   bounds:
     m_Center: {x: 4.83, y: -3.22, z: 0}
     m_Extent: {x: 2.26, y: 1.32, z: 0}
@@ -8682,7 +8682,7 @@ MonoBehaviour:
   npcPrefab:
   - {fileID: 3720086770032763808, guid: ab3dac8679491634e86bc81dc2fd6522, type: 3}
   orderManager: {fileID: 1510452048}
-  MaxCustomers: 4
+  MaxCustomers: 3
   SpawnDelayMinInSeconds: 5
   SpawnDelayMaxInSeconds: 10
 --- !u!114 &1510452048

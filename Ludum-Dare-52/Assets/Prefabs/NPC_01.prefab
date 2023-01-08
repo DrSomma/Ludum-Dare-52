@@ -1282,7 +1282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3720086770032763815}
-  moveSpeed: 2.5
+  moveSpeed: 1
   ease: 1
 --- !u!114 &3720086770032763813
 MonoBehaviour:

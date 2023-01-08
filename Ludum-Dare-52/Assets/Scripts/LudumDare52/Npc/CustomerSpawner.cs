@@ -17,7 +17,7 @@ namespace LudumDare52.Npc
         private OrderManager orderManager;
 
         [SerializeField]
-        private int MaxCustomers = 4;
+        private int MaxCustomers = 3;
 
         [SerializeField]
         private float SpawnDelayMinInSeconds = 10f;

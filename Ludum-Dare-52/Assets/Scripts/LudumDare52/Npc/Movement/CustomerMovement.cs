@@ -11,19 +11,24 @@ namespace LudumDare52.Npc.Movement
 {
     public class CustomerMovement : MonoBehaviour
     {
-        [SerializeField] private CharacterAnimator animator;
-        [SerializeField] private float moveSpeed = 5f;
-        
-        
-        private BaseWaypointHandler _waypointHandlerSystem;
+        [SerializeField]
+        private CharacterAnimator animator;
+
+        [SerializeField]
+        private float moveSpeed = 1f;
+
+        [SerializeField]
+        private Ease ease;
+
+        private Vector2 _animation;
+        private Waypoint _currentWaypoint;
+        private Vector2 _movement;
 
         private Waypoint _target;
-        private Waypoint _cur;
-        private Vector2 _movement;
-        [SerializeField] private Ease ease;
-        private Vector2 _animationVector;
 
-        public Action OnSceenEntered;
+        private BaseWaypointHandler _waypointHandlerSystem;
+
+        private Action onSceenEntered;
 
         private void Start()
         {
@@ -31,12 +36,19 @@ namespace LudumDare52.Npc.Movement
             StartMoveNpcInScene();
         }
 
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(center: _target.pos, size: Vector3.one * 0.2f);
+        }
+
         private void StartMoveNpcInScene()
         {
             GetMoveTween().OnComplete(
                 () =>
                 {
-                    OnSceenEntered?.Invoke();
+                    onSceenEntered?.Invoke();
                     StartMovementLoop();
                 });
         }
@@ -45,34 +57,43 @@ namespace LudumDare52.Npc.Movement
         {
             MoveLoop();
         }
-        
+
         private void MoveLoop()
         {
-            GetMoveTween().OnComplete(MoveLoop).Play(); 
+            GetMoveTween().OnComplete(MoveLoop).Play();
         }
 
         private TweenerCore<Vector3, Vector3, VectorOptions> GetMoveTween()
         {
-            _cur = _target;
+            _currentWaypoint = _target;
             _target = _waypointHandlerSystem.GetNext();
-            _animationVector = Vector2.zero;
-            animator.SetAnimation(Vector2.zero); //Idle
-            return transform.DOMove(_target.pos, moveSpeed * _target.SpeedFactor).SetSpeedBased().SetDelay(_cur.IdleDelay).SetEase(ease).OnStart(
+            _animation = Vector2.zero;
+            SetIdleAnimation();
+            return transform.DOMove(endValue: _target.pos, duration: moveSpeed * _target.SpeedFactor).SetSpeedBased().SetDelay(_currentWaypoint.IdleDelay).SetEase(ease).OnStart(
                 () =>
                 {
-                    if (!isActiveAndEnabled) return;
-                    _animationVector = GetAnimationVector();
-                    animator.SetAnimation(_animationVector);
+                    if (!isActiveAndEnabled)
+                    {
+                        return;
+                    }
+
+                    _animation = GetAnimationVector();
+                    animator.SetAnimation(_animation);
                 });
+        }
+
+        private void SetIdleAnimation()
+        {
+            animator.SetAnimation(Vector2.zero);
         }
 
         private Vector2 GetAnimationVector()
         {
             Vector2 position = transform.position;
-            var newVector = (_target.pos - position).normalized;
+            Vector2 newVector = (_target.pos - position).normalized;
             return newVector;
         }
-        
+
         public void SetPause(bool pause)
         {
             if (pause)
@@ -82,16 +103,9 @@ namespace LudumDare52.Npc.Movement
             }
             else
             {
-                animator.SetAnimation(_animationVector);
+                animator.SetAnimation(_animation);
                 transform.DOPlay();
             }
-        }
-
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawCube(_target.pos, Vector3.one * 0.2f);
         }
     }
 }

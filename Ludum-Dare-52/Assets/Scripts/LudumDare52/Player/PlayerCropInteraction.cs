@@ -1,7 +1,6 @@
 using System.Collections;
 using LudumDare52.Crops;
 using LudumDare52.Systems;
-using LudumDare52.Systems.Manager;
 using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;
 
@@ -28,7 +27,7 @@ namespace LudumDare52.Player
             {
                 return;
             }
-            
+
             //Todo: Crop auswählen!
 
             if (Input.GetMouseButtonDown(0) && CropManager.Instance.CanPlantOnPos(_nearest.Value))

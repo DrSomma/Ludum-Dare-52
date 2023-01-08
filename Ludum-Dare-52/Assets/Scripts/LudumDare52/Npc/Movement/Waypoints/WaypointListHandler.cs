@@ -4,12 +4,23 @@ namespace LudumDare52.Npc.Movement.Waypoints
 {
     public class WaypointListHandler : BaseWaypointHandler
     {
-        [SerializeField] private Waypoint[] waypoints;
-        private int _nextIndex = 0;
-    
+        [SerializeField]
+        private Waypoint[] waypoints;
+
+        private int _nextIndex;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.cyan;
+            foreach (Waypoint waypoint in waypoints)
+            {
+                Gizmos.DrawCube(center: waypoint.pos, size: Vector3.one * 0.3f);
+            }
+        }
+
         public override Waypoint GetNext()
         {
-            var next = waypoints [_nextIndex];
+            Waypoint next = waypoints[_nextIndex];
             _nextIndex = (_nextIndex + 1) % waypoints.Length;
             return next;
         }
@@ -17,15 +28,6 @@ namespace LudumDare52.Npc.Movement.Waypoints
         public void SetWaypoints(Waypoint[] newWaypoints)
         {
             waypoints = newWaypoints;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.cyan;
-            foreach (var waypoint in waypoints)
-            {
-                Gizmos.DrawCube(waypoint.pos, Vector3.one * 0.3f);
-            }
         }
     }
 }
