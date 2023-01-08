@@ -8,12 +8,12 @@ namespace LudumDare52.Daytime
     {
         [SerializeField]
         private float dayLengthInSeconds;
-        
+
         private float _time;
         private bool _timeIsTicking;
 
-        public float DaytimeInPercent => _time/dayLengthInSeconds;
-        
+        public float DaytimeInPercent => _time / dayLengthInSeconds;
+
         protected override void Awake()
         {
             base.Awake();
@@ -22,11 +22,12 @@ namespace LudumDare52.Daytime
 
         private void Update()
         {
-            if(!_timeIsTicking)
+            if (!_timeIsTicking)
+            {
                 return;
+            }
 
-            _time += UnityEngine.Time.deltaTime;
-            Debug.Log(_time);
+            _time += Time.deltaTime;
             if (_time >= dayLengthInSeconds)
             {
                 _time = dayLengthInSeconds;

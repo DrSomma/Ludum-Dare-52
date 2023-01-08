@@ -181,6 +181,7 @@ MonoBehaviour:
   animator: {fileID: 3720086770032763815}
   moveSpeed: 1
   ease: 1
+  interactable: {fileID: -114916213918552390}
 --- !u!114 &3720086770032763813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607a8ef5b2a6d494eac94c555643c33c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _container: {fileID: 3720086770032763813}
+  container: {fileID: 3720086770032763813}
   interactable: {fileID: -114916213918552390}
   uiOrderRowPrefab: {fileID: 3002065640015177698, guid: 93c10679752c6d2458d02b07a6f45776, type: 3}
   uiOrderItemPrefab: {fileID: 4976030852615022860, guid: 4f654f267ac66944f92d0044c58ceb0c, type: 3}
@@ -279,6 +280,7 @@ GameObject:
   - component: {fileID: 3744389473863300406}
   - component: {fileID: 8948257437333885304}
   - component: {fileID: 8426854458301911908}
+  - component: {fileID: 9149388416843009117}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -384,3 +386,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 1
+--- !u!225 &9149388416843009117
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6414195215066859866}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

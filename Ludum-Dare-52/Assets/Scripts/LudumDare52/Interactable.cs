@@ -8,6 +8,16 @@ namespace LudumDare52
         public Action OnPlayerIsClose;
         public Action OnPlayerLeft;
         public Action OnLeftClick;
+        public Action<bool> OnCanInteractChanged;
+        private bool _canInteract;
+
+        public bool CanInteract => _canInteract;
+
+        public void SetCanInteract(bool activ)
+        {
+            _canInteract = activ;
+            OnCanInteractChanged?.Invoke(activ);
+        }
 
         public void TriggerPlayerIsClose()
         {

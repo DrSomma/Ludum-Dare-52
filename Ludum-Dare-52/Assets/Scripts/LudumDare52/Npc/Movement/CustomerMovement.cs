@@ -21,6 +21,9 @@ namespace LudumDare52.Npc.Movement
         [SerializeField]
         private Ease ease;
 
+        [SerializeField]
+        private Interactable interactable;
+
         private Vector2 _animation;
         private Waypoint _currentWaypoint;
         private Vector2 _movement;
@@ -30,9 +33,7 @@ namespace LudumDare52.Npc.Movement
         private Waypoint _target;
 
         private BaseWaypointHandler _waypointHandlerSystem;
-
-        public Action OnSceenEntered;
-
+        
         private void Start()
         {
             _waypointHandlerSystem = ResourceSystem.Instance.RandomNpcWaypointSystem;
@@ -71,6 +72,7 @@ namespace LudumDare52.Npc.Movement
 
         public void SendCustomerHome()
         {
+            interactable.SetCanInteract(false);
             transform.DOKill();
             transform.DOMove(endValue: _spawnPoint.pos, duration: moveSpeed * 2).SetSpeedBased().OnStart(
                 () =>
@@ -86,7 +88,7 @@ namespace LudumDare52.Npc.Movement
             GetMoveTween().OnComplete(
                 () =>
                 {
-                    OnSceenEntered?.Invoke();
+                    interactable.SetCanInteract(true);
                     StartMovementLoop();
                 });
         }

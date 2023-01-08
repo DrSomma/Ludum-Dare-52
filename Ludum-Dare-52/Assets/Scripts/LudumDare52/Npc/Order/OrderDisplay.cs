@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Npc.Movement;
 using UnityEngine;
 
 namespace LudumDare52.Npc.Order
@@ -18,7 +19,7 @@ namespace LudumDare52.Npc.Order
     public class OrderDisplay : MonoBehaviour
     {
         [SerializeField]
-        private CustomerOrderContainer _container;
+        private CustomerOrderContainer container;
 
         [SerializeField]
         private Interactable interactable;
@@ -40,16 +41,40 @@ namespace LudumDare52.Npc.Order
 
         private void Awake()
         {
-            _container.OnNewOrder += OnNewOrder;
-            _container.OnOrderUpdate += OnOrderUpdate;
+            container.OnNewOrder += OnNewOrder;
+            container.OnOrderUpdate += OnOrderUpdate;
             interactable.OnPlayerIsClose += OnPlayerIsClose;
             interactable.OnPlayerLeft += OnPlayerLeft;
+            uiContainer.GetComponent<CanvasGroup>().DOFade(0, 0);
+            interactable.OnCanInteractChanged += OnCanInteractChanged;
+        }
+
+        private void OnCanInteractChanged(bool canInteract)
+        {
+            if (canInteract)
+            {
+                ShowOrder();
+            }
+            else
+            {
+                HideOrder();
+            }
+        }
+
+        private void HideOrder()
+        {
+            uiContainer.GetComponent<CanvasGroup>().DOFade(0, 0.2f);
+        }
+
+        private void ShowOrder()
+        {
+            uiContainer.GetComponent<CanvasGroup>().DOFade(1, 0.2f);
         }
 
         private void OnOrderUpdate(Crop obj)
         {
             Debug.Log("Update Order Ui");
-            foreach (KeyValuePair<Crop, int> orderItem in _container.Order.ProgressList)
+            foreach (KeyValuePair<Crop, int> orderItem in container.Order.ProgressList)
             {
                 for (int i = 0; i < orderItem.Value; i++)
                 {

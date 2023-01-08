@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Amazeit.Utilities;
 using Amazeit.Utilities.Random;
 using LudumDare52.Npc.Order;
+using LudumDare52.Systems.Manager;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace LudumDare52.Npc
 {
@@ -26,14 +29,48 @@ namespace LudumDare52.Npc
         private float SpawnDelayMaxInSeconds = 20f;
 
         private readonly List<GameObject> _npcs = new();
+        private bool _canSpawn;
+        private Coroutine _coroutine;
 
-        private void Start()
+        private void Awake()
         {
-            StartCoroutine(SpawnLoop());
+            GameManager.Instance.OnStateUpdate += OnStateUpdate;
+        }
+
+        private void OnStateUpdate(GameState state)
+        {
+            if (state == GameState.Running)
+            {
+                StartLoop();
+            }
+
+            if (state == GameState.Pause)
+            {
+                if (_coroutine != null)
+                {
+                    
+                StopCoroutine(_coroutine);
+                }
+            }
+
+            if (state == GameState.DayEnd)
+            {
+                _canSpawn = false;
+            }
+        }
+
+        private void StartLoop()
+        {
+            if(_coroutine != null)
+                return;
+            _canSpawn = true;
+            _coroutine = StartCoroutine(SpawnLoop());
         }
 
         private void Spawn()
         {
+            if(!_canSpawn)
+                return;
             GameObject npc = Instantiate(npcPrefab.Random());
             npc.transform.position = transform.position;
             npc.GetComponent<CustomerOrderContainer>().SetOrder(orderManager.GetNewOrder());
@@ -48,8 +85,8 @@ namespace LudumDare52.Npc
 
         private IEnumerator SpawnLoop()
         {
-            //TODO: Pause oder Tag vorbei
-            while (true)
+            Debug.Log("Spawnloop start");
+            while (_canSpawn)
             {
                 if (_npcs.Count() >= MaxCustomers)
                 {
@@ -61,6 +98,8 @@ namespace LudumDare52.Npc
                     yield return new WaitForSeconds(Random.Range(minInclusive: SpawnDelayMinInSeconds, maxInclusive: SpawnDelayMaxInSeconds));
                 }
             }
+            Debug.Log("Spawnloop done");
+            _coroutine = null;
         }
     }
 }
