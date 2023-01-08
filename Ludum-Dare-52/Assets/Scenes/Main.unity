@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3506fed3104a379bc26eaba3992f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayMin: 2
+  delayMin: 4
   delayMax: 8
   bounds:
     m_Center: {x: 4.83, y: -3.22, z: 0}
