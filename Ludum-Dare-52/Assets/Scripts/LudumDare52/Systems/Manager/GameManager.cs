@@ -8,6 +8,7 @@ namespace LudumDare52.Systems.Manager
     {
         Init,
         Running,
+        DayEnd,
         Pause,
         GameOver
     }
@@ -15,8 +16,6 @@ namespace LudumDare52.Systems.Manager
 
     public class GameManager : Singleton<GameManager>
     {
-        public Action<Vector2> OnRespawn;
-
         public Action<GameState> OnStateUpdate;
         public GameState State { get; private set; }
 
@@ -24,19 +23,18 @@ namespace LudumDare52.Systems.Manager
         {
             base.Awake();
             OnStateUpdate = null;
-            OnRespawn = null;
             State = GameState.Init;
+        }
+
+        private void Start()
+        {
+            SetState(GameState.Running);
         }
 
         public void SetState(GameState state)
         {
             State = state;
             OnStateUpdate?.Invoke(state);
-        }
-
-        public void SetRespawn(Vector2 respawnPos)
-        {
-            OnRespawn?.Invoke(respawnPos);
         }
     }
 }
