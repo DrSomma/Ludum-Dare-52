@@ -33,6 +33,9 @@ namespace LudumDare52.Npc.Order
         [SerializeField]
         private Transform uiContainer;
 
+        [SerializeField]
+        private Canvas canvas;
+
         private Dictionary<Crop, UiRow> _cropToUiRow;
 
         private void Awake()
@@ -59,12 +62,14 @@ namespace LudumDare52.Npc.Order
         {
             uiContainer.DOKill();
             uiContainer.transform.DOScale(endValue: 2, duration: 0.3f);
+            canvas.sortingOrder = 1;
         }
         
         private void OnPlayerLeft()
         {
             uiContainer.DOKill();
             uiContainer.transform.DOScale(endValue: 1, duration: 0.3f);
+            canvas.sortingOrder = 0;
         }
         
 

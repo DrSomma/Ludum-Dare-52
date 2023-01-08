@@ -222,6 +222,7 @@ MonoBehaviour:
   uiOrderRowPrefab: {fileID: 3002065640015177698, guid: 93c10679752c6d2458d02b07a6f45776, type: 3}
   uiOrderItemPrefab: {fileID: 4976030852615022860, guid: 4f654f267ac66944f92d0044c58ceb0c, type: 3}
   uiContainer: {fileID: 3268404516938315580}
+  canvas: {fileID: 4232302037236782702}
 --- !u!58 &-282741070746152985
 CircleCollider2D:
   m_ObjectHideFlags: 0
