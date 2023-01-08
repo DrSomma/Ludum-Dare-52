@@ -1,16 +1,20 @@
-using System.Collections;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Systems.Manager;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LudumDare52.Crops
 {
     public class CropBehavior : MonoBehaviour
     {
-        [FormerlySerializedAs("renderer")]
         [SerializeField]
-        private SpriteRenderer Renderer;
+        private SpriteRenderer spriteRenderer;
+
+        private bool _isGrowing;
+
+        private float _currentStageGrowTime;
+        private int _currentStage;
+        private float _timeStage;
 
         public Crop Crop { get; set; }
 
@@ -19,24 +23,46 @@ namespace LudumDare52.Crops
         private void Start()
         {
             IsHarvestable = false;
-            StartCoroutine(Grow());
+            _isGrowing = true;
+            spriteRenderer.sprite = Crop.stages[0];
+            
+            GameManager.Instance.OnStateUpdate += OnStateUpdate;
+            _timeStage = Mathf.Max(a: Crop.growtimeInSeconds / (Crop.stages.Length - 1), b: 0);
         }
 
-        private IEnumerator Grow()
+        private void Update()
         {
-            float timeStage = Mathf.Max(a: Crop.growtimeInSeconds / (Crop.stages.Length - 1), b: 0);
-            for (int i = 0; i < Crop.stages.Length; i++)
+            if (!_isGrowing)
             {
-                Renderer.sprite = Crop.stages[i];
-
-                if (i < Crop.stages.Length - 1)
-                {
-                    yield return new WaitForSeconds(timeStage);
-                }
+                return;
             }
 
-            IsHarvestable = true;
+            _currentStageGrowTime += Time.deltaTime;
+            if (!(_currentStageGrowTime >= _timeStage))
+            {
+                return;
+            }
+
+            _currentStageGrowTime = 0;
+            _currentStage++;
+            spriteRenderer.sprite = Crop.stages[_currentStage];
+            if (_currentStage == Crop.stages.Length - 1)
+            {
+                _isGrowing = false;
+                IsHarvestable = true;
+            }
         }
+
+        private void OnDestroy()
+        {
+            GameManager.Instance.OnStateUpdate -= OnStateUpdate;
+        }
+
+        private void OnStateUpdate(GameState state)
+        {
+            _isGrowing = state == GameState.Running;
+        }
+
 
         public void Harvest()
         {

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Amazeit.Utilities.Singleton;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Storage;
-using LudumDare52.Systems.Manager;
 using UnityEngine;
 
 namespace LudumDare52.Crops
@@ -29,12 +28,6 @@ namespace LudumDare52.Crops
             _cropBehavior = newCropObj.GetComponent<CropBehavior>();
             _cropBehavior.Crop = crop;
             _crops.Add(key: pos, value: _cropBehavior);
-            GameManager.Instance.OnStateUpdate += OnStateUpdate;
-        }
-
-        private void OnStateUpdate(GameState state)
-        {
-            _cropBehavior.enabled = state == GameState.Running;
         }
 
         public void HarvestCrop(Vector2 pos)
