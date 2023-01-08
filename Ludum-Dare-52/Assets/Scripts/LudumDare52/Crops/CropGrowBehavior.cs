@@ -65,6 +65,7 @@ namespace LudumDare52.Crops
             _isGrowing = false;
             Crop = null;
             spriteRenderer.sprite = null;
+            _currentStage = 0;
         }
 
         private void OnStateUpdate(GameState state)
@@ -83,6 +84,7 @@ namespace LudumDare52.Crops
             spriteRenderer.sprite = Crop.stages[0];
             _timeStage = Mathf.Max(a: Crop.growtimeInSeconds / (Crop.stages.Length - 1), b: 0);
             _isGrowing = true;
+            transform.DOScale(1, 0);
         }
 
 
