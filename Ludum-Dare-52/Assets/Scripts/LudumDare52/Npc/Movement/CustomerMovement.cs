@@ -28,7 +28,7 @@ namespace LudumDare52.Npc.Movement
 
         private BaseWaypointHandler _waypointHandlerSystem;
 
-        private Action onSceenEntered;
+        public Action OnSceenEntered;
 
         private void Start()
         {
@@ -48,7 +48,7 @@ namespace LudumDare52.Npc.Movement
             GetMoveTween().OnComplete(
                 () =>
                 {
-                    onSceenEntered?.Invoke();
+                    OnSceenEntered?.Invoke();
                     StartMovementLoop();
                 });
         }
