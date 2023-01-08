@@ -10,7 +10,7 @@ namespace LudumDare52.Storage
         [SerializeField]
         private GameObject entityContainerPrefab;
 
-        private readonly List<GameObject> _entitys = new();
+        private readonly Dictionary<IStorageable, GameObject> _entitys = new();
 
         private void Start()
         {
@@ -20,13 +20,16 @@ namespace LudumDare52.Storage
 
         private void OnRemoveFromStorage(IStorageable obj)
         {
+            GameObject entity = _entitys[obj];
+            entity.transform.DOScale(endValue: 0, duration: 0.3f).OnComplete(() => { Destroy(entity); });
+            _entitys.Remove(obj);
         }
 
         private void OnAddToStorage(IStorageable obj)
         {
             Debug.Log("Display");
             GameObject newEntity = Instantiate(entityContainerPrefab);
-            _entitys.Add(newEntity);
+            _entitys.Add(key: obj, value: newEntity);
 
             newEntity.transform.position = GetStoragePosInGridSpace();
             newEntity.GetComponent<SpriteRenderer>().sprite = obj.DisplaySprite;
@@ -38,7 +41,8 @@ namespace LudumDare52.Storage
 
         private Vector2 GetStoragePosInGridSpace()
         {
-            return StoragePositionManager.Instance.PositonList[_entitys.Count - 1];
+            int index = _entitys.Count - 1;
+            return StoragePositionManager.Instance.PositonList[index];
         }
     }
 }

@@ -13,7 +13,7 @@ namespace LudumDare52.Storage
         public Sprite DisplaySprite { get; }
     }
 
-    public record CropStorageEntity : IStorageable
+    public class CropStorageEntity : IStorageable
     {
         public CropStorageEntity(Crop crop)
         {
@@ -48,12 +48,15 @@ namespace LudumDare52.Storage
             Storage.Add(newItem);
             OnAddToStorage?.Invoke(newItem);
         }
-        
+
         public bool TryRemoveFromStorage(Crop orderItemKey)
         {
-            var removeObj= Storage.OfType<CropStorageEntity>().FirstOrDefault(x => orderItemKey);
-            if (removeObj == null) return false;
-            
+            CropStorageEntity removeObj = Storage.OfType<CropStorageEntity>().FirstOrDefault(x => orderItemKey);
+            if (removeObj == null)
+            {
+                return false;
+            }
+
             OnRemoveFromStorage?.Invoke(removeObj);
             Storage.Remove(removeObj);
 

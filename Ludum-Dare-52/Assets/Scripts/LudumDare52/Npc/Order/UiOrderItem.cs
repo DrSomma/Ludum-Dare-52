@@ -19,6 +19,7 @@ namespace LudumDare52.Npc.Order
 
         public void SetCheck()
         {
+            imgItem.color = Color.green;
             imgCheckmark.gameObject.SetActive(true);
         }
     }

@@ -265,6 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: {fileID: -114916213918552390}
   orderContainer: {fileID: 3720086770032763813}
+  _movement: {fileID: 3720086770032763812}
 --- !u!1 &6414195215066859866
 GameObject:
   m_ObjectHideFlags: 0

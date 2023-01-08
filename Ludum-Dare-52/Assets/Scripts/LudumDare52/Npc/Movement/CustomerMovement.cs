@@ -30,12 +30,25 @@ namespace LudumDare52.Npc.Movement
 
         public Action OnSceenEntered;
 
+        private Vector2 _spawnPoint;
+
         private void Start()
         {
             _waypointHandlerSystem = ResourceSystem.Instance.RandomNpcWaypointSystem;
+            _spawnPoint = transform.position;
             StartMoveNpcInScene();
         }
 
+
+        public void SendCustomerHome()
+        {
+            transform.DOKill();
+            transform.DOMove(_spawnPoint, moveSpeed).OnComplete(
+                () =>
+                {
+                    Destroy(gameObject);
+                });
+        }
 
         private void OnDrawGizmos()
         {
