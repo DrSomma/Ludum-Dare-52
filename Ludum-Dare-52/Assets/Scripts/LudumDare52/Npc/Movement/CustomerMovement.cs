@@ -43,7 +43,12 @@ namespace LudumDare52.Npc.Movement
         public void SendCustomerHome()
         {
             transform.DOKill();
-            transform.DOMove(_spawnPoint, moveSpeed).OnComplete(
+            transform.DOMove(_spawnPoint, moveSpeed*2).SetSpeedBased().OnStart(
+                () =>
+                {
+                    _animation = GetAnimationVector();
+                    animator.SetAnimation(_animation);
+                }).OnComplete(
                 () =>
                 {
                     Destroy(gameObject);
