@@ -10,7 +10,7 @@ namespace LudumDare52.Npc.Order
         public Order GetNewOrder()
         {
             Crop[] orderList = ResourceSystem.Instance.CropsList.Random(0, 5);
-            return new Order {OrderList = orderList};
+            return new Order(orderList);
         }
     }
 }

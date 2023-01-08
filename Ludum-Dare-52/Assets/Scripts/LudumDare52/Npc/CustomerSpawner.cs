@@ -36,7 +36,7 @@ namespace LudumDare52.Npc
         {
             GameObject npc = Instantiate(npcPrefab.Random());
             npc.transform.position = transform.position;
-            npc.GetComponent<NpcOrderContainer>().Order = orderManager.GetNewOrder();
+            npc.GetComponent<CustomerOrderContainer>().SetOrder(orderManager.GetNewOrder());
             npc.GetComponent<OnObjectDestroyed>().OnDestroyCallback += OnNpcDestroyed;
             _npcs.Add(npc);
         }
