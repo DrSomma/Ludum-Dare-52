@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Amazeit.Utilities.Singleton;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Systems.Manager.PositionManager;
@@ -47,11 +48,16 @@ namespace LudumDare52.Storage
             Storage.Add(newItem);
             OnAddToStorage?.Invoke(newItem);
         }
-
-        public void RemoveFromStorage(IStorageable newItem)
+        
+        public bool TryRemoveFromStorage(Crop orderItemKey)
         {
-            Storage.Remove(newItem);
-            OnRemoveFromStorage?.Invoke(newItem);
+            var removeObj= Storage.OfType<CropStorageEntity>().FirstOrDefault(x => orderItemKey);
+            if (removeObj == null) return false;
+            
+            OnRemoveFromStorage?.Invoke(removeObj);
+            Storage.Remove(removeObj);
+
+            return true;
         }
     }
 }
