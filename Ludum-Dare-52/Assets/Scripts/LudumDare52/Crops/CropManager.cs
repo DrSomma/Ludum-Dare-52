@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Amazeit.Utilities.Singleton;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Storage;
+using LudumDare52.Systems.Manager;
 using UnityEngine;
 
 namespace LudumDare52.Crops
@@ -12,6 +13,7 @@ namespace LudumDare52.Crops
         private GameObject cropPrefab;
 
         private readonly Dictionary<Vector2, CropBehavior> _crops = new();
+        private CropBehavior _cropBehavior;
 
         public void PlantCrop(Vector2 pos, Crop crop)
         {
@@ -24,9 +26,15 @@ namespace LudumDare52.Crops
 
             GameObject newCropObj = Instantiate(cropPrefab);
             newCropObj.transform.position = pos - Vector2.up * 0.2f;
-            CropBehavior cropBehavior = newCropObj.GetComponent<CropBehavior>();
-            cropBehavior.Crop = crop;
-            _crops.Add(key: pos, value: cropBehavior);
+            _cropBehavior = newCropObj.GetComponent<CropBehavior>();
+            _cropBehavior.Crop = crop;
+            _crops.Add(key: pos, value: _cropBehavior);
+            GameManager.Instance.OnStateUpdate += OnStateUpdate;
+        }
+
+        private void OnStateUpdate(GameState state)
+        {
+            _cropBehavior.enabled = state == GameState.Running;
         }
 
         public void HarvestCrop(Vector2 pos)
@@ -41,7 +49,6 @@ namespace LudumDare52.Crops
             _crops.Remove(pos);
             crop.Harvest();
             StorageManager.Instance.AddToStorage(new CropStorageEntity(crop.Crop));
-            Debug.Log("Harvested crop.");
         }
 
         public bool CanPlantOnPos(Vector2 checkPos)
