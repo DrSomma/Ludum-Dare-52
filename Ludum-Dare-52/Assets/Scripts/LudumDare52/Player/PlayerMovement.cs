@@ -66,7 +66,7 @@ namespace LudumDare52.Player
                 _canMove = true;
             }
 
-            if (newState == GameState.Pause)
+            if (newState == GameState.Pause || newState == GameState.DayEnd)
             {
                 _canMove = false;
             }
