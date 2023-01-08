@@ -5,6 +5,7 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using LudumDare52.Npc.Movement.Waypoints;
 using LudumDare52.Systems;
+using LudumDare52.Systems.Manager;
 using UnityEngine;
 
 namespace LudumDare52.Npc.Movement
@@ -24,41 +25,60 @@ namespace LudumDare52.Npc.Movement
         private Waypoint _currentWaypoint;
         private Vector2 _movement;
 
+        private Waypoint _spawnPoint;
+
         private Waypoint _target;
 
         private BaseWaypointHandler _waypointHandlerSystem;
 
         public Action OnSceenEntered;
 
-        private Vector2 _spawnPoint;
-
         private void Start()
         {
             _waypointHandlerSystem = ResourceSystem.Instance.RandomNpcWaypointSystem;
-            _spawnPoint = transform.position;
+            _spawnPoint = new Waypoint();
+            _spawnPoint.pos = transform.position;
             StartMoveNpcInScene();
+            GameManager.Instance.OnStateUpdate += OnStateUpdate;
         }
 
-
-        public void SendCustomerHome()
+        private void OnDestroy()
         {
-            transform.DOKill();
-            transform.DOMove(_spawnPoint, moveSpeed*2).SetSpeedBased().OnStart(
-                () =>
-                {
-                    _animation = GetAnimationVector();
-                    animator.SetAnimation(_animation);
-                }).OnComplete(
-                () =>
-                {
-                    Destroy(gameObject);
-                });
+            GameManager.Instance.OnStateUpdate -= OnStateUpdate;
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawCube(center: _target.pos, size: Vector3.one * 0.2f);
+        }
+
+        private void OnStateUpdate(GameState state)
+        {
+            switch (state)
+            {
+                case GameState.DayEnd: SendCustomerHome();
+                    break;
+                case GameState.Running: SetPause(false);
+                    break;
+                case GameState.Pause: SetPause(true);
+                    break;
+                case GameState.Init: break;
+                case GameState.GameOver: break;
+            }
+        }
+
+
+        public void SendCustomerHome()
+        {
+            transform.DOKill();
+            transform.DOMove(endValue: _spawnPoint.pos, duration: moveSpeed * 2).SetSpeedBased().OnStart(
+                () =>
+                {
+                    _target = _spawnPoint;
+                    _animation = GetAnimationVector();
+                    animator.SetAnimation(_animation);
+                }).OnComplete(() => { Destroy(gameObject); });
         }
 
         private void StartMoveNpcInScene()
@@ -112,7 +132,7 @@ namespace LudumDare52.Npc.Movement
             return newVector;
         }
 
-        public void SetPause(bool pause)
+        private void SetPause(bool pause)
         {
             if (pause)
             {
