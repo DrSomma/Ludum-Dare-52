@@ -22,26 +22,14 @@ namespace LudumDare52.Player
         [SerializeField]
         private bool canMoveAxisX = true;
 
-        private Vector2 _movement;
         private bool _canMove;
+
+        private Vector2 _movement;
 
         private void Start()
         {
             _canMove = true;
             GameManager.Instance.OnStateUpdate += OnGameStateUpdate;
-        }
-
-        private void OnGameStateUpdate(GameState newState)
-        {
-            if (newState == GameState.Running)
-            {
-                _canMove = true;
-            }
-
-            if (newState == GameState.Pause)
-            {
-                _canMove = false;
-            }
         }
 
         private void Update()
@@ -69,6 +57,19 @@ namespace LudumDare52.Player
             }
 
             MovePlayer();
+        }
+
+        private void OnGameStateUpdate(GameState newState)
+        {
+            if (newState == GameState.Running)
+            {
+                _canMove = true;
+            }
+
+            if (newState == GameState.Pause)
+            {
+                _canMove = false;
+            }
         }
 
         protected virtual void MovePlayer()

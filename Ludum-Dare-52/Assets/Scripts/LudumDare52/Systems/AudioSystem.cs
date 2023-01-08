@@ -1,13 +1,15 @@
-﻿using Amazeit.Utilities;
-using Amazeit.Utilities.Singleton;
+﻿using Amazeit.Utilities.Singleton;
 using UnityEngine;
 
 namespace LudumDare52.Systems
 {
     public class AudioSystem : Singleton<AudioSystem>
     {
-        [SerializeField] private AudioSource _musicSource;
-        [SerializeField] private AudioSource _soundsSource;
+        [SerializeField]
+        private AudioSource _musicSource;
+
+        [SerializeField]
+        private AudioSource _soundsSource;
 
         public void PlayMusic(AudioClip clip)
         {
@@ -17,13 +19,13 @@ namespace LudumDare52.Systems
 
         public void PlaySound(AudioClip clip, float vol = 1)
         {
-            _soundsSource.PlayOneShot(clip, vol);
+            _soundsSource.PlayOneShot(clip: clip, volumeScale: vol);
         }
-        
+
         public void PlaySound(AudioClip clip, float pitch, float vol = 1)
         {
             _soundsSource.pitch = pitch;
-            _soundsSource.PlayOneShot(clip, vol);
+            _soundsSource.PlayOneShot(clip: clip, volumeScale: vol);
         }
 
         public void StopSound()

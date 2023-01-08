@@ -7,6 +7,7 @@ namespace LudumDare52.Npc.Order
     {
         [SerializeField]
         private Image imgItem;
+
         [SerializeField]
         private Image imgCheckmark;
 

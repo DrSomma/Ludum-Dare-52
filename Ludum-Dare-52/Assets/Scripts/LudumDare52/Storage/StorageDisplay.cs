@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;
@@ -8,9 +7,10 @@ namespace LudumDare52.Storage
 {
     public class StorageDisplay : MonoBehaviour
     {
-        [SerializeField] private GameObject entityContainerPrefab;
+        [SerializeField]
+        private GameObject entityContainerPrefab;
 
-        private List<GameObject> _entitys = new (); 
+        private readonly List<GameObject> _entitys = new();
 
         private void Start()
         {
@@ -30,15 +30,15 @@ namespace LudumDare52.Storage
 
             newEntity.transform.position = GetStoragePosInGridSpace();
             newEntity.GetComponent<SpriteRenderer>().sprite = obj.DisplaySprite;
-            
+
             Sequence sq = DOTween.Sequence();
-            sq.Append(newEntity.transform.DOScale(0,0));
-            sq.Append(newEntity.transform.DOScale(1, 0.3f).SetEase(Ease.OutBounce));
+            sq.Append(newEntity.transform.DOScale(endValue: 0, duration: 0));
+            sq.Append(newEntity.transform.DOScale(endValue: 1, duration: 0.3f).SetEase(Ease.OutBounce));
         }
 
         private Vector2 GetStoragePosInGridSpace()
         {
-            return StoragePositionManager.Instance.PositonList[_entitys.Count-1];
+            return StoragePositionManager.Instance.PositonList[_entitys.Count - 1];
         }
     }
 }

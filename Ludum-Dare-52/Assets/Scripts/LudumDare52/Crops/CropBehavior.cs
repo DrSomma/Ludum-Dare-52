@@ -40,11 +40,7 @@ namespace LudumDare52.Crops
 
         public void Harvest()
         {
-            transform.DOScale(endValue: 0, duration: 0.3f).OnComplete(
-                () =>
-                {
-                    Destroy(gameObject);
-                });
+            transform.DOScale(endValue: 0, duration: 0.3f).OnComplete(() => { Destroy(gameObject); });
         }
     }
 }

@@ -9,6 +9,7 @@ namespace LudumDare52.Crops.ScriptableObject
         [Description("in seconds")]
         [Tooltip("in seconds")]
         public float growtimeInSeconds;
+
         public Sprite[] stages;
         public int price;
         public Sprite displaySpriteUi;

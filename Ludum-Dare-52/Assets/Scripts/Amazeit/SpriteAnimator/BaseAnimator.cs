@@ -10,8 +10,19 @@ namespace AmazeIt.SpriteAnimator
         [SerializeField]
         protected SpriteRenderer _renderer;
 
-        private Coroutine _runningRoutine;
         private string _currentPlayingId = string.Empty;
+
+        private Coroutine _runningRoutine;
+
+        private void OnDisable()
+        {
+            Stop();
+        }
+
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
 
         protected void PlayLoop(
             string id,
@@ -63,16 +74,6 @@ namespace AmazeIt.SpriteAnimator
 
             _currentPlayingId = string.Empty;
             StopCoroutine(_runningRoutine);
-        }
-
-        private void OnDisable()
-        {
-            Stop();
-        }
-
-        private void OnDestroy()
-        {
-            StopAllCoroutines();
         }
 
         private IEnumerator Animate(

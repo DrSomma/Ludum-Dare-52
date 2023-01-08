@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Amazeit.Utilities;
 using Amazeit.Utilities.Singleton;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -22,6 +21,16 @@ namespace LudumDare52.Systems.Manager.PositionManager
             CalculateCropPos();
         }
 
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            foreach (Vector2 pos in Positions)
+            {
+                Gizmos.DrawCube(center: pos, size: Vector3.one * 0.3f);
+            }
+        }
+
         private void CalculateCropPos()
         {
             List<Vector2> allCenterTileWorldPos = GetAllCenterTileWorldPos();
@@ -31,16 +40,6 @@ namespace LudumDare52.Systems.Manager.PositionManager
                 Positions.Add(tile + new Vector2(x: 0, y: 0));
                 Positions.Add(tile + new Vector2(x: 1f, y: 0));
                 Positions.Add(tile + new Vector2(x: 0, y: 1f));
-            }
-        }
-
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            foreach (Vector2 pos in Positions)
-            {
-                Gizmos.DrawCube(center: pos, size: Vector3.one * 0.3f);
             }
         }
 

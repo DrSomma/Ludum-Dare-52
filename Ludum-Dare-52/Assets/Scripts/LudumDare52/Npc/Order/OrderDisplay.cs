@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using LudumDare52.Crops.ScriptableObject;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace LudumDare52.Npc.Order
 {
@@ -13,14 +12,14 @@ namespace LudumDare52.Npc.Order
         [Header("Ui")]
         [SerializeField]
         private GameObject uiOrderRowPrefab;
-        
+
         [SerializeField]
         private GameObject uiOrderItemPrefab;
 
         [SerializeField]
         private Transform uiContainer;
-        
-        void Awake()
+
+        private void Awake()
         {
             _container.OnNewOrder += OnNewOrder;
         }
@@ -30,13 +29,13 @@ namespace LudumDare52.Npc.Order
             Debug.Log("Display new Order");
             foreach (KeyValuePair<Crop, int> orderItem in newOrder.OrderList)
             {
-                var row = Instantiate(uiOrderRowPrefab, uiContainer, false);
+                GameObject row = Instantiate(original: uiOrderRowPrefab, parent: uiContainer, worldPositionStays: false);
                 for (int i = 0; i < orderItem.Value; i++)
                 {
-                    var itemContainer = Instantiate(uiOrderItemPrefab, row.transform, false);
+                    GameObject itemContainer = Instantiate(original: uiOrderItemPrefab, parent: row.transform, worldPositionStays: false);
                     itemContainer.GetComponent<UiOrderItem>().SetNewOrderItem(orderItem.Key.displaySpriteUi);
                 }
-            }           
+            }
         }
     }
 }

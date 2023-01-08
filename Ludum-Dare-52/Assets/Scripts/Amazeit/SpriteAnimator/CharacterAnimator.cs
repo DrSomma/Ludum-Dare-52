@@ -10,9 +10,10 @@ namespace AmazeIt.SpriteAnimator
         [SerializeField]
         private CharacterAnimation characterAnimation;
 
-        private Vector2 _lastDir;
-        private Dictionary<string, Sprite[]> _animationWalkDic;
         private Dictionary<string, Sprite[]> _animationIdleDic;
+        private Dictionary<string, Sprite[]> _animationWalkDic;
+
+        private Vector2 _lastDir;
 
 
         protected void Awake()

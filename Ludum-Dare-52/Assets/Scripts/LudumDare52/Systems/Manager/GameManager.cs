@@ -1,5 +1,4 @@
 using System;
-using Amazeit.Utilities;
 using Amazeit.Utilities.Singleton;
 using UnityEngine;
 
@@ -16,10 +15,10 @@ namespace LudumDare52.Systems.Manager
 
     public class GameManager : Singleton<GameManager>
     {
-        public GameState State { get; private set; }
+        public Action<Vector2> OnRespawn;
 
         public Action<GameState> OnStateUpdate;
-        public Action<Vector2> OnRespawn;
+        public GameState State { get; private set; }
 
         protected override void Awake()
         {

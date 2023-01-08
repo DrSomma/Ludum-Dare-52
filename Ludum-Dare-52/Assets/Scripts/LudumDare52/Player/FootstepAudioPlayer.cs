@@ -8,12 +8,12 @@ namespace LudumDare52.Player
         [SerializeField]
         private AudioClip[] foodsteps;
 
+        [SerializeField]
+        private float minDis = 0.4f;
+
         private float _deltaDistance;
         private Vector2 _laspos;
         private Vector2 _newpos;
-
-        [SerializeField]
-        private float minDis = 0.4f;
 
         private void Start()
         {
