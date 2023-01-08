@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Amazeit.Utilities;
+using Amazeit.Utilities.Singleton;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Storage;
 using UnityEngine;

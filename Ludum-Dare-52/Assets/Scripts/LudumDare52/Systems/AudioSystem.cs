@@ -1,4 +1,5 @@
 ﻿using Amazeit.Utilities;
+using Amazeit.Utilities.Singleton;
 using UnityEngine;
 
 namespace LudumDare52.Systems

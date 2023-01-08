@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Amazeit.Utilities;
+using Amazeit.Utilities.Singleton;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
