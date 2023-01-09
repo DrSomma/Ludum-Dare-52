@@ -53,6 +53,12 @@ namespace LudumDare52.DayNightCycle
         private void OnStateUpdate(GameState obj)
         {
             _timeIsTicking = obj == GameState.Running;
+
+            if (obj == GameState.Running && !onEnterDayTimeEventFired)
+            {
+                onEnterDayTimeEventFired = true;
+                onEnterDayTime?.Invoke();
+            }
         }
 
         public void ResetTime()

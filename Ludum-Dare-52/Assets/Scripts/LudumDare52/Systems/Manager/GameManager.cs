@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using Amazeit.Utilities.Singleton;
 using LudumDare52.DayNightCycle;
+using UnityEngine;
 
 namespace LudumDare52.Systems.Manager
 {
@@ -28,6 +30,12 @@ namespace LudumDare52.Systems.Manager
 
         private void Start()
         {
+            StartCoroutine(StartGame());
+        }
+
+        private IEnumerator StartGame()
+        {
+            yield return new WaitForEndOfFrame();
             SetState(GameState.Running);
         }
 
