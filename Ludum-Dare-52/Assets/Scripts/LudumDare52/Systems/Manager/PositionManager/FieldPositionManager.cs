@@ -1,5 +1,6 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
+using LudumDare52.Progress;
 using UnityEngine;
 
 namespace LudumDare52.Systems.Manager.PositionManager
@@ -8,18 +9,35 @@ namespace LudumDare52.Systems.Manager.PositionManager
     {
         [SerializeField]
         private GameObject cropPrefab;
-        
-        private void Start()
+
+        private HashSet<Vector2> cropIsOnPos;
+
+        protected override void Awake()
         {
-            SpawnCrops();
+            base.Awake();
+            cropIsOnPos = new HashSet<Vector2>();
+            UpgradeFieldManager.Instance.OnUpgradeField += OnUpgradeField;
         }
 
-        private void SpawnCrops()
+        private void OnUpgradeField()
+        {
+            CalculatePositions();
+
+            SpawnCropsSlots();
+        }
+
+        private void SpawnCropsSlots()
         {
             foreach (Vector2 position in Positions)
             {
+                if (cropIsOnPos.Contains(position))
+                {
+                    continue;
+                }
+
                 GameObject newCropObj = Instantiate(cropPrefab);
                 newCropObj.transform.position = position - Vector2.up * 0.2f;
+                cropIsOnPos.Add(position);
             }
         }
 

@@ -14,22 +14,24 @@ namespace LudumDare52.Progress
     {
         public int day;
         public Crop crop;
-        public FieldProgessStep field;
+        public bool upgradeField;
     }
-
-    [Serializable]
-    public struct FieldProgessStep
-    {
-        public Vector2Int centerTilePos;
-        public bool size4X4;
-    }
-
+    
     public class Progressmanager : Singleton<Progressmanager>
     {
         [SerializeField]
         private List<ProgressStep> progressSteps;
 
-        public Action OnUpdate;
+        public Action<ProgressStep> OnUpdate;
+
+        //u cant set a Dictionary in the unity inspector
+        private Dictionary<int, ProgressStep> _progressSteps; //day -> step 
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _progressSteps = progressSteps.ToDictionary(x => x.day, x => x);
+        }
 
         private void Start()
         {
@@ -38,38 +40,25 @@ namespace LudumDare52.Progress
 
         private void OnDayEnd(GameState state)
         {
-            if (state != GameState.DayEnd)
+            int today = TimeManager.Instance.Day;
+            if (state != GameState.DayEnd || _progressSteps.ContainsKey(today))
             {
                 return;
             }
-
-            OnUpdate?.Invoke();
+            OnUpdate?.Invoke(_progressSteps[today]);
         }
-
-
+        
+        
         public bool IsCropActiv(Crop crop)
         {
             int today = TimeManager.Instance.Day;
-            Debug.Log("cro: " + crop + " " + progressSteps.Any(x => x.crop == crop && today >= x.day));
-            return progressSteps.Any(x => x.crop == crop && today >= x.day);
+            return _progressSteps.Values.Any(x => x.crop == crop && today >= x.day);
         }
-
-        public FieldProgessStep? GetTodayFieldUpdate()
+        
+        public int GetFieldUpgradeLevel()
         {
             int today = TimeManager.Instance.Day;
-            ProgressStep? step = progressSteps.FirstOrDefault(x => today == x.day);
-            if (step == null || step.Value.field.centerTilePos == Vector2Int.zero)
-            {
-                return null;
-            }
-
-            return step.Value.field;
-        }
-
-        public List<FieldProgessStep> GetAllActivFieldUpgrades()
-        {
-            int today = TimeManager.Instance.Day;
-            return progressSteps.Where(x => today >= x.day && x.field.centerTilePos != Vector2Int.zero).Select(x => x.field).ToList();
+            return _progressSteps.Values.Count(x => today >= x.day && x.upgradeField);
         }
     }
 }

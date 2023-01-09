@@ -14,14 +14,7 @@ namespace LudumDare52.Systems.Manager.PositionManager
         private Sprite centerTile;
 
         protected readonly HashSet<Vector2> Positions = new();
-
-        protected override void Awake()
-        {
-            base.Awake();
-            CalculateCropPos();
-        }
-
-
+        
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -31,7 +24,7 @@ namespace LudumDare52.Systems.Manager.PositionManager
             }
         }
 
-        private void CalculateCropPos()
+        protected void CalculatePositions()
         {
             List<Vector2> allCenterTileWorldPos = GetAllCenterTileWorldPos();
             foreach (Vector2 tile in allCenterTileWorldPos)
