@@ -10,6 +10,12 @@ namespace LudumDare52.DayNightCycle
         [SerializeField]
         private float DayLengthInSeconds;
 
+        [SerializeField]
+        private int StartHour;
+
+        [SerializeField]
+        private int EndHour;
+
         private float _time;
         private bool _timeIsTicking;
         public Action onEnterDayTime;
@@ -67,6 +73,16 @@ namespace LudumDare52.DayNightCycle
             onEnterDayTime?.Invoke();
             onEnterDayTimeEventFired = true;
             onEnterNightTimeEventFired = false;
+        }
+
+        public string GetTimeAsBeautifulString()
+        {
+            float dayTimeInPercentCache = DaytimeInPercent;
+            int timeRange = EndHour - StartHour;
+
+            int hours = (int) (dayTimeInPercentCache * timeRange);
+            int minutes = (int) ((dayTimeInPercentCache * timeRange - hours) * 60);
+            return $"{hours + StartHour:00}:{minutes:00}";
         }
     }
 }
