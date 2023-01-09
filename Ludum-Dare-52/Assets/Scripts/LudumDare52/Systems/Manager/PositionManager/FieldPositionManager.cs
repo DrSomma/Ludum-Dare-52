@@ -16,13 +16,11 @@ namespace LudumDare52.Systems.Manager.PositionManager
         {
             base.Awake();
             _cropIsOnPos = new HashSet<Vector2>();
-            UpgradeFieldManager.Instance.OnUpgradeField += OnUpgradeField;
         }
 
-        private void OnUpgradeField()
+        public void OnUpgradeField()
         {
             CalculatePositions();
-
             SpawnCropsSlots();
         }
 

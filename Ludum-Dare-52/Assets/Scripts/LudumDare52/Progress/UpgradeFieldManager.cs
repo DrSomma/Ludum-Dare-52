@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Amazeit.Utilities.Singleton;
+using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -25,9 +26,7 @@ namespace LudumDare52.Progress
         private List<FieldProgessStep> upgradeSteps;
 
         private int _upgradeLevel;
-
-        public Action OnUpgradeField;
-
+        
         protected void Start()
         {
             Progressmanager.Instance.OnUpdate += OnUpdate;
@@ -44,7 +43,7 @@ namespace LudumDare52.Progress
                 UpgradeField(step);
             }
 
-            OnUpgradeField?.Invoke();
+            FieldPositionManager.Instance.OnUpgradeField();
         }
 
         private void OnDrawGizmosSelected()
@@ -79,7 +78,7 @@ namespace LudumDare52.Progress
             _upgradeLevel++;
             int levelIndex = _upgradeLevel - 1;
             UpgradeField(upgradeSteps[levelIndex]);
-            OnUpgradeField?.Invoke();
+            FieldPositionManager.Instance.OnUpgradeField();
         }
 
         private BoundsInt GetArea(Vector2Int centerPos, bool is3X3)
