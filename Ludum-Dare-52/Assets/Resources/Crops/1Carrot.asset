@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3588852ae01c4923bc9cae11cc427404, type: 3}
   m_Name: 1Carrot
   m_EditorClassIdentifier: 
-  growtimeInSeconds: 3
+  growtimeInSeconds: 10
   stages:
   - {fileID: -2007380888, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
   - {fileID: -782055084, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
   - {fileID: 1862869328, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
-  price: 20
+  price: 5
   displaySpriteUi: {fileID: -1093577764, guid: 0122c541e7d0a7f4f8c1e7a79521a123, type: 3}

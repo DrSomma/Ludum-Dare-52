@@ -62,6 +62,7 @@ namespace LudumDare52.Systems.Manager
 
         public void StartNextDay()
         {
+            AudioSystem.Instance.PlaySound(ResourceSystem.Instance.dayStart);
             TimeManager.Instance.ResetTime();
             MoneyManager.Instance.Reset();
             SetState(GameState.Running);

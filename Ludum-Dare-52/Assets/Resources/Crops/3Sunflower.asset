@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3588852ae01c4923bc9cae11cc427404, type: 3}
   m_Name: 3Sunflower
   m_EditorClassIdentifier: 
-  growtimeInSeconds: 3
+  growtimeInSeconds: 25
   stages:
   - {fileID: 972865839, guid: 9e612be3f23cee04cbd470f87b2b0a52, type: 3}
   - {fileID: -553452044, guid: 9e612be3f23cee04cbd470f87b2b0a52, type: 3}
   - {fileID: 1773988684, guid: 9e612be3f23cee04cbd470f87b2b0a52, type: 3}
-  price: 30
+  price: 10
   displaySpriteUi: {fileID: 1089126296, guid: 0122c541e7d0a7f4f8c1e7a79521a123, type: 3}

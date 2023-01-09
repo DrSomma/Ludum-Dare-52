@@ -3,6 +3,7 @@ using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Npc.Movement;
 using LudumDare52.Storage;
 using LudumDare52.Storage.Money;
+using LudumDare52.Systems;
 using UnityEngine;
 
 namespace LudumDare52.Npc.Order
@@ -27,6 +28,7 @@ namespace LudumDare52.Npc.Order
         {
             Debug.Log("OnLeft -> Handle Order");
             Order order = orderContainer.Order;
+            bool couldSell = false;
             foreach (KeyValuePair<Crop, int> orderItem in order.OrderList)
             {
                 while (!order.IsRowFulfilled(orderItem.Key))
@@ -34,12 +36,18 @@ namespace LudumDare52.Npc.Order
                     if (StorageManager.Instance.TryRemoveFromStorage(orderItem.Key))
                     {
                         orderContainer.FulfillItemOrder(orderItem.Key);
+                        couldSell = true;
                     }
                     else
                     {
                         break;
                     }
                 }
+            }
+
+            if (!couldSell)
+            {
+                AudioSystem.Instance.PlaySound(ResourceSystem.Instance.cant);
             }
 
             if (!order.IsOrderFullfilled())
@@ -53,6 +61,7 @@ namespace LudumDare52.Npc.Order
 
         private void AddMoney(int add)
         {
+            AudioSystem.Instance.PlaySound(ResourceSystem.Instance.money);
             MoneyManager.Instance.AddMoney(add);
         }
     }

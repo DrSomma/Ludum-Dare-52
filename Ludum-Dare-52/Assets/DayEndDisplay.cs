@@ -2,6 +2,7 @@ using System.Linq;
 using DG.Tweening;
 using LudumDare52.DayNightCycle;
 using LudumDare52.Progress;
+using LudumDare52.Systems;
 using LudumDare52.Systems.Manager;
 using TMPro;
 using UnityEngine;
@@ -50,6 +51,9 @@ public class DayEndDisplay : MonoBehaviour
 
     private void ShowUi()
     {
+        AudioSystem.Instance.PlaySound(ResourceSystem.Instance.progess);
+
+        
         int nextDay = TimeManager.Instance.Day;
 
         foreach (Transform child in uiUnlockContainer.transform)

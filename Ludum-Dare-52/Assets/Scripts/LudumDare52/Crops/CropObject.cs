@@ -1,5 +1,6 @@
 ﻿using System;
 using LudumDare52.Storage;
+using LudumDare52.Systems;
 using UnityEngine;
 
 namespace LudumDare52.Crops
@@ -35,10 +36,13 @@ namespace LudumDare52.Crops
             Debug.Log("HarvestCrop");
             if (!behavior.IsHarvestable || !CanHarvestHaveStorageLeft())
             {
+                AudioSystem.Instance.PlaySound(ResourceSystem.Instance.cant, 0.3f);
                 Debug.Log($"Can't harvest. Crop:{behavior.IsHarvestable} Storage:{CanHarvestHaveStorageLeft()}");
                 return;
             }
             
+            AudioSystem.Instance.PlaySound(ResourceSystem.Instance.harvest);
+
             behavior.Harvest();
             StorageManager.Instance.AddToStorage(new CropStorageEntity(behavior.Crop));
         }
@@ -47,8 +51,10 @@ namespace LudumDare52.Crops
         {
             if (behavior.Crop != null)
             {
+                AudioSystem.Instance.PlaySound(ResourceSystem.Instance.cant, 0.3f);
                 return;
             }
+            AudioSystem.Instance.PlaySound(ResourceSystem.Instance.plantCrop);
             behavior.PlantNewCrop(CropSelector.Instance.GetCrop());
         }
         

@@ -247,6 +247,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomNpcWaypointSystem: {fileID: 114793271}
+  plantCrop: {fileID: 8300000, guid: 70fb84c6462ff154bb11cda145fab0a8, type: 3}
+  money: {fileID: 8300000, guid: 2b2e5d4451cc536419860fdd0e624a08, type: 3}
+  progess: {fileID: 8300000, guid: f357082236cadb649bf648291f764ddc, type: 3}
+  harvest: {fileID: 8300000, guid: d9dd4aa1f1ecd8a4e9caed7c37feebb5, type: 3}
+  cant: {fileID: 8300000, guid: 57e3ed449252199419945d40a637e385, type: 3}
+  dayStart: {fileID: 8300000, guid: 1dbc4019cc5d3b44ebdd2136bc488309, type: 3}
 --- !u!114 &114793271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2379,7 +2385,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.487
   m_Pitch: 1
   Loop: 0
   Mute: 0

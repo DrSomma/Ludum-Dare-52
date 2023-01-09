@@ -14,6 +14,13 @@ namespace LudumDare52.Systems
         public BaseWaypointHandler RandomNpcWaypointSystem => randomNpcWaypointSystem;
 
 
+        public AudioClip plantCrop;
+        public AudioClip money;
+        public AudioClip progess;
+        public AudioClip harvest;
+        public AudioClip cant;
+        public AudioClip dayStart;
+
         protected override void Awake()
         {
             base.Awake();
