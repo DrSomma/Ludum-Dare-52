@@ -26,6 +26,7 @@ namespace LudumDare52.Crops
         {
             PlayerInteraction.Instance.OnNearestChange += OnNearestChange;
             _canvasGroup = uiContainer.GetComponent<CanvasGroup>();
+            HideUi();
 
             for (int index = 0; index < ResourceSystem.Instance.CropsList.Length; index++)
             {
@@ -108,13 +109,11 @@ namespace LudumDare52.Crops
 
         private void HideUi()
         {
-            Debug.Log("Hide!!!!");
             _canvasGroup.DOFade(endValue: 0, duration: 0.3f);
         }
 
         private void ShowUi()
         {
-            Debug.Log("Show!!!!");
             _canvasGroup.DOFade(endValue: 1, duration: 0.3f);
         }
 
