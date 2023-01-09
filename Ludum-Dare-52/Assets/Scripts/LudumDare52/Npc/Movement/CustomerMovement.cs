@@ -1,4 +1,3 @@
-using System;
 using AmazeIt.SpriteAnimator;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -33,7 +32,7 @@ namespace LudumDare52.Npc.Movement
         private Waypoint _target;
 
         private BaseWaypointHandler _waypointHandlerSystem;
-        
+
         private void Start()
         {
             _waypointHandlerSystem = ResourceSystem.Instance.RandomNpcWaypointSystem;
@@ -45,7 +44,10 @@ namespace LudumDare52.Npc.Movement
 
         private void OnDestroy()
         {
-            GameManager.Instance.OnStateUpdate -= OnStateUpdate;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnStateUpdate -= OnStateUpdate;
+            }
         }
 
         private void OnDrawGizmos()
@@ -58,11 +60,14 @@ namespace LudumDare52.Npc.Movement
         {
             switch (state)
             {
-                case GameState.DayEnd: SendCustomerHome();
+                case GameState.DayEnd:
+                    SendCustomerHome();
                     break;
-                case GameState.Running: SetPause(false);
+                case GameState.Running:
+                    SetPause(false);
                     break;
-                case GameState.Pause: SetPause(true);
+                case GameState.Pause:
+                    SetPause(true);
                     break;
                 case GameState.Init: break;
                 case GameState.GameOver: break;
