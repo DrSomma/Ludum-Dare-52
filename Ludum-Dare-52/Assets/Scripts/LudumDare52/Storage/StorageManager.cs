@@ -13,16 +13,15 @@ namespace LudumDare52.Storage
         public Sprite DisplaySprite { get; }
     }
 
-    public class CropStorageEntity : IStorageable
+    public class ItemStorageEntity : IStorageable
     {
-        private Crop _crop;
-        public Sprite DisplaySprite => _crop.displaySpriteUi;
+        public Sprite DisplaySprite => Item.displaySpriteUi;
 
-        public Crop Crop => _crop;
-        
-        public CropStorageEntity(Crop crop)
+        public Item Item { get; }
+
+        public ItemStorageEntity(Crop item)
         {
-            _crop = crop;
+            Item = item;
         }
     }
 
@@ -52,9 +51,9 @@ namespace LudumDare52.Storage
             OnAddToStorage?.Invoke(newItem);
         }
 
-        public bool TryRemoveFromStorage(Crop orderItemKey)
+        public bool TryRemoveFromStorage(Item orderItemKey)
         {
-            CropStorageEntity removeObj = Storage.OfType<CropStorageEntity>().FirstOrDefault(x => x.Crop == orderItemKey);
+            ItemStorageEntity removeObj = Storage.OfType<ItemStorageEntity>().FirstOrDefault(x => x.Item == orderItemKey);
             if (removeObj == null)
             {
                 return false;

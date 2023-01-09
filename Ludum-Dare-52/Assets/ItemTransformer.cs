@@ -40,19 +40,15 @@ public class ItemTransformer : MonoBehaviour
 
     private void OnLeftClick()
     {
-        Debug.Log("losaaaaaa");
-
         bool hasItem = StorageManager.Instance.TryRemoveFromStorage(input);
         if (hasItem)
         {
-            StorageManager.Instance.AddToStorage(new CropStorageEntity(output));
+            StorageManager.Instance.AddToStorage(new ItemStorageEntity(output));
         }
     }
 
     private void OnPlayerIsClose()
     {
-        Debug.Log("losaaaaaa");
-
         uiCanvas.DOFade(1, 0.3f);
     }
     

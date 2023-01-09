@@ -46,7 +46,7 @@ namespace LudumDare52.Crops
             hotkey.text = (index + 1).ToString();
             displayIcon.sprite = crop.displaySpriteUi;
             _crop = crop;
-            SetCropIsActiv(Progressmanager.Instance.IsCropActiv(_crop));
+            SetCropIsActiv(Progressmanager.Instance.IsActiv(_crop));
             SetSelected(false);
         }
 

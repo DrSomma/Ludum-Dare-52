@@ -44,7 +44,7 @@ namespace LudumDare52.Crops
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.harvest);
 
             behavior.Harvest();
-            StorageManager.Instance.AddToStorage(new CropStorageEntity(behavior.Crop));
+            StorageManager.Instance.AddToStorage(new ItemStorageEntity(behavior.Crop));
         }
         
         private void PlantCrop()

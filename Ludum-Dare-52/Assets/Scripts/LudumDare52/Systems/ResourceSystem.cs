@@ -11,6 +11,7 @@ namespace LudumDare52.Systems
         private BaseWaypointHandler randomNpcWaypointSystem;
 
         public Crop[] CropsList { get; private set; }
+        public Item[] ItemList { get; private set; }
         public BaseWaypointHandler RandomNpcWaypointSystem => randomNpcWaypointSystem;
 
 
@@ -30,7 +31,8 @@ namespace LudumDare52.Systems
         private void AssemblyResources()
         {
             //lade scriptableobjects 
-            CropsList = Resources.LoadAll<Crop>("Crops");
+            CropsList = Resources.LoadAll<Crop>("Items/Crops");
+            ItemList = Resources.LoadAll<Item>("Items");
         }
     }
 }

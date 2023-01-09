@@ -29,7 +29,7 @@ namespace LudumDare52.Npc.Order
             Debug.Log("OnLeft -> Handle Order");
             Order order = orderContainer.Order;
             bool couldSell = false;
-            foreach (KeyValuePair<Crop, int> orderItem in order.OrderList)
+            foreach (KeyValuePair<Item, int> orderItem in order.OrderList)
             {
                 while (!order.IsRowFulfilled(orderItem.Key))
                 {

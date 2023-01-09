@@ -13708,9 +13708,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2144998891}
   - component: {fileID: 2144998890}
-  - component: {fileID: 2144998889}
   - component: {fileID: 2144998888}
-  m_Layer: 0
+  - component: {fileID: 2144998889}
+  - component: {fileID: 2144998892}
+  m_Layer: 7
   m_Name: shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13729,7 +13730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5561075dcb55ddb47beb5fdd4cb6dc3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: {fileID: 0}
+  interactable: {fileID: 2144998889}
   uiCanvas: {fileID: 764638588}
   input: {fileID: 11400000, guid: e3f3ce6e5e21e9541bacdd0fc2074784, type: 2}
   output: {fileID: 11400000, guid: 8eaf0ea8c2d51234aa59efd952b5838e, type: 2}
@@ -13813,6 +13814,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2144998892
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144998887}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1001 &6109935050722913634
 PrefabInstance:
   m_ObjectHideFlags: 0

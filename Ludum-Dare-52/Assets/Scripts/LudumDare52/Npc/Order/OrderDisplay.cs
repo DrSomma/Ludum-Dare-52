@@ -37,7 +37,7 @@ namespace LudumDare52.Npc.Order
         [SerializeField]
         private Canvas canvas;
 
-        private Dictionary<Crop, UiRow> _cropToUiRow;
+        private Dictionary<Item, UiRow> _itemToUiRow;
 
         private void Awake()
         {
@@ -71,14 +71,13 @@ namespace LudumDare52.Npc.Order
             uiContainer.GetComponent<CanvasGroup>().DOFade(1, 0.2f);
         }
 
-        private void OnOrderUpdate(Crop obj)
+        private void OnOrderUpdate(Item obj)
         {
-            Debug.Log("Update Order Ui");
-            foreach (KeyValuePair<Crop, int> orderItem in container.Order.ProgressList)
+            foreach (KeyValuePair<Item, int> orderItem in container.Order.ProgressList)
             {
                 for (int i = 0; i < orderItem.Value; i++)
                 {
-                    _cropToUiRow[orderItem.Key].items[i].SetCheck();
+                    _itemToUiRow[orderItem.Key].items[i].SetCheck();
                 }
             }
         }
@@ -101,8 +100,8 @@ namespace LudumDare52.Npc.Order
         private void OnNewOrder(Order newOrder)
         {
             Debug.Log("Display new Order");
-            _cropToUiRow = new Dictionary<Crop, UiRow>();
-            foreach (KeyValuePair<Crop, int> orderItem in newOrder.OrderList)
+            _itemToUiRow = new Dictionary<Item, UiRow>();
+            foreach (KeyValuePair<Item, int> orderItem in newOrder.OrderList)
             {
                 GameObject row = Instantiate(original: uiOrderRowPrefab, parent: uiContainer, worldPositionStays: false);
                 UiRow uirow = new UiRow();
@@ -114,7 +113,7 @@ namespace LudumDare52.Npc.Order
                     uirow.items.Add(item);
                 }
 
-                _cropToUiRow.Add(key: orderItem.Key, value: uirow);
+                _itemToUiRow.Add(key: orderItem.Key, value: uirow);
             }
         }
     }
