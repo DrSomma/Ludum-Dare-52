@@ -23,15 +23,15 @@ namespace LudumDare52.Crops
 
         private void Start()
         {
-            GameManager.Instance.OnStateUpdate += OnDayEnd;
+            Progressmanager.Instance.OnUpdate += OnUpdate;
         }
         
-        private void OnDayEnd(GameState state)
+        private void OnUpdate()
         {
-            if(state != GameState.DayEnd || _crop == null)
+            if(_crop == null)
                 return;
 
-            SetCropIsActiv(Progressmanager.Instance.IsCropActiv(_crop));
+            UpdateCropIsActiv();
         }
 
         public void SetSelected(bool selected)
@@ -44,14 +44,15 @@ namespace LudumDare52.Crops
             hotkey.text = (index+1).ToString();
             displayIcon.sprite = crop.displaySpriteUi;
             _crop = crop;
-            SetCropIsActiv(Progressmanager.Instance.IsCropActiv(_crop));
+            UpdateCropIsActiv();
             SetSelected(false);
         }
 
-        private void SetCropIsActiv(bool isActive)
+        private void UpdateCropIsActiv()
         {
-            IsActiv = isActive;
-            displayIcon.color = isActive ? Color.white : Color.black;
+            
+            IsActiv = Progressmanager.Instance.IsCropActiv(_crop);
+            displayIcon.color = IsActiv ? Color.white : Color.black;
         }
     }
 }
