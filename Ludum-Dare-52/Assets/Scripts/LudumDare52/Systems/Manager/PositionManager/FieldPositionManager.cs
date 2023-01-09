@@ -10,12 +10,12 @@ namespace LudumDare52.Systems.Manager.PositionManager
         [SerializeField]
         private GameObject cropPrefab;
 
-        private HashSet<Vector2> cropIsOnPos;
+        private HashSet<Vector2> _cropIsOnPos;
 
         protected override void Awake()
         {
             base.Awake();
-            cropIsOnPos = new HashSet<Vector2>();
+            _cropIsOnPos = new HashSet<Vector2>();
             UpgradeFieldManager.Instance.OnUpgradeField += OnUpgradeField;
         }
 
@@ -30,14 +30,14 @@ namespace LudumDare52.Systems.Manager.PositionManager
         {
             foreach (Vector2 position in Positions)
             {
-                if (cropIsOnPos.Contains(position))
+                if (_cropIsOnPos.Contains(position))
                 {
                     continue;
                 }
 
                 GameObject newCropObj = Instantiate(cropPrefab);
                 newCropObj.transform.position = position - Vector2.up * 0.2f;
-                cropIsOnPos.Add(position);
+                _cropIsOnPos.Add(position);
             }
         }
 

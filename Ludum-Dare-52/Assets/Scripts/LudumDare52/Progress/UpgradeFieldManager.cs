@@ -10,7 +10,7 @@ namespace LudumDare52.Progress
     public struct FieldProgessStep
     {
         public Vector2Int centerTilePos;
-        public bool size4X4;
+        public bool size3X3;
     }
 
     public class UpgradeFieldManager : Singleton<UpgradeFieldManager>
@@ -23,7 +23,7 @@ namespace LudumDare52.Progress
 
         [SerializeField]
         private List<FieldProgessStep> upgradeSteps;
-        
+
         private int _upgradeLevel;
 
         public Action OnUpgradeField;
@@ -33,6 +33,8 @@ namespace LudumDare52.Progress
             Progressmanager.Instance.OnUpdate += OnUpdate;
             _upgradeLevel = Progressmanager.Instance.GetFieldUpgradeLevel();
 
+            Debug.Log(_upgradeLevel);
+            
             //clear field
             fieldMap.ClearAllTiles();
 
@@ -41,6 +43,7 @@ namespace LudumDare52.Progress
                 FieldProgessStep step = upgradeSteps[index];
                 UpgradeField(step);
             }
+
             OnUpgradeField?.Invoke();
         }
 
@@ -52,7 +55,7 @@ namespace LudumDare52.Progress
                 Gizmos.color = Color.blue;
                 Vector3 center = fieldMap.CellToWorld((Vector3Int) step.centerTilePos) + new Vector3(x: 0.5f, y: 0.5f);
                 Gizmos.DrawCube(center: center, size: Vector3.one * 1f);
-                BoundsInt area = GetArea(centerPos: step.centerTilePos, is4x4: step.size4X4);
+                BoundsInt area = GetArea(centerPos: step.centerTilePos, is3X3: step.size3X3);
 
                 Gizmos.color = colorLight;
                 for (int x = area.xMin; x < area.xMax; x++)
@@ -60,7 +63,6 @@ namespace LudumDare52.Progress
                     for (int y = area.yMin; y < area.yMax; y++)
                     {
                         Vector3 fc = fieldMap.CellToWorld(new Vector3Int(x: x, y: y)) + new Vector3(x: 0.5f, y: 0.5f);
-                        ;
                         Gizmos.DrawCube(center: fc, size: Vector3.one * 1f);
                     }
                 }
@@ -75,13 +77,14 @@ namespace LudumDare52.Progress
             }
 
             _upgradeLevel++;
-            UpgradeField(upgradeSteps[_upgradeLevel]);
+            int levelIndex = _upgradeLevel - 1;
+            UpgradeField(upgradeSteps[levelIndex]);
             OnUpgradeField?.Invoke();
         }
 
-        private BoundsInt GetArea(Vector2Int centerPos, bool is4x4)
+        private BoundsInt GetArea(Vector2Int centerPos, bool is3X3)
         {
-            if (is4x4)
+            if (is3X3)
             {
                 return new BoundsInt(position: new Vector3Int(x: centerPos.x - 1, y: centerPos.y - 1), size: new Vector3Int(x: 3, y: 3, z: 1));
             }
@@ -95,7 +98,7 @@ namespace LudumDare52.Progress
         {
             Vector2Int tilePos = step.centerTilePos;
 
-            BoundsInt area = GetArea(centerPos: tilePos, is4x4: step.size4X4);
+            BoundsInt area = GetArea(centerPos: tilePos, is3X3: step.size3X3);
             TileBase[] tiles = new TileBase[area.size.x * area.size.y * area.size.z];
             for (int i = 0; i < tiles.Length; i++)
             {

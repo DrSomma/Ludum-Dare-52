@@ -41,11 +41,21 @@ namespace LudumDare52.Progress
         private void OnDayEnd(GameState state)
         {
             int today = TimeManager.Instance.Day;
-            if (state != GameState.DayEnd || _progressSteps.ContainsKey(today))
+            if (state != GameState.DayEnd || !_progressSteps.ContainsKey(today))
             {
                 return;
             }
             OnUpdate?.Invoke(_progressSteps[today]);
+        }
+
+        public ProgressStep? GetStep(int day)
+        {
+            if (_progressSteps.TryGetValue(day, out var step))
+            {
+                return step;
+            }
+
+            return null;
         }
         
         

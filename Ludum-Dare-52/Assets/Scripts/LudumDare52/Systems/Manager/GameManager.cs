@@ -1,5 +1,6 @@
 using System;
 using Amazeit.Utilities.Singleton;
+using LudumDare52.DayNightCycle;
 
 namespace LudumDare52.Systems.Manager
 {
@@ -34,6 +35,12 @@ namespace LudumDare52.Systems.Manager
         {
             State = state;
             OnStateUpdate?.Invoke(state);
+        }
+
+        public void StartNextDay()
+        {
+            TimeManager.Instance.ResetTime();
+            SetState(GameState.Running);
         }
     }
 }
