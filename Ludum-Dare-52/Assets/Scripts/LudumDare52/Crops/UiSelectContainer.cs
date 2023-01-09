@@ -20,7 +20,7 @@ namespace LudumDare52.Crops
 
         public void Init(int index, Sprite sprite)
         {
-            hotkey.text = index.ToString();
+            hotkey.text = (index+1).ToString();
             displayIcon.sprite = sprite;
         }
     }
