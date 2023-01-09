@@ -36,11 +36,16 @@ namespace LudumDare52.Systems.Manager.PositionManager
             List<Vector2> allCenterTileWorldPos = GetAllCenterTileWorldPos();
             foreach (Vector2 tile in allCenterTileWorldPos)
             {
-                Positions.Add(tile + new Vector2(x: 1f, y: 1f));
-                Positions.Add(tile + new Vector2(x: 0, y: 0));
-                Positions.Add(tile + new Vector2(x: 1f, y: 0));
-                Positions.Add(tile + new Vector2(x: 0, y: 1f));
+                AddPositons(tile);
             }
+        }
+
+        protected virtual void AddPositons(Vector2 tile)
+        {
+            Positions.Add(tile + new Vector2(x: 1f, y: 1f));
+            Positions.Add(tile + new Vector2(x: 0, y: 0));
+            Positions.Add(tile + new Vector2(x: 1f, y: 0));
+            Positions.Add(tile + new Vector2(x: 0, y: 1f));
         }
 
         private List<Vector2> GetAllCenterTileWorldPos()
