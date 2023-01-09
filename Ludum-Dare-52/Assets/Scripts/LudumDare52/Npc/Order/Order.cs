@@ -23,11 +23,16 @@ namespace LudumDare52.Npc.Order
 
         public void FulfillItemOrder(Crop orderItemKey)
         {
-            if (OrderList[orderItemKey] <= ProgressList[orderItemKey])
+            if (IsRowFulfilled(orderItemKey))
             {
                 return; //WTF? Du bist doch schon durch!
             }
             ProgressList[orderItemKey] += 1;
+        }
+
+        public bool IsRowFulfilled(Crop key)
+        {
+            return OrderList[key] <= ProgressList[key];
         }
 
         public bool IsOrderFullfilled()

@@ -25,6 +25,7 @@ namespace LudumDare52.Crops
         private void Start()
         {
             PlayerInteraction.Instance.OnNearestChange += OnNearestChange;
+
             _canvasGroup = uiContainer.GetComponent<CanvasGroup>();
             HideUi();
 
@@ -33,7 +34,7 @@ namespace LudumDare52.Crops
                 Crop crop = ResourceSystem.Instance.CropsList[index];
                 GameObject holder = Instantiate(original: holderPrefab, parent: uiContainer, worldPositionStays: false);
                 UiSelectContainer container = holder.GetComponent<UiSelectContainer>();
-                container.Init(index: index, sprite: crop.displaySpriteUi);
+                container.Init(index: index, crop: crop);
                 _selectContainers.Add(container);
             }
 
@@ -75,6 +76,11 @@ namespace LudumDare52.Crops
                     return;
                 }
 
+                if (!_selectContainers[index].IsActiv)
+                {
+                    return;
+                }
+
                 Clean();
                 _selectContainers[index].SetSelected(true);
                 _selectedCrop = ResourceSystem.Instance.CropsList[index];
@@ -82,11 +88,10 @@ namespace LudumDare52.Crops
 
             void Clean()
             {
-                _selectContainers[1].SetSelected(false);
-                _selectContainers[0].SetSelected(false);
-                _selectContainers[2].SetSelected(false);
-                _selectContainers[3].SetSelected(false);
-                _selectContainers[4].SetSelected(false);
+                foreach (var container in _selectContainers)
+                {
+                    container.SetSelected(false);
+                }
             }
         }
 

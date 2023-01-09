@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using LudumDare52.Daytime;
 using UnityEngine;
 
 namespace LudumDare52.DayNightCycle

@@ -15,12 +15,15 @@ namespace LudumDare52.Storage
 
     public class CropStorageEntity : IStorageable
     {
+        private Crop _crop;
+        public Sprite DisplaySprite => _crop.displaySpriteUi;
+
+        public Crop Crop => _crop;
+        
         public CropStorageEntity(Crop crop)
         {
-            DisplaySprite = crop.displaySpriteUi;
+            _crop = crop;
         }
-
-        public Sprite DisplaySprite { get; }
     }
 
     public class StorageManager : Singleton<StorageManager>
@@ -51,7 +54,7 @@ namespace LudumDare52.Storage
 
         public bool TryRemoveFromStorage(Crop orderItemKey)
         {
-            CropStorageEntity removeObj = Storage.OfType<CropStorageEntity>().FirstOrDefault(x => orderItemKey);
+            CropStorageEntity removeObj = Storage.OfType<CropStorageEntity>().FirstOrDefault(x => x.Crop == orderItemKey);
             if (removeObj == null)
             {
                 return false;

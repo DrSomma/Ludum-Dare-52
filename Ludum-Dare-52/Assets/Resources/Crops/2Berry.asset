@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3588852ae01c4923bc9cae11cc427404, type: 3}
-  m_Name: Carrot
+  m_Name: 2Berry
   m_EditorClassIdentifier: 
   growtimeInSeconds: 3
   stages:
-  - {fileID: -2007380888, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
-  - {fileID: -782055084, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
-  - {fileID: 1862869328, guid: f90b5f89b9398664aa73de2a0dba380f, type: 3}
-  price: 20
-  displaySpriteUi: {fileID: -1093577764, guid: 0122c541e7d0a7f4f8c1e7a79521a123, type: 3}
+  - {fileID: -582930762, guid: d327bef7226d1f2479a08b5a02cec46d, type: 3}
+  - {fileID: 325152237, guid: d327bef7226d1f2479a08b5a02cec46d, type: 3}
+  - {fileID: -2009945540, guid: d327bef7226d1f2479a08b5a02cec46d, type: 3}
+  price: 30
+  displaySpriteUi: {fileID: -1309093384, guid: 0122c541e7d0a7f4f8c1e7a79521a123, type: 3}

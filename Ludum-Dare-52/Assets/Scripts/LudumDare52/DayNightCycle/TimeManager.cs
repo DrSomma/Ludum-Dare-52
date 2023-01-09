@@ -19,11 +19,13 @@ namespace LudumDare52.DayNightCycle
         private bool onEnterNightTimeEventFired;
 
         public float DaytimeInPercent => _time / DayLengthInSeconds;
+        public int Day { get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
             GameManager.Instance.OnStateUpdate += OnStateUpdate;
+            Day = 1;
         }
 
         private void Update()
@@ -37,6 +39,7 @@ namespace LudumDare52.DayNightCycle
             if (_time >= DayLengthInSeconds)
             {
                 _time = DayLengthInSeconds;
+                Day++;
                 GameManager.Instance.SetState(GameState.DayEnd);
             }
             else if (Math.Abs(_time - DayLengthInSeconds * 0.5) < 0.5f && !onEnterNightTimeEventFired)
