@@ -8,7 +8,7 @@ namespace LudumDare52.DayNightCycle
     {
         [SerializeField]
         private TextMeshProUGUI txtTime;
-        
+
         [SerializeField]
         private TextMeshProUGUI txtDay;
 
@@ -18,21 +18,24 @@ namespace LudumDare52.DayNightCycle
             SetDay();
         }
 
+        private void Update()
+        {
+            txtTime.text = TimeManager.Instance.GetTimeAsBeautifulString();
+        }
+
         private void OnDayDone(GameState state)
         {
-            if(state != GameState.DayEnd)
+            if (state != GameState.DayEnd)
+            {
                 return;
+            }
+
             SetDay();
         }
 
         private void SetDay()
         {
             txtDay.text = TimeManager.Instance.Day.ToString();
-        }
-
-        private void Update()
-        {
-            txtTime.text = "" +  TimeManager.Instance.DaytimeInPercent.ToString("P");
         }
     }
 }

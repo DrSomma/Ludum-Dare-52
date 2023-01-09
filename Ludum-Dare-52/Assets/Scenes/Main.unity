@@ -10766,6 +10766,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DayLengthInSeconds: 90
+<<<<<<< HEAD
+=======
+  StartHour: 6
+  EndHour: 22
+>>>>>>> origin/dev
 --- !u!1 &1297125543
 GameObject:
   m_ObjectHideFlags: 0
