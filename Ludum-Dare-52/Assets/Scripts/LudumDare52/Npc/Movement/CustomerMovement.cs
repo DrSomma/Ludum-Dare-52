@@ -70,7 +70,9 @@ namespace LudumDare52.Npc.Movement
                     SetPause(true);
                     break;
                 case GameState.Init: break;
-                case GameState.GameOver: break;
+                case GameState.GameOver:
+                    SendCustomerHome();
+                    break;
             }
         }
 
