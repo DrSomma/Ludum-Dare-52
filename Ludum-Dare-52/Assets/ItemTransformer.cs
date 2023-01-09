@@ -38,10 +38,10 @@ public class ItemTransformer : MonoBehaviour
 
     private void OnLeftClick()
     {
-        bool hasItem = StorageManager.Instance.TryRemoveFromStorage(input);
+        bool hasItem = ItemStorageManager.Instance.TryRemoveFromStorage(input);
         if (hasItem)
         {
-            StorageManager.Instance.AddToStorage(new ItemStorageEntity(output));
+            ItemStorageManager.Instance.AddToStorage(output);
         }
     }
 

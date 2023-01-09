@@ -23,8 +23,8 @@ namespace LudumDare52.Storage
         private void Start()
         {
             _slots = StoragePositionManager.Instance.PositonList.ToDictionary<Vector2, Vector2, StorageDisplayEntity>(keySelector: x => x, elementSelector: _ => null);
-            StorageManager.Instance.OnAddToStorage += OnAddToStorage;
-            StorageManager.Instance.OnRemoveFromStorage += OnRemoveFromStorage;
+            ItemStorageManager.Instance.OnAddToStorage += OnAddToStorage;
+            ItemStorageManager.Instance.OnRemoveFromStorage += OnRemoveFromStorage;
         }
 
         private void OnRemoveFromStorage(IStorageable obj)

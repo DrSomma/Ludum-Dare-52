@@ -44,7 +44,7 @@ namespace LudumDare52.Crops
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.harvest);
 
             behavior.Harvest();
-            StorageManager.Instance.AddToStorage(new ItemStorageEntity(behavior.Crop));
+            ItemStorageManager.Instance.AddToStorage(behavior.Crop);
         }
         
         private void PlantCrop()
@@ -60,7 +60,7 @@ namespace LudumDare52.Crops
         
         private bool CanHarvestHaveStorageLeft()
         {
-            return StorageManager.Instance.HasSpace;
+            return ItemStorageManager.Instance.HasSpace;
         }
     }
 }

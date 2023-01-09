@@ -33,7 +33,7 @@ namespace LudumDare52.Npc.Order
             {
                 while (!order.IsRowFulfilled(orderItem.Key))
                 {
-                    if (StorageManager.Instance.TryRemoveFromStorage(orderItem.Key))
+                    if (ItemStorageManager.Instance.TryRemoveFromStorage(orderItem.Key))
                     {
                         orderContainer.FulfillItemOrder(orderItem.Key);
                         couldSell = true;
