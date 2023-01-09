@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using LudumDare52;
 using LudumDare52.Crops.ScriptableObject;
@@ -16,26 +14,26 @@ public class ItemTransformer : MonoBehaviour
 
     [SerializeField]
     private Crop input;
-    
+
     [SerializeField]
     private Crop output;
 
     // private bool is
     // [SerializeField]
     // private float Time;
-    
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         interactable.OnPlayerIsClose += OnPlayerIsClose;
         interactable.OnPlayerLeft += OnPlayerLeft;
         interactable.OnLeftClick += OnLeftClick;
-        uiCanvas.DOFade(0, 0.3f);
+        uiCanvas.DOFade(endValue: 0, duration: 0.3f);
     }
 
     private void OnPlayerLeft()
     {
-        uiCanvas.DOFade(0, 0.3f);
+        uiCanvas.DOFade(endValue: 0, duration: 0.3f);
     }
 
     private void OnLeftClick()
@@ -49,7 +47,6 @@ public class ItemTransformer : MonoBehaviour
 
     private void OnPlayerIsClose()
     {
-        uiCanvas.DOFade(1, 0.3f);
+        uiCanvas.DOFade(endValue: 1, duration: 0.3f);
     }
-    
 }
