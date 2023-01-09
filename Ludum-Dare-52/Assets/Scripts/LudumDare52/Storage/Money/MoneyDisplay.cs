@@ -11,11 +11,13 @@ namespace LudumDare52.Storage.Money
         private bool doAnimation = true;
 
         private TextMeshProUGUI _txtMoney;
+        private Vector3 _scale;
 
         private void Start()
         {
             _txtMoney = GetComponent<TextMeshProUGUI>();
             MoneyManager.Instance.OnUpdateMoney += OnUpdateMoney;
+            _scale = transform.localScale;
         }
 
         private void OnUpdateMoney(int change, int newMoneyValue, int target)
@@ -25,7 +27,11 @@ namespace LudumDare52.Storage.Money
             if(!doAnimation || newMoneyValue == 0)
                 return;
             _txtMoney.transform.DOKill();
-            _txtMoney.transform.DOPunchScale(punch: Vector3.one * 0.2f, duration: 0.3f, vibrato: 1);
+            _txtMoney.transform.DOPunchScale(punch: Vector3.one * 0.2f, duration: 0.3f, vibrato: 1).OnKill(
+                () =>
+                {
+                    _txtMoney.transform.localScale = _scale;
+                });
         }
     }
 }

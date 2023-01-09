@@ -15,9 +15,11 @@ namespace LudumDare52.Storage.Money
 
         public void Reset()
         {
-            int diff = Money - LevelMoney;
-            Money = diff;
-            OnUpdateMoney?.Invoke(arg1: diff, arg2: Money, arg3: LevelMoney);
+            // int diff = Money - LevelMoney;
+            // Money = diff;
+            // OnUpdateMoney?.Invoke(arg1: diff, arg2: Money, arg3: LevelMoney);
+            Money = 0;
+            OnUpdateMoney?.Invoke(arg1: 0, arg2: Money, arg3: LevelMoney);
         }
 
         private void Start()
