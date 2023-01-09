@@ -6,9 +6,10 @@ namespace LudumDare52.Npc.Order
 {
     public class CustomerOrderContainer : MonoBehaviour
     {
-        public Action<Crop> OnOrderUpdate;
         public Action<Order> OnNewOrder;
+        public Action<Crop> OnOrderUpdate;
         public Order Order { get; private set; }
+
 
         public void SetOrder(Order newOrder)
         {
