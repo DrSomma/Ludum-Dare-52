@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Amazeit.Utilities.Singleton;
 using LudumDare52.DayNightCycle;
+using LudumDare52.Storage.Money;
 using UnityEngine;
 
 namespace LudumDare52.Systems.Manager
@@ -41,13 +42,28 @@ namespace LudumDare52.Systems.Manager
 
         public void SetState(GameState state)
         {
+            if (state == GameState.DayEnd)
+            {
+                //check if day end or game over 
+                if (IsGameOver())
+                {
+                    state = GameState.GameOver;
+                }
+            }
+            
             State = state;
             OnStateUpdate?.Invoke(state);
+        }
+
+        private bool IsGameOver()
+        {
+            return !MoneyManager.Instance.HasRequiertMoney;
         }
 
         public void StartNextDay()
         {
             TimeManager.Instance.ResetTime();
+            MoneyManager.Instance.Reset();
             SetState(GameState.Running);
         }
     }
