@@ -48,7 +48,7 @@ namespace LudumDare52.DayNightCycle
                 Day++;
                 GameManager.Instance.SetState(GameState.DayEnd);
             }
-            else if (Math.Abs(_time - DayLengthInSeconds * 0.5) < 0.5f && !onEnterNightTimeEventFired)
+            else if (Math.Abs(_time - DayLengthInSeconds * 0.75) < 0.5f && !onEnterNightTimeEventFired)
             {
                 onEnterNightTime?.Invoke(DayLengthInSeconds * 0.125f);
                 onEnterNightTimeEventFired = true;
