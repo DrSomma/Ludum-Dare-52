@@ -10,7 +10,7 @@ namespace LudumDare52.Daytime
 
         private void Update()
         {
-            txtTime.text = "" +  TimeManager.Instance.DaytimeInPercent;
+            txtTime.text = "" +  TimeManager.Instance.DaytimeInPercent.ToString("P");
         }
     }
 }

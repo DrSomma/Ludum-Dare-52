@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LudumDare52.Daytime;
 using UnityEngine;
 
 namespace LudumDare52.DayNightCycle
@@ -9,37 +10,10 @@ namespace LudumDare52.DayNightCycle
         public List<GameObject> ObjectsToActivateWhenEnterNightTime;
         public List<GameObject> ObjectsToActivateWhenEnterDayTime;
 
-        public bool IsDayTime;
-        private bool isDayTimeCache;
-
         public void Start()
         {
-            // TODO Register OnEnterDay & OnEnterNight
-
-            // GameManager.Instance.OnEnterDayTime += OnEnterDayTime();
-            // GameManager.Instance.OnEnterNightTimte += OnEnterNightTime();
-
-            // Debug
-            isDayTimeCache = IsDayTime;
-        }
-
-        public void Update()
-        {
-            if (IsDayTime == isDayTimeCache)
-            {
-                return;
-            }
-
-            if (IsDayTime)
-            {
-                OnEnterDayTime();
-            }
-            else
-            {
-                OnEnterNightTime();
-            }
-
-            isDayTimeCache = IsDayTime;
+            TimeManager.Instance.onEnterDayTime += OnEnterDayTime;
+            TimeManager.Instance.onEnterNightTime += OnEnterNightTime;
         }
 
         private void OnEnterDayTime()
@@ -53,7 +27,7 @@ namespace LudumDare52.DayNightCycle
             DeactivateObjects(ObjectsToActivateWhenEnterNightTime);
         }
 
-        private void OnEnterNightTime()
+        private void OnEnterNightTime(float timeUntilFullDarkness)
         {
             foreach (DayNightCycleEntity dayNightCycleEntity in DayNightCycleEntities)
             {

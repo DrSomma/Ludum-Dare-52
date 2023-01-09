@@ -17,9 +17,9 @@ namespace LudumDare52.Crops
         [SerializeField]
         private GameObject holderPrefab;
 
-        private CanvasGroup _canvasGroup;
-
         private readonly List<UiSelectContainer> _selectContainers = new();
+
+        private CanvasGroup _canvasGroup;
         private Crop _selectedCrop;
 
         private void Start()
@@ -92,7 +92,10 @@ namespace LudumDare52.Crops
 
         private void OnDestroy()
         {
-            PlayerInteraction.Instance.OnNearestChange -= OnNearestChange;
+            if (PlayerInteraction.Instance != null)
+            {
+                PlayerInteraction.Instance.OnNearestChange -= OnNearestChange;
+            }
         }
 
         private void OnNearestChange(Interactable interactable)
