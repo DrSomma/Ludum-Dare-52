@@ -29,22 +29,26 @@ namespace LudumDare52.Npc.Order
             Order order = orderContainer.Order;
             foreach (KeyValuePair<Crop, int> orderItem in order.OrderList)
             {
-                if(order.IsRowFulfilled(orderItem.Key))
-                    continue;
-                
-                bool hasItem = StorageManager.Instance.TryRemoveFromStorage(orderItem.Key);
-                Debug.Log($"Item: {orderItem.Key} hasItem: {hasItem}");
-                if (hasItem)
+                while (!order.IsRowFulfilled(orderItem.Key))
                 {
-                    orderContainer.FulfillItemOrder(orderItem.Key);
+                    if (StorageManager.Instance.TryRemoveFromStorage(orderItem.Key))
+                    {
+                        orderContainer.FulfillItemOrder(orderItem.Key);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
 
-            if (order.IsOrderFullfilled())
+            if (!order.IsOrderFullfilled())
             {
-                AddMoney(order.GetValue());
-                _movement.SendCustomerHome();
+                return;
             }
+
+            AddMoney(order.GetValue());
+            _movement.SendCustomerHome();
         }
 
         private void AddMoney(int add)
