@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
+using Amazeit.Utilities.Singleton;
 using UnityEngine;
 
 namespace LudumDare52.Player
 {
-    //TODO: maby refactor with PlayerCropInteraction some methods are the same 
-    public class PlayerInteraction : MonoBehaviour
+    public class PlayerInteraction : Singleton<PlayerInteraction>
     {
         [SerializeField]
         private float minDistance;
 
         [SerializeField]
         private LayerMask layerMask;
+
+        public Action<Interactable> OnNearestChange;
 
         private Interactable _nearest;
 
@@ -63,6 +66,7 @@ namespace LudumDare52.Player
                         }
                         _nearest = newNearst;
                         _nearest.TriggerPlayerIsClose();
+                        OnNearestChange?.Invoke(newNearst);
                     }
                 }
                 else
@@ -70,6 +74,7 @@ namespace LudumDare52.Player
                     if (_nearest != null)
                     {
                         _nearest.TriggerPlayerLeft();
+                        OnNearestChange?.Invoke(null);
                     }
                     _nearest = null;
                 }

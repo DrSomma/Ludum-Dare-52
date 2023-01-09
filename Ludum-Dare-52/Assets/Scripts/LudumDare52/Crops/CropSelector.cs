@@ -1,18 +1,121 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Amazeit.Utilities.Singleton;
+using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Player;
 using LudumDare52.Systems;
+using UnityEngine;
 
 namespace LudumDare52.Crops
 {
     public class CropSelector : Singleton<CropSelector>
     {
+        [SerializeField]
+        private Transform uiContainer;
+
+        [SerializeField]
+        private GameObject holderPrefab;
+
+        private CanvasGroup _canvasGroup;
+
+        private readonly List<UiSelectContainer> _selectContainers = new();
         private Crop _selectedCrop;
 
         private void Start()
         {
-            //Todo: select!!!!
+            PlayerInteraction.Instance.OnNearestChange += OnNearestChange;
+            _canvasGroup = uiContainer.GetComponent<CanvasGroup>();
+
+            for (int index = 0; index < ResourceSystem.Instance.CropsList.Length; index++)
+            {
+                Crop crop = ResourceSystem.Instance.CropsList[index];
+                GameObject holder = Instantiate(original: holderPrefab, parent: uiContainer, worldPositionStays: false);
+                UiSelectContainer container = holder.GetComponent<UiSelectContainer>();
+                container.Init(index: index, sprite: crop.displaySpriteUi);
+                _selectContainers.Add(container);
+            }
+
+            _selectContainers.First().SetSelected(true);
             _selectedCrop = ResourceSystem.Instance.CropsList.First();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SlectCrop(0);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SlectCrop(1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SlectCrop(2);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SlectCrop(3);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                SlectCrop(4);
+            }
+
+            void SlectCrop(int index)
+            {
+                if (_selectContainers.Count <= index)
+                {
+                    return;
+                }
+
+                Clean();
+                _selectContainers[index].SetSelected(true);
+                _selectedCrop = ResourceSystem.Instance.CropsList[index];
+            }
+
+            void Clean()
+            {
+                _selectContainers[1].SetSelected(false);
+                _selectContainers[0].SetSelected(false);
+                _selectContainers[2].SetSelected(false);
+                _selectContainers[3].SetSelected(false);
+                _selectContainers[4].SetSelected(false);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            PlayerInteraction.Instance.OnNearestChange -= OnNearestChange;
+        }
+
+        private void OnNearestChange(Interactable interactable)
+        {
+            if (interactable != null && interactable.gameObject.CompareTag("CropSpace"))
+            {
+                ShowUi();
+            }
+            else
+            {
+                HideUi();
+            }
+        }
+
+        private void HideUi()
+        {
+            Debug.Log("Hide!!!!");
+            _canvasGroup.DOFade(endValue: 0, duration: 0.3f);
+        }
+
+        private void ShowUi()
+        {
+            Debug.Log("Show!!!!");
+            _canvasGroup.DOFade(endValue: 1, duration: 0.3f);
         }
 
         public Crop GetCrop()
