@@ -8158,9 +8158,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202494702}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1202494705
 MonoBehaviour:
@@ -9922,16 +9922,16 @@ MonoBehaviour:
     crop: {fileID: 11400000, guid: e3f3ce6e5e21e9541bacdd0fc2074784, type: 2}
     upgradeField: 1
   - day: 2
-    crop: {fileID: 11400000, guid: 5ec4fc27333534746870741de1755758, type: 2}
-    upgradeField: 1
-  - day: 3
     crop: {fileID: 0}
     upgradeField: 1
+  - day: 3
+    crop: {fileID: 11400000, guid: 5ec4fc27333534746870741de1755758, type: 2}
+    upgradeField: 0
   - day: 4
     crop: {fileID: 0}
     upgradeField: 1
   - day: 5
-    crop: {fileID: 0}
+    crop: {fileID: 11400000, guid: 4fea2bc902ac0cb48b3cbd138aa35809, type: 2}
     upgradeField: 1
 --- !u!1 &1413866063
 GameObject:
