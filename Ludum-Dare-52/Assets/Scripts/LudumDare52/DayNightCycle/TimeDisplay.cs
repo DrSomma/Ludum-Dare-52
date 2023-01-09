@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using LudumDare52.DayNightCycle;
+using TMPro;
 using UnityEngine;
 
 namespace LudumDare52.Daytime

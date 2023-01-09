@@ -3,7 +3,7 @@ using Amazeit.Utilities.Singleton;
 using LudumDare52.Systems.Manager;
 using UnityEngine;
 
-namespace LudumDare52.Daytime
+namespace LudumDare52.DayNightCycle
 {
     public class TimeManager : Singleton<TimeManager>
     {
