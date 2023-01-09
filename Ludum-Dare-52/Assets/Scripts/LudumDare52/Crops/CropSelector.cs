@@ -45,32 +45,32 @@ namespace LudumDare52.Crops
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                SlectCrop(0);
+                SelectCrop(0);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                SlectCrop(1);
+                SelectCrop(1);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                SlectCrop(2);
+                SelectCrop(2);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                SlectCrop(3);
+                SelectCrop(3);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
-                SlectCrop(4);
+                SelectCrop(4);
             }
 
-            void SlectCrop(int index)
+            void SelectCrop(int index)
             {
-                if (_selectContainers.Count <= index)
+                if (index >= _selectContainers.Count)
                 {
                     return;
                 }
