@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace LudumDare52.Systems.Manager.PositionManager
 {
-    public class StoragePositionManager : BasePositionManager<StoragePositionManager>
+    public class StoragePositionManager : BasePositionCalculator
     {
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             CalculatePositions();
         }
 

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using LudumDare52;
 using LudumDare52.Crops.ScriptableObject;
@@ -19,8 +21,10 @@ public class ItemTransformer : MonoBehaviour
     private Crop output;
 
     // private bool is
-    // [SerializeField]
-    // private float Time;
+    [SerializeField]
+    private float timeInSeconds;
+    
+    // private Storage<Sto>
 
     // Start is called before the first frame update
     private void Start()
@@ -41,8 +45,14 @@ public class ItemTransformer : MonoBehaviour
         bool hasItem = ItemStorageManager.Instance.TryRemoveFromStorage(input);
         if (hasItem)
         {
-            ItemStorageManager.Instance.AddToStorage(output);
+            StartCoroutine(Produce());
         }
+    }
+
+    private IEnumerator Produce()
+    {
+        yield return new WaitForSeconds(timeInSeconds);
+        ItemStorageManager.Instance.AddToStorage(output);
     }
 
     private void OnPlayerIsClose()

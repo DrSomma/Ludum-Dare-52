@@ -20,9 +20,12 @@ namespace LudumDare52.Storage
         // private readonly Dictionary<IStorageable, GameObject> _entitys = new();
         private Dictionary<Vector2, StorageDisplayEntity> _slots = new();
 
+        [SerializeField]
+        private StoragePositionManager positionManager;
+
         private void Start()
         {
-            _slots = StoragePositionManager.Instance.PositonList.ToDictionary<Vector2, Vector2, StorageDisplayEntity>(keySelector: x => x, elementSelector: _ => null);
+            _slots = positionManager.PositonList.ToDictionary<Vector2, Vector2, StorageDisplayEntity>(keySelector: x => x, elementSelector: _ => null);
             ItemStorageManager.Instance.OnAddToStorage += OnAddToStorage;
             ItemStorageManager.Instance.OnRemoveFromStorage += OnRemoveFromStorage;
         }
@@ -61,7 +64,7 @@ namespace LudumDare52.Storage
 
         private Vector2 GetStoragePosInGridSpace()
         {
-            return StoragePositionManager.Instance.PositonList.First(x => _slots[x] == null);
+            return positionManager.PositonList.First(x => _slots[x] == null);
         }
     }
 }

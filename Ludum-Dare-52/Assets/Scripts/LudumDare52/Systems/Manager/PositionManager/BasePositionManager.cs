@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace LudumDare52.Systems.Manager.PositionManager
 {
-    public class BasePositionManager<T> : Singleton<T> where T : MonoBehaviour
+    public class BasePositionCalculator : MonoBehaviour
     {
         [SerializeField]
         private Tilemap tilemap;

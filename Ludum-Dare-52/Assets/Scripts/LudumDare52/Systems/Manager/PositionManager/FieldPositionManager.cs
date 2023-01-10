@@ -5,16 +5,15 @@ using UnityEngine;
 
 namespace LudumDare52.Systems.Manager.PositionManager
 {
-    public class FieldPositionManager : BasePositionManager<FieldPositionManager>
+    public class FieldPositionManager : BasePositionCalculator
     {
         [SerializeField]
         private GameObject cropPrefab;
 
         private HashSet<Vector2> _cropIsOnPos;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             _cropIsOnPos = new HashSet<Vector2>();
         }
 

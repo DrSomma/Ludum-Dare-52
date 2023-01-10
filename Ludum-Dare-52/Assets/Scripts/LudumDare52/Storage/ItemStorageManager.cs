@@ -79,6 +79,9 @@ namespace LudumDare52.Storage
         public Action<IStorageable> OnAddToStorage;
         public Action<IStorageable> OnRemoveFromStorage;
         public bool HasSpace => _storage.HasSpace;
+        
+        [SerializeField]
+        private StoragePositionManager positionManager;
 
         private void Start()
         {
@@ -87,7 +90,7 @@ namespace LudumDare52.Storage
 
         private void OnNewDay()
         {
-            int size = StoragePositionManager.Instance.PositonList.Count;
+            int size = positionManager.PositonList.Count;
             _storage = new Storage<ItemStorageEntity>(size);
         }
 
