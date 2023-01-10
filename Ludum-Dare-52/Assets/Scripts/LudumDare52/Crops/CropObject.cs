@@ -15,7 +15,7 @@ namespace LudumDare52.Crops
         
         private void Start()
         {
-            interactable.OnLeftClick += OnLeftClick;
+            interactable.OnPlayerExit += OnLeftClick;
             interactable.OnRightClick += OnRightClick;
         }
 
@@ -44,7 +44,7 @@ namespace LudumDare52.Crops
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.harvest);
 
             behavior.Harvest();
-            ItemStorageContainer.Instance.AddToStorage(behavior.Crop);
+            MainStorage.Instance.Container.AddToStorage(behavior.Crop);
         }
         
         private void PlantCrop()
@@ -60,7 +60,7 @@ namespace LudumDare52.Crops
         
         private bool CanHarvestHaveStorageLeft()
         {
-            return ItemStorageContainer.Instance.HasSpace;
+            return MainStorage.Instance.Container.HasSpace;
         }
     }
 }

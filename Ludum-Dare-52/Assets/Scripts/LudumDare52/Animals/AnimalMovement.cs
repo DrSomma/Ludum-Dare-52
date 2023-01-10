@@ -28,22 +28,22 @@ namespace LudumDare52.Animals
         {
             _currentWaypoint = _target;
             _target = waypoins.GetNext();
-            await MoveToPosition(_target.IdleDelay);
+            await MoveToPosition(_target.IdleDelay, _target.pos, _target.SpeedFactor);
         }
 
-        public async Task MoveToPosition()
+        public async Task MoveToPosition(Vector2 postion)
         {
-            await MoveToPosition(0);
+            await MoveToPosition(0, postion, 2f);
         }
 
-        private Task MoveToPosition(float delay)
+        private Task MoveToPosition(float delay, Vector2 pos, float speedFactor)
         {
             if (delay > 0)
             {
                 SetIdleAnimation();
             }
 
-            return transform.DOMove(endValue: _target.pos, duration: moveSpeed * _target.SpeedFactor).SetSpeedBased().SetEase(ease).SetDelay(delay).OnStart(
+            return transform.DOMove(endValue: pos, duration: moveSpeed * speedFactor).SetSpeedBased().SetEase(ease).SetDelay(delay).OnStart(
                 () =>
                 {
                     if (!isActiveAndEnabled)
@@ -51,7 +51,7 @@ namespace LudumDare52.Animals
                         return;
                     }
 
-                    animator.SetAnimation(GetAnimationVector(_target.pos));
+                    animator.SetAnimation(GetAnimationVector(pos));
                 }).AsyncWaitForCompletion();
         }
 

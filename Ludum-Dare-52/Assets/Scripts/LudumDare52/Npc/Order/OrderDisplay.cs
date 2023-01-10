@@ -43,7 +43,7 @@ namespace LudumDare52.Npc.Order
         {
             container.OnNewOrder += OnNewOrder;
             container.OnOrderUpdate += OnOrderUpdate;
-            interactable.OnPlayerIsClose += OnPlayerIsClose;
+            interactable.OnPlayerEnter += OnPlayerIsClose;
             interactable.OnPlayerLeft += OnPlayerLeft;
             uiContainer.GetComponent<CanvasGroup>().DOFade(0, 0);
             interactable.OnCanInteractChanged += OnCanInteractChanged;

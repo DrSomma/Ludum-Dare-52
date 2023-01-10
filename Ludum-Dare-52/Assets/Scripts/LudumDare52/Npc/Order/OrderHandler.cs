@@ -21,7 +21,7 @@ namespace LudumDare52.Npc.Order
 
         private void Start()
         {
-            interactable.OnLeftClick += OnLeftClick;
+            interactable.OnPlayerExit += OnLeftClick;
         }
 
         private void OnLeftClick()
@@ -33,7 +33,7 @@ namespace LudumDare52.Npc.Order
             {
                 while (!order.IsRowFulfilled(orderItem.Key))
                 {
-                    if (ItemStorageContainer.Instance.TryRemoveFromStorage(orderItem.Key))
+                    if (MainStorage.Instance.Container.TryRemoveFromStorage(orderItem.Key))
                     {
                         orderContainer.FulfillItemOrder(orderItem.Key);
                         couldSell = true;

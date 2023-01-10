@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Amazeit.Utilities.Singleton;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Systems.Manager;
 using LudumDare52.Systems.Manager.PositionManager;
@@ -13,7 +12,7 @@ namespace LudumDare52.Storage
     {
         public Sprite DisplaySprite { get; }
     }
-    
+
     public class Storage<T> where T : IStorageable
     {
         private readonly List<T> _storageList = new();
@@ -21,19 +20,20 @@ namespace LudumDare52.Storage
         public Action<IStorageable> OnAddToStorage;
         public Action<IStorageable> OnRemoveFromStorage;
 
-        public bool HasSpace => _maxStorage > _storageList.Count;
-
         public Storage(int space)
         {
             _maxStorage = space;
         }
-        
+
+        public bool HasSpace => _maxStorage > _storageList.Count;
+
         public void AddToStorage(T newItem)
         {
             if (!HasSpace)
             {
                 return;
             }
+
             OnAddToStorage?.Invoke(newItem);
             _storageList.Add(newItem);
         }
@@ -45,6 +45,7 @@ namespace LudumDare52.Storage
             {
                 OnRemoveFromStorage?.Invoke(entity);
             }
+
             return removed;
         }
 
@@ -52,20 +53,29 @@ namespace LudumDare52.Storage
         {
             _maxStorage = size;
         }
+
+        public bool HasEntiy(T entity)
+        {
+            return _storageList.Contains(entity);
+        }
+
+        public T GetEnity(T key)
+        {
+            return _storageList.First(x => Equals(x, key));
+        }
     }
 
-    public class ItemStorageContainer : Singleton<ItemStorageContainer>
+    public class ItemStorageContainer : MonoBehaviour
     {
-        public bool HasSpace => Storage.HasSpace;
-        
         [SerializeField]
-        private StoragePositionManager positionManager;
+        private BasePositionManager positionManager;
+
+        public bool HasSpace => Storage.HasSpace;
 
         public Storage<Item> Storage { get; private set; }
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             SetStorage();
         }
 
@@ -76,19 +86,29 @@ namespace LudumDare52.Storage
 
         private void OnNewDay()
         {
-            int size = positionManager.PositonList.Count;
+            int size = positionManager.Count;
             Storage.SetSize(size);
         }
 
         private void SetStorage()
         {
-            int size = positionManager.PositonList.Count;
+            int size = positionManager.Count;
             Storage = new Storage<Item>(size);
         }
 
         public void AddToStorage(Item newItem)
         {
             Storage.AddToStorage(newItem);
+        }
+
+        public bool HasItem(Item item)
+        {
+            return Storage.HasEntiy(entity: item);
+        }
+        
+        public bool GetItem(Item item)
+        {
+            return Storage.GetEnity(key: item);
         }
 
         public bool TryRemoveFromStorage(Item item)

@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DG.Tweening;
+using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.DayNightCycle;
 using TMPro;
 using UnityEngine;
 
 namespace LudumDare52.Cheat
 {
-    public record Cheat
+    internal interface ICheat
     {
-        public Cheat(
+        public KeyCode Hotkey { get; }
+        public string DisplayName { get; }
+        public bool Activ { get; }
+
+        public void Trigger();
+    }
+
+    internal record ToggleCheat : ICheat
+    {
+        public ToggleCheat(
             string displayName,
             bool activ,
             KeyCode hotkey,
@@ -33,7 +43,7 @@ namespace LudumDare52.Cheat
         public bool Activ { get; private set; }
         public KeyCode Hotkey { get; }
 
-        public void ChangeActiv()
+        public void Trigger()
         {
             Activ = !Activ;
             if (Activ)
@@ -47,9 +57,23 @@ namespace LudumDare52.Cheat
         }
     }
 
+    internal record Cheat(string DisplayName, KeyCode Hotkey, Action OnTrigger) : ICheat
+    {
+        public Action OnTrigger { get; set; } = OnTrigger;
+        public KeyCode Hotkey { get; } = Hotkey;
+        public string DisplayName { get; } = DisplayName;
+        public bool Activ { get; } = false;
+
+        public void Trigger()
+        {
+            OnTrigger?.Invoke();
+        }
+    }
+
+
     public class CheatMenu : MonoBehaviour
     {
-        private static readonly KeyCode[] KeyCodes = {KeyCode.F2, KeyCode.F3};
+        private static readonly KeyCode[] KeyCodes = {KeyCode.F2, KeyCode.F3,KeyCode.F4,KeyCode.F5,KeyCode.F6};
 
         [SerializeField]
         private TextMeshProUGUI txtCheats;
@@ -57,26 +81,33 @@ namespace LudumDare52.Cheat
         [SerializeField]
         private CanvasGroup uiContainer;
 
-        private readonly List<Cheat> _cheats = new();
+        [SerializeField]
+        private GameObject player;
+
+        [SerializeField]
+        private Item egg;
+
+        private readonly List<ICheat> _cheats = new();
 
         private bool _isActiv;
 
         private void Start()
         {
             _cheats.Add(
-                new Cheat(
+                new ToggleCheat(
                     displayName: "growtime",
                     activ: false,
                     hotkey: KeyCodes[0],
                     onActiv: () => { TimeManager.Instance.TimeGrowMultiplier = 10; },
                     onInactive: () => { TimeManager.Instance.TimeGrowMultiplier = 1; }));
             _cheats.Add(
-                new Cheat(
+                new ToggleCheat(
                     displayName: "daytime",
                     activ: false,
                     hotkey: KeyCodes[1],
                     onActiv: () => { TimeManager.Instance.TimeDayMultiplier = 15; },
                     onInactive: () => { TimeManager.Instance.TimeDayMultiplier = 1; }));
+            _cheats.Add(new Cheat(DisplayName: "spawn egg", Hotkey: KeyCodes[2], OnTrigger: () => { WorldEntiySpawner.Instance.Spawn(item: egg, position: player.transform.position); }));
             SetUiActiv();
             UpdateUi();
         }
@@ -94,9 +125,9 @@ namespace LudumDare52.Cheat
                 return;
             }
 
-            foreach (Cheat cheat in _cheats.Where(cheat => Input.GetKeyDown(cheat.Hotkey)))
+            foreach (ICheat cheat in _cheats.Where(cheat => Input.GetKeyDown(cheat.Hotkey)))
             {
-                cheat.ChangeActiv();
+                cheat.Trigger();
                 UpdateUi();
             }
         }
@@ -110,7 +141,7 @@ namespace LudumDare52.Cheat
         {
             StringBuilder builder = new();
             builder.Append("F1 hide/show ");
-            foreach (Cheat cheat in _cheats)
+            foreach (ICheat cheat in _cheats)
             {
                 builder.Append(cheat.Activ ? "<color=\"green\">" : "<color=\"white\">");
                 builder.Append(" ");

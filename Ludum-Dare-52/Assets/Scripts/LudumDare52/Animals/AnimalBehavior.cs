@@ -15,7 +15,21 @@ namespace LudumDare52.Animals
 
         private AnimalGoal _goal;
 
+        public bool CanProcessing => _goal == AnimalGoal.Idle;
+
         private void Start()
+        {
+            SetGoal(AnimalGoal.Idle);
+        }
+
+        public async Task Eat(Vector2 pos)
+        {
+            SetGoal(AnimalGoal.Eat);
+            await animalMovement.MoveToPosition(pos);
+            SetGoal(AnimalGoal.Processing);
+        }
+        
+        public void ProcessingDone()
         {
             SetGoal(AnimalGoal.Idle);
         }
@@ -47,28 +61,18 @@ namespace LudumDare52.Animals
                 }
                 case AnimalGoal.Eat:
                 {
-                    _currentLoop = StartCoroutine(MoveToTaget());
                     break;
                 }
                 case AnimalGoal.Processing:
                 {
-                    // SetGoal(AnimalGoal.Idle);
                     Debug.Log("Processing");
+                    _currentLoop = StartCoroutine(IdleLoop());
                     break;
                 }
                 default: throw new ArgumentOutOfRangeException(paramName: nameof(newGoal), actualValue: newGoal, message: null);
             }
         }
-
-        private IEnumerator MoveToTaget()
-        {
-            animalMovement.StopMovement();
-            while (true)
-            {
-                yield return new WaitUntil(() => animalMovement.MoveToPosition().IsCompleted);
-                SetGoal(AnimalGoal.Processing);
-            }
-        }
+        
 
         private IEnumerator IdleLoop()
         {

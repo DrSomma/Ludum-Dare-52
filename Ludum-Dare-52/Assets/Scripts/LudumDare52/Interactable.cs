@@ -5,9 +5,9 @@ namespace LudumDare52
 {
     public class Interactable : MonoBehaviour
     {
-        public Action OnPlayerIsClose;
+        public Action OnPlayerEnter;
         public Action OnPlayerLeft;
-        public Action OnLeftClick;
+        public Action OnPlayerExit;
         public Action OnRightClick;
         public Action<bool> OnCanInteractChanged;
         private bool _canInteract;
@@ -22,7 +22,7 @@ namespace LudumDare52
 
         public void TriggerPlayerIsClose()
         {
-            OnPlayerIsClose?.Invoke();
+            OnPlayerEnter?.Invoke();
         }
         
         public void TriggerPlayerLeft()
@@ -32,7 +32,7 @@ namespace LudumDare52
 
         public void TriggerLeftClick()
         {
-            OnLeftClick?.Invoke();
+            OnPlayerExit?.Invoke();
         }
         
         public void TriggerRightClick()

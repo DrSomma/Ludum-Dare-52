@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using LudumDare52.Systems.Manager.PositionManager;
@@ -12,37 +13,47 @@ namespace LudumDare52.Storage
         public GameObject GameObject { get; set; }
     }
 
-    public class BaseStorageDisplay : MonoBehaviour
-    {
-
-    }
-
     public class StorageDisplay : MonoBehaviour
     {
         [SerializeField]
         private GameObject entityContainerPrefab;
 
-        private Dictionary<Vector2, StorageDisplayEntity> _slots = new();
+        [SerializeField]
+        private BasePositionManager positionManager;
 
         [SerializeField]
-        private StoragePositionManager positionManager;
+        private ItemStorageContainer container;
+
+        private Dictionary<Vector2, StorageDisplayEntity> _slots = new();
 
         private void Start()
         {
-            _slots = positionManager.PositonList.ToDictionary<Vector2, Vector2, StorageDisplayEntity>(keySelector: x => x, elementSelector: _ => null);
-            ItemStorageContainer.Instance.Storage.OnAddToStorage += OnAddToStorage;
-            ItemStorageContainer.Instance.Storage.OnRemoveFromStorage += OnRemoveFromStorage;
+            _slots = positionManager.GetPositonList().ToDictionary<Vector2, Vector2, StorageDisplayEntity>(keySelector: x => x, elementSelector: _ => null);
+            container.Storage.OnAddToStorage += OnAddToStorage;
+            container.Storage.OnRemoveFromStorage += OnRemoveFromStorage;
         }
 
-        private void OnRemoveFromStorage(IStorageable obj)
+        public Vector2 GetEnitiyPosInWorld(IStorageable obj)
+        {
+            return GetDisplayEntity(obj).GameObject.transform.position;
+        }
+
+        private StorageDisplayEntity GetDisplayEntity(IStorageable obj)
         {
             KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value?.Storageable == obj);
             StorageDisplayEntity entity = entityKeyValuePair.Value;
             if (entity == null)
             {
-                Debug.LogError("somthing is not dispayed!");
-                return;
+                throw new IndexOutOfRangeException("somthing is not dispayed!");
             }
+
+            return entity;
+        }
+
+        private void OnRemoveFromStorage(IStorageable obj)
+        {
+            KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value?.Storageable == obj);
+            StorageDisplayEntity entity = GetDisplayEntity(obj);
 
             entity.GameObject.transform.DOScale(endValue: 0, duration: 0.3f).OnComplete(() => { Destroy(entity.GameObject); });
             _slots[entityKeyValuePair.Key] = null;
@@ -53,9 +64,9 @@ namespace LudumDare52.Storage
             Debug.Log("Display");
             GameObject newGameObjectEntity = Instantiate(entityContainerPrefab);
 
-            Vector2 position = GetStoragePosInGridSpace();
+            Vector2 position = GetFirstEmptySlotPositionInGridCoordinates();
 
-            _slots[position] = new StorageDisplayEntity() {GameObject = newGameObjectEntity, Storageable = obj};
+            _slots[position] = new StorageDisplayEntity {GameObject = newGameObjectEntity, Storageable = obj};
 
             newGameObjectEntity.transform.position = position;
             newGameObjectEntity.GetComponent<SpriteRenderer>().sprite = obj.DisplaySprite;
@@ -66,9 +77,9 @@ namespace LudumDare52.Storage
         }
 
 
-        private Vector2 GetStoragePosInGridSpace()
+        private Vector2 GetFirstEmptySlotPositionInGridCoordinates()
         {
-            return positionManager.PositonList.First(x => _slots[x] == null);
+            return _slots.First(x => x.Value == null).Key;
         }
     }
 }
