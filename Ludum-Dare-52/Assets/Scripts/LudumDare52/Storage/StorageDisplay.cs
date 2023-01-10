@@ -12,12 +12,16 @@ namespace LudumDare52.Storage
         public GameObject GameObject { get; set; }
     }
 
+    public class BaseStorageDisplay : MonoBehaviour
+    {
+
+    }
+
     public class StorageDisplay : MonoBehaviour
     {
         [SerializeField]
         private GameObject entityContainerPrefab;
 
-        // private readonly Dictionary<IStorageable, GameObject> _entitys = new();
         private Dictionary<Vector2, StorageDisplayEntity> _slots = new();
 
         [SerializeField]
@@ -26,8 +30,8 @@ namespace LudumDare52.Storage
         private void Start()
         {
             _slots = positionManager.PositonList.ToDictionary<Vector2, Vector2, StorageDisplayEntity>(keySelector: x => x, elementSelector: _ => null);
-            ItemStorageManager.Instance.OnAddToStorage += OnAddToStorage;
-            ItemStorageManager.Instance.OnRemoveFromStorage += OnRemoveFromStorage;
+            ItemStorageContainer.Instance.Storage.OnAddToStorage += OnAddToStorage;
+            ItemStorageContainer.Instance.Storage.OnRemoveFromStorage += OnRemoveFromStorage;
         }
 
         private void OnRemoveFromStorage(IStorageable obj)

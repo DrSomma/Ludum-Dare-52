@@ -27,6 +27,7 @@ namespace LudumDare52.DayNightCycle
         public float DaytimeInPercent => _time / DayLengthInSeconds;
         public int Day { get; private set; }
         public float TimeGrowMultiplier { get; set; } = 1;
+        public float TimeDayMultiplier { get; set; } = 1;
 
         protected override void Awake()
         {
@@ -42,7 +43,7 @@ namespace LudumDare52.DayNightCycle
                 return;
             }
 
-            _time += Time.deltaTime;
+            _time += Time.deltaTime * TimeDayMultiplier;
             if (_time >= DayLengthInSeconds)
             {
                 _time = DayLengthInSeconds;

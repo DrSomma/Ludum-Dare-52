@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using LudumDare52.Storage;
 using UnityEngine;
 
 namespace LudumDare52.Crops.ScriptableObject
@@ -11,14 +12,13 @@ namespace LudumDare52.Crops.ScriptableObject
         public float growtimeInSeconds;
 
         public Sprite[] stages;
-        public int price;
-        public Sprite displaySpriteUi;
     }
     
     [CreateAssetMenu(fileName = "New Item")]
-    public class Item : UnityEngine.ScriptableObject
+    public class Item : UnityEngine.ScriptableObject, IStorageable
     {
         public Sprite displaySpriteUi;
         public int price;
+        public Sprite DisplaySprite => displaySpriteUi;
     }
 }

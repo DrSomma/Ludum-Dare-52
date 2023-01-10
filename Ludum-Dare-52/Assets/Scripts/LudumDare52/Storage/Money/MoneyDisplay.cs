@@ -22,7 +22,6 @@ namespace LudumDare52.Storage.Money
 
         private void OnUpdateMoney(int change, int newMoneyValue, int target)
         {
-            Debug.Log($"you got {change} Coins and now you have {newMoneyValue}");
             _txtMoney.text = $"{newMoneyValue}/{target} <sprite=0>";
             if(!doAnimation || newMoneyValue == 0)
                 return;
