@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Amazeit.Utilities.Singleton;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Systems.Manager;
 using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace LudumDare52.Storage
     public interface IStorageable
     {
         public Sprite DisplaySprite { get; }
+
+        public bool EqualKey(object obj);
     }
 
     public class ItemStorageEntity : IStorageable
@@ -22,16 +25,31 @@ namespace LudumDare52.Storage
 
         public Item Item { get; }
         public Sprite DisplaySprite => Item.displaySpriteUi;
+
+        public bool EqualKey(object obj)
+        {
+            if (obj is Item other)
+            {
+                return other == Item;
+            }
+
+            return false;
+        }
     }
 
-    public class Storage
+    public class Storage<T> where T : IStorageable
     {
-        private readonly List<IStorageable> _storageList = new();
-        private static int MaxStorage => StoragePositionManager.Instance.PositonList.Count;
+        private readonly List<T> _storageList = new();
+        private int _maxStorage;
 
-        public bool HasSpace => MaxStorage > _storageList.Count;
+        public bool HasSpace => _maxStorage > _storageList.Count;
 
-        public void AddToStorage(IStorageable newItem)
+        public Storage(int space)
+        {
+            _maxStorage = space;
+        }
+        
+        public void AddToStorage(T newItem)
         {
             if (!HasSpace)
             {
@@ -41,9 +59,9 @@ namespace LudumDare52.Storage
             _storageList.Add(newItem);
         }
 
-        public bool TryRemoveFromStorage(Item orderItemKey, out ItemStorageEntity entity)
+        public bool TryRemoveFromStorage(object key, out T entity)
         {
-            entity = _storageList.OfType<ItemStorageEntity>().FirstOrDefault(x => x.Item == orderItemKey);
+            entity = _storageList.FirstOrDefault(x => x.EqualKey(key));
             if (entity == null)
             {
                 return false;
@@ -57,27 +75,39 @@ namespace LudumDare52.Storage
 
     public class ItemStorageManager : Singleton<ItemStorageManager>
     {
-        private readonly Storage _storage = new();
+        private Storage<ItemStorageEntity> _storage;
         public Action<IStorageable> OnAddToStorage;
         public Action<IStorageable> OnRemoveFromStorage;
         public bool HasSpace => _storage.HasSpace;
 
+        private void Start()
+        {
+            GameManager.Instance.OnNewDay += OnNewDay;
+        }
+
+        private void OnNewDay()
+        {
+            int size = StoragePositionManager.Instance.PositonList.Count;
+            _storage = new Storage<ItemStorageEntity>(size);
+        }
+
         public void AddToStorage(Item newItem)
         {
-            ItemStorageEntity entiy = new ItemStorageEntity(newItem);
+            ItemStorageEntity entiy = new(newItem);
+            
             _storage.AddToStorage(entiy);
             OnAddToStorage?.Invoke(entiy);
         }
 
         public bool TryRemoveFromStorage(Item item)
         {
-            bool hasItem = _storage.TryRemoveFromStorage(orderItemKey: item, entity: out ItemStorageEntity entity);
+            bool hasItem = _storage.TryRemoveFromStorage(key: item, entity: out ItemStorageEntity entity);
             if (hasItem)
             {
                 OnRemoveFromStorage?.Invoke(entity);
             }
 
-            return true;
+            return hasItem;
         }
     }
 }

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.DayNightCycle;
 using LudumDare52.Systems.Manager;
 using UnityEngine;
 
@@ -35,8 +36,8 @@ namespace LudumDare52.Crops
                 return;
             }
 
-            _currentStageGrowTime += Time.deltaTime;
-            if (!(_currentStageGrowTime >= _timeStage))
+            _currentStageGrowTime += Time.deltaTime * TimeManager.Instance.TimeGrowMultiplier;
+            if (_currentStageGrowTime < _timeStage)
             {
                 return;
             }
@@ -84,7 +85,7 @@ namespace LudumDare52.Crops
             spriteRenderer.sprite = Crop.stages[0];
             _timeStage = Mathf.Max(a: Crop.growtimeInSeconds / (Crop.stages.Length - 1), b: 0);
             _isGrowing = true;
-            transform.DOScale(1, 0);
+            transform.DOScale(endValue: 1, duration: 0);
         }
 
 

@@ -20,6 +20,8 @@ namespace LudumDare52.Systems.Manager
     public class GameManager : Singleton<GameManager>
     {
         public Action<GameState> OnStateUpdate;
+        public Action OnNewDay;
+        
         public GameState State { get; private set; }
 
         protected override void Awake()
@@ -37,7 +39,7 @@ namespace LudumDare52.Systems.Manager
         private IEnumerator StartGame()
         {
             yield return new WaitForEndOfFrame();
-            SetState(GameState.Running);
+            StartNextDay();
         }
 
         public void SetState(GameState state)
@@ -62,10 +64,12 @@ namespace LudumDare52.Systems.Manager
 
         public void StartNextDay()
         {
+            //Todo: nutze das Event für alles
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.dayStart);
             TimeManager.Instance.ResetTime();
             MoneyManager.Instance.Reset();
             SetState(GameState.Running);
+            OnNewDay?.Invoke();
         }
     }
 }
