@@ -5,18 +5,25 @@ namespace LudumDare52
 {
     public class Interactable : MonoBehaviour
     {
+        [SerializeField]
+        private bool canInteractOnStart = true;
+        
         public Action OnPlayerEnter;
         public Action OnPlayerExit;
         public Action OnLeftClick;
         public Action OnRightClick;
         public Action<bool> OnCanInteractChanged;
-        private bool _canInteract;
 
-        public bool CanInteract => _canInteract;
+        public bool CanInteract { get; private set; }
+
+        private void Start()
+        {
+            SetCanInteract(canInteractOnStart);
+        }
 
         public void SetCanInteract(bool activ)
         {
-            _canInteract = activ;
+            CanInteract = activ;
             OnCanInteractChanged?.Invoke(activ);
         }
 

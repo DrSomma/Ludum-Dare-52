@@ -12,6 +12,9 @@ namespace LudumDare52.Storage
         
         [SerializeField]
         private ItemStorageContainer container;
+        
+        [SerializeField]
+        private StorageDisplay display;
 
         public ItemStorageContainer Container => container;
         
@@ -25,6 +28,11 @@ namespace LudumDare52.Storage
         {
             int size = positionManager.Count;
             container.SetStorageSize(size);
+        }
+
+        public void RemoveWorldObjectFromStorage(GameObject o)
+        {
+            // display.GetEnitiyPosInWorld()
         }
     }
 }

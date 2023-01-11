@@ -15,6 +15,14 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1260451888611038401, guid: 5db96d30f77a9fb4ab378b7087c72064, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2655996373969745481, guid: 5db96d30f77a9fb4ab378b7087c72064, type: 3}
+      propertyPath: canInteractOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3536177375743841353, guid: 5db96d30f77a9fb4ab378b7087c72064, type: 3}
       propertyPath: spawnAnimation
       value: 

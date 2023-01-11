@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using LudumDare52;
 using LudumDare52.Storage;
@@ -25,23 +24,35 @@ public class StorageEntiyInteraction : MonoBehaviour
 
     private void OnRightClick()
     {
-        if (_deledWasTriggerted)
+        if (!interactable.CanInteract)
         {
             return;
         }
 
-        _deledWasTriggerted = true;
+        interactable.SetCanInteract(false);
         //storage display will destroy gameobject
-        MainStorage.Instance.Container.TryRemoveFromStorage(entiyContainer.Item);
+        MainStorage.Instance.RemoveWorldObjectFromStorage(gameObject);
     }
 
     private void OnPlayerExit()
     {
-        transform.DOScale(_size, 0.3f);
+        if (!interactable.CanInteract)
+        {
+            return;
+        }
+
+        transform.DOKill();
+        transform.DOScale(endValue: _size, duration: 0.3f);
     }
 
     private void OnPlayerIsClose()
     {
-        transform.DOScale(_size * 1.1f, 0.3f);
+        if (!interactable.CanInteract)
+        {
+            return;
+        }
+
+        transform.DOKill();
+        transform.DOScale(endValue: _size * 1.7f, duration: 0.3f);
     }
 }

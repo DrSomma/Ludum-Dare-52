@@ -49,6 +49,12 @@ namespace LudumDare52.Storage
             return entity;
         }
 
+        public void Deletz()
+        {
+
+            bool bittenichtdasevnt;
+        }
+
         private void OnRemoveFromStorage(IStorageable obj)
         {
             KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value?.Storageable == obj);

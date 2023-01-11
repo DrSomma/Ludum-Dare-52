@@ -104,5 +104,6 @@ namespace LudumDare52.Storage
         {
             return Storage.TryRemoveFromStorage(entity: item);
         }
+        
     }
 }
