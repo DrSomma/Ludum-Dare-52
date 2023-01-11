@@ -61,7 +61,6 @@ namespace LudumDare52.Storage
 
         private void OnAddToStorage(IStorageable obj)
         {
-            Debug.Log("Display");
             GameObject newGameObjectEntity = Instantiate(entityContainerPrefab);
 
             Vector2 position = GetFirstEmptySlotPositionInGridCoordinates();

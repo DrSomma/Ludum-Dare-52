@@ -17,8 +17,8 @@ namespace LudumDare52.Storage
     {
         private readonly List<T> _storageList = new();
         private int _maxStorage;
-        public Action<IStorageable> OnAddToStorage;
-        public Action<IStorageable> OnRemoveFromStorage;
+        public Action<T> OnAddToStorage;
+        public Action<T> OnRemoveFromStorage;
 
         public Storage(int space)
         {
@@ -67,8 +67,9 @@ namespace LudumDare52.Storage
 
     public class ItemStorageContainer : MonoBehaviour
     {
-        [SerializeField]
-        private BasePositionManager positionManager;
+        // [Tooltip("use this if u dont use a BasePositionManager")]
+        // [SerializeField]
+        private const int StartSize = 0;
 
         public bool HasSpace => Storage.HasSpace;
 
@@ -76,24 +77,12 @@ namespace LudumDare52.Storage
 
         protected void Awake()
         {
-            SetStorage();
+            Storage = new Storage<Item>(StartSize);
         }
-
-        private void Start()
+        
+        public void SetStorageSize(int newsize)
         {
-            GameManager.Instance.OnNewDay += OnNewDay;
-        }
-
-        private void OnNewDay()
-        {
-            int size = positionManager.Count;
-            Storage.SetSize(size);
-        }
-
-        private void SetStorage()
-        {
-            int size = positionManager.Count;
-            Storage = new Storage<Item>(size);
+            Storage.SetSize(newsize);
         }
 
         public void AddToStorage(Item newItem)

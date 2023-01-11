@@ -15,7 +15,7 @@ namespace LudumDare52.Crops
         
         private void Start()
         {
-            interactable.OnPlayerExit += OnLeftClick;
+            interactable.OnLeftClick += OnLeftClick;
             interactable.OnRightClick += OnRightClick;
         }
 

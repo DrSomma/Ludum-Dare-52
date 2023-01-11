@@ -50,7 +50,7 @@ public class WorldEntiyInteraction : MonoBehaviour
         spriterenderer.sprite = item.DisplaySprite;
         _item = item;
         interactable.OnPlayerEnter += OnPlayerIsClose;
-        interactable.OnPlayerExit += OnPlayerExit;
+        interactable.OnLeftClick += OnPlayerExit;
         DoAnimation(position);
     }
 

@@ -21,7 +21,7 @@ namespace LudumDare52.Npc.Order
 
         private void Start()
         {
-            interactable.OnPlayerExit += OnLeftClick;
+            interactable.OnLeftClick += OnLeftClick;
         }
 
         private void OnLeftClick()

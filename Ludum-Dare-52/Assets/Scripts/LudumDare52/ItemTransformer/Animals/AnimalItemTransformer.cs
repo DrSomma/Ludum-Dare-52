@@ -13,10 +13,7 @@ namespace LudumDare52.ItemTransformer.Animals
     {
         [SerializeField]
         private List<AnimalBehavior> animals;
-
-        [SerializeField]
-        private StorageDisplay display;
-
+        
         protected override IEnumerator Produce()
         {
             while (!animals.Any(x => x.CanProcessing))
@@ -26,7 +23,7 @@ namespace LudumDare52.ItemTransformer.Animals
             
             AnimalBehavior animal = animals.Where(x => x.CanProcessing).RandomElement();
 
-            Vector2 foodPos = display.GetEnitiyPosInWorld(input);
+            Vector2 foodPos = transform.position;
             Task task = animal.Eat(foodPos);
             yield return new WaitUntil(() => task.IsCompleted);
             containerInput.Storage.TryRemoveFromStorage(input);
