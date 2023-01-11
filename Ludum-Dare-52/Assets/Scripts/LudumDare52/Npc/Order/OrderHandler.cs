@@ -47,7 +47,7 @@ namespace LudumDare52.Npc.Order
 
             if (!couldSell)
             {
-                AudioSystem.Instance.PlaySound(ResourceSystem.Instance.cant);
+                AudioSystem.Instance.PlayCantSound();
             }
 
             if (!order.IsOrderFullfilled())

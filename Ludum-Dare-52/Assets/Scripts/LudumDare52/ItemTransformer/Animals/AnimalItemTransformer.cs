@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazeit.Utilities.Random;
 using LudumDare52.Animals;
+using LudumDare52.Systems;
 using UnityEngine;
 
 namespace LudumDare52.ItemTransformer.Animals
@@ -13,6 +14,10 @@ namespace LudumDare52.ItemTransformer.Animals
         [SerializeField]
         private List<AnimalBehavior> animals;
 
+        [SerializeField]
+        private AudioClip prozessingDone;
+
+        
         protected override IEnumerator Produce()
         {
             while (!animals.Any(x => x.CanProcessing))
@@ -31,6 +36,7 @@ namespace LudumDare52.ItemTransformer.Animals
             animal.ProgressDisplay.StartAnimation(timeInSeconds);
             yield return new WaitForSeconds(timeInSeconds);
             animal.ProcessingDone();
+            AudioSystem.Instance.PlaySound(prozessingDone);
 
             WorldEntiySpawner.Instance.Spawn(item: output, position: animal.transform.position);
         }

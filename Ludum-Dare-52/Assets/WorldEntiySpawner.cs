@@ -10,7 +10,7 @@ public class WorldEntiySpawner : Singleton<WorldEntiySpawner>
     public void Spawn(Item item, Vector2 position)
     {
         GameObject entiy = Instantiate(worldEntiyPrefab, position, Quaternion.identity);
-        WorldEntiyInteraction worldEnity = entiy.GetComponent<WorldEntiyInteraction>();
+        EntiyContainer worldEnity = entiy.GetComponent<EntiyContainer>();
         worldEnity.SetEnity(item: item, position: position);
     }
 }

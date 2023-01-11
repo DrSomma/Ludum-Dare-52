@@ -245,12 +245,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomNpcWaypointSystem: {fileID: 114793271}
+  storageEntiyContainerPrefab: {fileID: 4441140341045623482, guid: 5999c183c6dab7146a62cffb1acf7003, type: 3}
   plantCrop: {fileID: 8300000, guid: 70fb84c6462ff154bb11cda145fab0a8, type: 3}
   money: {fileID: 8300000, guid: 2b2e5d4451cc536419860fdd0e624a08, type: 3}
   progess: {fileID: 8300000, guid: f357082236cadb649bf648291f764ddc, type: 3}
   harvest: {fileID: 8300000, guid: d9dd4aa1f1ecd8a4e9caed7c37feebb5, type: 3}
   cant: {fileID: 8300000, guid: 57e3ed449252199419945d40a637e385, type: 3}
   dayStart: {fileID: 8300000, guid: 1dbc4019cc5d3b44ebdd2136bc488309, type: 3}
+  collectItem: {fileID: 8300000, guid: 6b8d00140c5421e4280635e6c08781e5, type: 3}
+  placeItemInStorage: {fileID: 8300000, guid: df2155f66fd0ef945aeb03a9945fd252, type: 3}
 --- !u!114 &114793271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11830,6 +11833,7 @@ MonoBehaviour:
   containerInput: {fileID: 1374109364}
   animals:
   - {fileID: 1305830417}
+  prozessingDone: {fileID: 8300000, guid: 3abfffcf7c9fde347b331c1c01842399, type: 3}
 --- !u!58 &1374109368
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14261,7 +14265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322813e7a1e445fe9cde3ca06a585d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityContainerPrefab: {fileID: 8970870915654886852, guid: 5db96d30f77a9fb4ab378b7087c72064, type: 3}
   positionManager: {fileID: 2097401025}
   container: {fileID: 2097401023}
 --- !u!114 &2097401025

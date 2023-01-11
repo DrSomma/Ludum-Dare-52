@@ -2,6 +2,7 @@
 using System.Linq;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Systems;
 using UnityEngine;
 
 namespace LudumDare52.Storage
@@ -43,6 +44,7 @@ namespace LudumDare52.Storage
             entity.sprite = obj.DisplaySprite;
             
             _slots[entityKeyValuePair.Key] = obj;
+            AudioSystem.Instance.PlaySound(ResourceSystem.Instance.placeItemInStorage);
 
             Sequence sq = DOTween.Sequence();
             sq.Append(entity.transform.DOScale(endValue: 0, duration: 0));
