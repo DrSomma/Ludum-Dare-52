@@ -21,7 +21,7 @@ namespace LudumDare52.ItemTransformer
 
         [SerializeField]
         protected SimpleStorage containerInput;
-        
+
         protected virtual void Start()
         {
             interactable.OnLeftClick += OnLeftClick;
@@ -36,7 +36,7 @@ namespace LudumDare52.ItemTransformer
 
             MainStorage.Instance.Container.TryRemoveFromStorage(input);
             containerInput.Storage.AddToStorage(input);
-
+            
             StartCoroutine(Produce());
         }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
+using LudumDare52.ItemTransformer;
 using UnityEngine;
 
 namespace LudumDare52.Animals
@@ -10,6 +10,11 @@ namespace LudumDare52.Animals
     {
         [SerializeField]
         private AnimalMovement animalMovement;
+
+        [SerializeField]
+        private ItemTransformerProgressDisplay progressBar;
+
+        public ItemTransformerProgressDisplay ProgressDisplay => progressBar;
 
         private Coroutine _currentLoop;
 
@@ -28,7 +33,7 @@ namespace LudumDare52.Animals
             await animalMovement.MoveToPosition(pos);
             SetGoal(AnimalGoal.Processing);
         }
-        
+
         public void ProcessingDone()
         {
             SetGoal(AnimalGoal.Idle);
@@ -66,13 +71,14 @@ namespace LudumDare52.Animals
                 case AnimalGoal.Processing:
                 {
                     Debug.Log("Processing");
+
                     _currentLoop = StartCoroutine(IdleLoop());
                     break;
                 }
                 default: throw new ArgumentOutOfRangeException(paramName: nameof(newGoal), actualValue: newGoal, message: null);
             }
         }
-        
+
 
         private IEnumerator IdleLoop()
         {
