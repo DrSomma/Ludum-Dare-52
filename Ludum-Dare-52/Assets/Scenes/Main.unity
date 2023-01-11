@@ -10771,7 +10771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368f19328fe479a4a9d3296e692dd448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DayLengthInSeconds: 20
+  DayLengthInSeconds: 90
   StartHour: 6
   EndHour: 22
   StartDawnHour: 18
