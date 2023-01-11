@@ -8,23 +8,32 @@ namespace LudumDare52.DayNightCycle
     public class TimeManager : Singleton<TimeManager>
     {
         [SerializeField]
-        private float DayLengthInSeconds;
+        private float DayLengthInSeconds = 90;
 
         [SerializeField]
-        private int StartHour;
+        private int StartHour = 6;
 
         [SerializeField]
-        private int EndHour;
+        private int EndHour = 22;
+
+        [SerializeField]
+        private int StartDawnHour = 18;
+
+        [Tooltip("The dawn hour is the time, the dawn finished. After this, the darkness will not grow anymore.")]
+        [SerializeField]
+        private int EndDawnHour = 21;
 
         private float _time;
         private bool _timeIsTicking;
-        public Action onEnterDayTime;
 
+        private int dayLengthInGameHours;
+        private int durationOfDawnInGameHours;
+
+        public Action onEnterDayTime;
         private bool onEnterDayTimeEventFired;
         public Action<float> onEnterNightTime;
         private bool onEnterNightTimeEventFired;
 
-        public float DaytimeInPercent => _time / DayLengthInSeconds;
         public int Day { get; private set; }
 
         protected override void Awake()
@@ -32,6 +41,11 @@ namespace LudumDare52.DayNightCycle
             base.Awake();
             GameManager.Instance.OnStateUpdate += OnStateUpdate;
             Day = 1;
+
+            ValidateFieldsAndWarn();
+
+            dayLengthInGameHours = EndHour - StartHour;
+            durationOfDawnInGameHours = EndDawnHour - StartDawnHour;
         }
 
         private void Update()
@@ -42,17 +56,49 @@ namespace LudumDare52.DayNightCycle
             }
 
             _time += Time.deltaTime;
+
             if (_time >= DayLengthInSeconds)
             {
                 _time = DayLengthInSeconds;
                 Day++;
                 GameManager.Instance.SetState(GameState.DayEnd);
             }
-            else if (Math.Abs(_time - DayLengthInSeconds * 0.75) < 0.5f && !onEnterNightTimeEventFired)
+            else
             {
-                onEnterNightTime?.Invoke(DayLengthInSeconds * 0.125f);
-                onEnterNightTimeEventFired = true;
-                onEnterDayTimeEventFired = false;
+                if (Math.Abs(_time - DayLengthInSeconds / dayLengthInGameHours * (StartDawnHour - StartHour)) < 0.1f && !onEnterNightTimeEventFired)
+                {
+                    onEnterNightTime?.Invoke(DayLengthInSeconds / dayLengthInGameHours * durationOfDawnInGameHours);
+                    onEnterNightTimeEventFired = true;
+                    onEnterDayTimeEventFired = false;
+                }
+            }
+        }
+
+        private void ValidateFieldsAndWarn()
+        {
+            if (DayLengthInSeconds < 1)
+            {
+                Debug.LogWarning($"The field {nameof(DayLengthInSeconds)} should be greater than 0.");
+            }
+
+            if (EndHour <= StartHour)
+            {
+                Debug.LogWarning($"The field {nameof(EndHour)} should be greater than the field {nameof(StartHour)} ({StartHour}).");
+            }
+
+            if (EndDawnHour <= StartDawnHour)
+            {
+                Debug.LogWarning($"The field {nameof(EndDawnHour)} should be greater than the field {nameof(StartDawnHour)} ({StartDawnHour}).");
+            }
+
+            if (StartDawnHour < StartHour || StartDawnHour > EndHour)
+            {
+                Debug.LogWarning($"The field {nameof(StartDawnHour)} should be within the range of {StartHour} and {EndHour}.");
+            }
+
+            if (EndDawnHour < StartHour || EndDawnHour > EndHour)
+            {
+                Debug.LogWarning($"The field {nameof(EndDawnHour)} should be within the range of {StartHour} and {EndHour}.");
             }
         }
 
@@ -77,8 +123,8 @@ namespace LudumDare52.DayNightCycle
 
         public string GetTimeAsBeautifulString()
         {
-            float dayTimeInPercentCache = DaytimeInPercent;
-            int timeRange = EndHour - StartHour;
+            float dayTimeInPercentCache = _time / DayLengthInSeconds;
+            int timeRange = dayLengthInGameHours;
 
             int hours = (int) (dayTimeInPercentCache * timeRange);
             int minutes = (int) ((dayTimeInPercentCache * timeRange - hours) * 60);
