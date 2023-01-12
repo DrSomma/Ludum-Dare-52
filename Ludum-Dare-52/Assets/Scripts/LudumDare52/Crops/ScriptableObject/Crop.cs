@@ -15,7 +15,7 @@ namespace LudumDare52.Crops.ScriptableObject
     }
     
     [CreateAssetMenu(fileName = "New Item")]
-    public class Item : UnityEngine.ScriptableObject, IStorageable
+    public class Item : UnityEngine.ScriptableObject
     {
         public Sprite displaySpriteUi;
         public int price;

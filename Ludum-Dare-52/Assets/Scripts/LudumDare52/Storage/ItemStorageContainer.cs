@@ -8,24 +8,21 @@ using UnityEngine;
 
 namespace LudumDare52.Storage
 {
-    public interface IStorageable
+    
+    public class Storage<T> where T : class
     {
-        public Sprite DisplaySprite { get; }
-    }
-
-    public class Storage<T> where T : IStorageable
-    {
-        private readonly List<T> _storageList = new();
+        private T[] _storageList;
         private int _maxStorage;
-        public Action<T> OnAddToStorage;
-        public Action<T> OnRemoveFromStorage;
+        public Action<T, int> OnAddToStorage;  //T storagePos
+        public Action<T, int> OnRemoveFromStorage;  //T storagePos
 
         public Storage(int space)
         {
             _maxStorage = space;
+            _storageList = new T[space];
         }
 
-        public bool HasSpace => _maxStorage > _storageList.Count;
+        public bool HasSpace => _maxStorage > _storageList.Count(x => x != null);
 
         public void AddToStorage(T newItem)
         {
@@ -34,24 +31,53 @@ namespace LudumDare52.Storage
                 return;
             }
 
-            OnAddToStorage?.Invoke(newItem);
-            _storageList.Add(newItem);
+            for (int i = 0; i < _storageList.Length; i++)
+            {
+                if (_storageList[i] == null)
+                {
+                    _storageList[i] = newItem;
+                    OnAddToStorage?.Invoke(newItem, i);
+                    break;
+                }
+            }
+
+           
         }
 
         public bool TryRemoveFromStorage(T entity)
         {
-            bool removed = _storageList.Remove(entity);
-            if (removed)
+
+            
+            for (int i = 0; i < _storageList.Length; i++)
             {
-                OnRemoveFromStorage?.Invoke(entity);
+                if (_storageList[i] != null && _storageList[i] == entity)
+                {
+                    _storageList[i] = null;
+                    OnRemoveFromStorage?.Invoke(entity, i);
+                    return true;
+                }
             }
 
-            return removed;
+            return false;
+        }
+        
+        public bool RemoveFromStorageByIndex(int index)
+        {
+            if (_storageList[index] != null)
+            {
+                _storageList[index] = null;
+                OnRemoveFromStorage?.Invoke(_storageList[index], index);
+                return true;
+            }
+            
+
+            return false;
         }
 
         public void SetSize(int size)
         {
             _maxStorage = size;
+            _storageList = new T[size];
         }
 
         public bool HasEntiy(T entity)
@@ -59,9 +85,9 @@ namespace LudumDare52.Storage
             return _storageList.Contains(entity);
         }
 
-        public T GetEnity(T key)
+        public T GetEnityByIndex(int index)
         {
-            return _storageList.First(x => Equals(x, key));
+            return _storageList[index];
         }
     }
 
@@ -94,15 +120,15 @@ namespace LudumDare52.Storage
         {
             return Storage.HasEntiy(entity: item);
         }
-        
-        public bool GetItem(Item item)
-        {
-            return Storage.GetEnity(key: item);
-        }
 
         public bool TryRemoveFromStorage(Item item)
         {
             return Storage.TryRemoveFromStorage(entity: item);
+        }
+        
+        public bool RemoveFromStorageByIndex(int index)
+        {
+            return Storage.RemoveFromStorageByIndex(index);
         }
         
     }

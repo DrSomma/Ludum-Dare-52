@@ -8,14 +8,11 @@ namespace LudumDare52.Storage
     public class MainStorage : Singleton<MainStorage>
     {
         [SerializeField]
-        private BasePositionManager positionManager;
+        private StoragePositionManager positionManager;
         
         [SerializeField]
         private ItemStorageContainer container;
         
-        [SerializeField]
-        private StorageDisplay display;
-
         public ItemStorageContainer Container => container;
         
         private void Start()
@@ -26,13 +23,10 @@ namespace LudumDare52.Storage
 
         private void OnNewDay()
         {
+            positionManager.ReCalculatePositions();
             int size = positionManager.Count;
             container.SetStorageSize(size);
         }
-
-        public void RemoveWorldObjectFromStorage(GameObject o)
-        {
-            // display.GetEnitiyPosInWorld()
-        }
+        
     }
 }

@@ -14,6 +14,8 @@ public class StorageEntiyInteraction : MonoBehaviour
     private bool _deledWasTriggerted;
     private float _size;
 
+    public int SlotIndex { get; set; }
+
     private void Start()
     {
         interactable.OnPlayerEnter += OnPlayerIsClose;
@@ -30,8 +32,7 @@ public class StorageEntiyInteraction : MonoBehaviour
         }
 
         interactable.SetCanInteract(false);
-        //storage display will destroy gameobject
-        MainStorage.Instance.RemoveWorldObjectFromStorage(gameObject);
+        MainStorage.Instance.Container.RemoveFromStorageByIndex(SlotIndex);
     }
 
     private void OnPlayerExit()

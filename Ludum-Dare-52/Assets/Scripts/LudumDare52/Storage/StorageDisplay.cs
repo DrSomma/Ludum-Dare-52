@@ -11,7 +11,7 @@ namespace LudumDare52.Storage
 {
     internal class StorageDisplayEntity
     {
-        public IStorageable Storageable { get; set; }
+        public Item Storageable { get; set; }
         public GameObject GameObject { get; set; }
     }
 
@@ -32,12 +32,7 @@ namespace LudumDare52.Storage
             container.Storage.OnRemoveFromStorage += OnRemoveFromStorage;
         }
 
-        public Vector2 GetEnitiyPosInWorld(IStorageable obj)
-        {
-            return GetDisplayEntity(obj).GameObject.transform.position;
-        }
-
-        private StorageDisplayEntity GetDisplayEntity(IStorageable obj)
+        private StorageDisplayEntity GetDisplayEntity(Item obj)
         {
             KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value?.Storageable == obj);
             StorageDisplayEntity entity = entityKeyValuePair.Value;
@@ -49,29 +44,26 @@ namespace LudumDare52.Storage
             return entity;
         }
 
-        public void Deletz()
+        private void OnRemoveFromStorage(Item item, int index)
         {
-
-            bool bittenichtdasevnt;
-        }
-
-        private void OnRemoveFromStorage(IStorageable obj)
-        {
-            KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value?.Storageable == obj);
-            StorageDisplayEntity entity = GetDisplayEntity(obj);
+            KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.ElementAt(index);
+            // KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value?.Storageable == item);
+            StorageDisplayEntity entity = GetDisplayEntity(item);
 
             entity.GameObject.transform.DOScale(endValue: 0, duration: 0.3f).OnComplete(() => { Destroy(entity.GameObject); });
             _slots[entityKeyValuePair.Key] = null;
         }
 
-        private void OnAddToStorage(IStorageable obj)
+        private void OnAddToStorage(Item item, int index)
         {
-            Vector2 position = GetFirstEmptySlotPositionInGridCoordinates();
+            // Vector2 position = GetFirstEmptySlotPositionInGridCoordinates();
+            Vector2 position = _slots.ElementAt(index).Key;
+
             GameObject newGameObjectEntity = Instantiate(original: ResourceSystem.Instance.StorageEntiyContainerPrefab, position: position, rotation: Quaternion.identity);
 
-            _slots[position] = new StorageDisplayEntity {GameObject = newGameObjectEntity, Storageable = obj};
-            Item item = obj as Item;
+            _slots[position] = new StorageDisplayEntity {GameObject = newGameObjectEntity, Storageable = item};
             EntiyContainer con = newGameObjectEntity.GetComponent<EntiyContainer>();
+            newGameObjectEntity.GetComponent<StorageEntiyInteraction>().SlotIndex = index;
 
             con.SetEnity(item: item, position: position);
         }

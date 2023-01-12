@@ -30,6 +30,11 @@ namespace LudumDare52.Systems.Manager.PositionManager
             }
         }
 
+        public void ReCalculatePositions()
+        {
+            CalculatePositions();
+        }
+
         protected void CalculatePositions()
         {
             List<Vector2> allCenterTileWorldPos = GetAllCenterTileWorldPos();

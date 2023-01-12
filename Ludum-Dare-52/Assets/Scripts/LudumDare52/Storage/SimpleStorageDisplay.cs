@@ -26,9 +26,9 @@ namespace LudumDare52.Storage
             _container.Storage.OnRemoveFromStorage += OnRemoveFromStorage;
         }
 
-        private void OnRemoveFromStorage(Item obj)
+        private void OnRemoveFromStorage(Item item, int index)
         {
-            KeyValuePair<SpriteRenderer, Item> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value == obj);
+            KeyValuePair<SpriteRenderer, Item> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value == item);
             SpriteRenderer entity = entityKeyValuePair.Key;
 
             entity.transform.DOKill();
@@ -36,14 +36,14 @@ namespace LudumDare52.Storage
             _slots[entityKeyValuePair.Key] = null;
         }
 
-        private void OnAddToStorage(Item obj)
+        private void OnAddToStorage(Item item, int index)
         {
             KeyValuePair<SpriteRenderer, Item> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value == null);
             SpriteRenderer entity = entityKeyValuePair.Key;
 
-            entity.sprite = obj.DisplaySprite;
+            entity.sprite = item.DisplaySprite;
             
-            _slots[entityKeyValuePair.Key] = obj;
+            _slots[entityKeyValuePair.Key] = item;
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.placeItemInStorage);
 
             Sequence sq = DOTween.Sequence();
