@@ -26,6 +26,9 @@ namespace LudumDare52.Progress
         private List<FieldProgessStep> upgradeSteps;
 
         private int _upgradeLevel;
+
+        [SerializeField]
+        private FieldPositionManager positionManager;
         
         protected void Start()
         {
@@ -43,7 +46,7 @@ namespace LudumDare52.Progress
                 UpgradeField(step);
             }
 
-            FieldPositionManager.Instance.OnUpgradeField();
+            positionManager.OnUpgradeField();
         }
 
         private void OnDrawGizmosSelected()
@@ -78,7 +81,7 @@ namespace LudumDare52.Progress
             _upgradeLevel++;
             int levelIndex = _upgradeLevel - 1;
             UpgradeField(upgradeSteps[levelIndex]);
-            FieldPositionManager.Instance.OnUpgradeField();
+            positionManager.OnUpgradeField();
         }
 
         private BoundsInt GetArea(Vector2Int centerPos, bool is3X3)

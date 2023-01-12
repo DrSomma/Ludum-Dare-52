@@ -1,20 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
-using LudumDare52.Progress;
 using UnityEngine;
 
 namespace LudumDare52.Systems.Manager.PositionManager
 {
-    public class FieldPositionManager : BasePositionManager<FieldPositionManager>
+    public class FieldPositionManager : BaseTilemapPositionCalculator
     {
         [SerializeField]
         private GameObject cropPrefab;
 
         private HashSet<Vector2> _cropIsOnPos;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             _cropIsOnPos = new HashSet<Vector2>();
         }
 
@@ -39,9 +37,14 @@ namespace LudumDare52.Systems.Manager.PositionManager
             }
         }
 
-        public Vector2 GetNearestCropPos(Vector2 playerPos)
+        // public Vector2 GetNearestCropPos(Vector2 playerPos)
+        // {
+        //     return Positions.OrderBy(x => Vector2.Distance(a: x, b: playerPos)).First();
+        // }
+
+        public override List<Vector2> GetPositonList()
         {
-            return Positions.OrderBy(x => Vector2.Distance(a: x, b: playerPos)).First();
+            return Positions.ToList();
         }
     }
 }

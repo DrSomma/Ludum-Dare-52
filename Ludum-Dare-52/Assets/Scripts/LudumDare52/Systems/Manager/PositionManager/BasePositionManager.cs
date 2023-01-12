@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
-using Amazeit.Utilities.Singleton;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace LudumDare52.Systems.Manager.PositionManager
 {
-    public class BasePositionManager<T> : Singleton<T> where T : MonoBehaviour
+    public abstract class BasePositionManager : MonoBehaviour
+    {
+        protected readonly HashSet<Vector2> Positions = new();
+
+        public int Count => Positions.Count;
+
+        public abstract List<Vector2> GetPositonList();
+    }
+
+    public abstract class BaseTilemapPositionCalculator : BasePositionManager
     {
         [SerializeField]
         private Tilemap tilemap;
@@ -13,8 +21,6 @@ namespace LudumDare52.Systems.Manager.PositionManager
         [SerializeField]
         private Sprite centerTile;
 
-        protected readonly HashSet<Vector2> Positions = new();
-        
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -22,6 +28,11 @@ namespace LudumDare52.Systems.Manager.PositionManager
             {
                 Gizmos.DrawCube(center: pos, size: Vector3.one * 0.3f);
             }
+        }
+
+        public void ReCalculatePositions()
+        {
+            CalculatePositions();
         }
 
         protected void CalculatePositions()

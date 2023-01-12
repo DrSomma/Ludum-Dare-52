@@ -29,11 +29,11 @@ namespace LudumDare52.Npc.Order
             Debug.Log("OnLeft -> Handle Order");
             Order order = orderContainer.Order;
             bool couldSell = false;
-            foreach (KeyValuePair<Crop, int> orderItem in order.OrderList)
+            foreach (KeyValuePair<Item, int> orderItem in order.OrderList)
             {
                 while (!order.IsRowFulfilled(orderItem.Key))
                 {
-                    if (StorageManager.Instance.TryRemoveFromStorage(orderItem.Key))
+                    if (MainStorage.Instance.Container.TryRemoveFromStorage(orderItem.Key))
                     {
                         orderContainer.FulfillItemOrder(orderItem.Key);
                         couldSell = true;
@@ -47,7 +47,7 @@ namespace LudumDare52.Npc.Order
 
             if (!couldSell)
             {
-                AudioSystem.Instance.PlaySound(ResourceSystem.Instance.cant);
+                AudioSystem.Instance.PlayCantSound();
             }
 
             if (!order.IsOrderFullfilled())

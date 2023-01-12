@@ -5,29 +5,36 @@ namespace LudumDare52
 {
     public class Interactable : MonoBehaviour
     {
-        public Action OnPlayerIsClose;
-        public Action OnPlayerLeft;
+        [SerializeField]
+        private bool canInteractOnStart = true;
+        
+        public Action OnPlayerEnter;
+        public Action OnPlayerExit;
         public Action OnLeftClick;
         public Action OnRightClick;
         public Action<bool> OnCanInteractChanged;
-        private bool _canInteract;
 
-        public bool CanInteract => _canInteract;
+        public bool CanInteract { get; private set; }
+
+        private void Start()
+        {
+            SetCanInteract(canInteractOnStart);
+        }
 
         public void SetCanInteract(bool activ)
         {
-            _canInteract = activ;
+            CanInteract = activ;
             OnCanInteractChanged?.Invoke(activ);
         }
 
         public void TriggerPlayerIsClose()
         {
-            OnPlayerIsClose?.Invoke();
+            OnPlayerEnter?.Invoke();
         }
         
         public void TriggerPlayerLeft()
         {
-            OnPlayerLeft?.Invoke();
+            OnPlayerExit?.Invoke();
         }
 
         public void TriggerLeftClick()

@@ -36,7 +36,7 @@ namespace LudumDare52.Crops
             Debug.Log("HarvestCrop");
             if (!behavior.IsHarvestable || !CanHarvestHaveStorageLeft())
             {
-                AudioSystem.Instance.PlaySound(ResourceSystem.Instance.cant, 0.3f);
+                AudioSystem.Instance.PlayCantSound();
                 Debug.Log($"Can't harvest. Crop:{behavior.IsHarvestable} Storage:{CanHarvestHaveStorageLeft()}");
                 return;
             }
@@ -44,14 +44,14 @@ namespace LudumDare52.Crops
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.harvest);
 
             behavior.Harvest();
-            StorageManager.Instance.AddToStorage(new CropStorageEntity(behavior.Crop));
+            MainStorage.Instance.Container.AddToStorage(behavior.Crop);
         }
         
         private void PlantCrop()
         {
             if (behavior.Crop != null)
             {
-                AudioSystem.Instance.PlaySound(ResourceSystem.Instance.cant, 0.3f);
+                AudioSystem.Instance.PlayCantSound();
                 return;
             }
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.plantCrop);
@@ -60,7 +60,7 @@ namespace LudumDare52.Crops
         
         private bool CanHarvestHaveStorageLeft()
         {
-            return StorageManager.Instance.HasSpace;
+            return MainStorage.Instance.Container.HasSpace;
         }
     }
 }

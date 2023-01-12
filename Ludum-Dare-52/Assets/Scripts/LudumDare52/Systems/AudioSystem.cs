@@ -32,5 +32,10 @@ namespace LudumDare52.Systems
         {
             _soundsSource.Stop();
         }
+
+        public void PlayCantSound()
+        {
+            PlaySound(ResourceSystem.Instance.cant, 0.1f);
+        }
     }
 }

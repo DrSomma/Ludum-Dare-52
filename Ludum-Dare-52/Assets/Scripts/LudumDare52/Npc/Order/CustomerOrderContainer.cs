@@ -7,7 +7,7 @@ namespace LudumDare52.Npc.Order
     public class CustomerOrderContainer : MonoBehaviour
     {
         public Action<Order> OnNewOrder;
-        public Action<Crop> OnOrderUpdate;
+        public Action<Item> OnOrderUpdate;
         public Order Order { get; private set; }
 
 
@@ -18,7 +18,7 @@ namespace LudumDare52.Npc.Order
             OnNewOrder?.Invoke(newOrder);
         }
 
-        public void FulfillItemOrder(Crop orderItemKey)
+        public void FulfillItemOrder(Item orderItemKey)
         {
             Order.FulfillItemOrder(orderItemKey);
             OnOrderUpdate?.Invoke(orderItemKey);

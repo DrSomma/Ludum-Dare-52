@@ -8,29 +8,27 @@ namespace LudumDare52.Npc.Order
     {
         private readonly int _allOrderItemsCount;
 
-        public Order(Crop[] crop)
+        public Order(Item[] crop)
         {
             OrderList = crop.GroupBy(l => l).ToDictionary(keySelector: grp => grp.Key, elementSelector: grp => grp.Count());
             ProgressList = crop.GroupBy(l => l).ToDictionary(keySelector: grp => grp.Key, elementSelector: _ => 0);
-            // Value = crop.Sum(x => x.price);
             _allOrderItemsCount = OrderList.Sum(x => x.Value);
         }
 
-        public Dictionary<Crop, int> OrderList { get; }
-        public Dictionary<Crop, int> ProgressList { get; }
+        public Dictionary<Item, int> OrderList { get; }
+        public Dictionary<Item, int> ProgressList { get; }
 
-        // public int Value { get; }
-
-        public void FulfillItemOrder(Crop orderItemKey)
+        public void FulfillItemOrder(Item orderItemKey)
         {
             if (IsRowFulfilled(orderItemKey))
             {
                 return; //WTF? Du bist doch schon durch!
             }
+
             ProgressList[orderItemKey] += 1;
         }
 
-        public bool IsRowFulfilled(Crop key)
+        public bool IsRowFulfilled(Item key)
         {
             return OrderList[key] <= ProgressList[key];
         }

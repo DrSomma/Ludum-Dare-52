@@ -9,13 +9,14 @@ using UnityEngine;
 
 namespace LudumDare52.Npc.Order
 {
+    //Todo: mach ne Factory 
     public class OrderManager : MonoBehaviour
     {
-        public Order GetNewOrder()
+        public static Order GetNewOrder()
         {
             (int min, int max) = LevelScaleManager.Instance.GetMinMaxCrops(TimeManager.Instance.Day);
-            Crop[] filteredList = ResourceSystem.Instance.CropsList.Where(x => Progressmanager.Instance.IsCropActiv(x)).ToArray();
-            Crop[] orderList = filteredList.Random(countMin: min, countMax: max);
+            Item[] filteredList = ResourceSystem.Instance.ItemList.Where(x => Progressmanager.Instance.IsActiv(x)).ToArray();
+            Item[] orderList = filteredList.Random(countMin: min, countMax: max);
             return new Order(orderList);
         }
     }

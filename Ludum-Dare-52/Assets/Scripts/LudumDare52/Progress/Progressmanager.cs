@@ -59,10 +59,10 @@ namespace LudumDare52.Progress
         }
         
         
-        public bool IsCropActiv(Crop crop)
+        public bool IsActiv(Item item)
         {
             int today = TimeManager.Instance.Day;
-            return _progressSteps.Values.Any(x => x.crop == crop && today >= x.day);
+            return _progressSteps.Values.Any(x => x.crop == item && today >= x.day);
         }
         
         public int GetFieldUpgradeLevel()
