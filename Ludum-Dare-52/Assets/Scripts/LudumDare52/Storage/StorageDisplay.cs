@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
@@ -32,23 +31,12 @@ namespace LudumDare52.Storage
             container.Storage.OnRemoveFromStorage += OnRemoveFromStorage;
         }
 
-        private StorageDisplayEntity GetDisplayEntity(Item obj)
-        {
-            KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value?.Storageable == obj);
-            StorageDisplayEntity entity = entityKeyValuePair.Value;
-            if (entity == null)
-            {
-                throw new IndexOutOfRangeException("somthing is not dispayed!");
-            }
-
-            return entity;
-        }
 
         private void OnRemoveFromStorage(Item item, int index)
         {
             KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.ElementAt(index);
             // KeyValuePair<Vector2, StorageDisplayEntity> entityKeyValuePair = _slots.FirstOrDefault(x => x.Value?.Storageable == item);
-            StorageDisplayEntity entity = GetDisplayEntity(item);
+            StorageDisplayEntity entity = entityKeyValuePair.Value;
 
             entity.GameObject.transform.DOScale(endValue: 0, duration: 0.3f).OnComplete(() => { Destroy(entity.GameObject); });
             _slots[entityKeyValuePair.Key] = null;
