@@ -1,7 +1,8 @@
-using AmazeIt.SpriteAnimator;
+using Amazeit.SpriteAnimator;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using LudumDare52.Entitys.Interactable;
 using LudumDare52.Npc.Movement.Waypoints;
 using LudumDare52.Systems;
 using LudumDare52.Systems.Manager;

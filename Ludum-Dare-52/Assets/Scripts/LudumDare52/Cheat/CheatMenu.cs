@@ -5,6 +5,7 @@ using System.Text;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.DayNightCycle;
+using LudumDare52.Entitys;
 using LudumDare52.Storage.Money;
 using LudumDare52.Systems.Manager;
 using TMPro;

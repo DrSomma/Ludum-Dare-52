@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Amazeit.SpriteAnimator.ScriptableObject;
 using UnityEngine;
 
-namespace AmazeIt.SpriteAnimator
+namespace Amazeit.SpriteAnimator
 {
     public class CharacterAnimator : BaseAnimator
     {

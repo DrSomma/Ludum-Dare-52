@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Entitys.Interactable;
 using LudumDare52.Npc.Movement;
 using UnityEngine;
 

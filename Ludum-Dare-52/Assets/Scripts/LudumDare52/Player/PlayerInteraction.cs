@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using Amazeit.Utilities.Singleton;
+using LudumDare52.Entitys.Interactable;
 using UnityEngine;
 
 namespace LudumDare52.Player

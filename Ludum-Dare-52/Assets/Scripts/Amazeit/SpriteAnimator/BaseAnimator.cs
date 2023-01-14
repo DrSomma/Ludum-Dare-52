@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace AmazeIt.SpriteAnimator
+namespace Amazeit.SpriteAnimator
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class BaseAnimator : MonoBehaviour

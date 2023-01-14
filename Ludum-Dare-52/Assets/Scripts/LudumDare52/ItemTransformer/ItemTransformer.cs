@@ -1,5 +1,6 @@
 using System.Collections;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Entitys.Interactable;
 using LudumDare52.Storage;
 using UnityEngine;
 

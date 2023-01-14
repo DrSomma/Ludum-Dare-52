@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using AmazeIt.SpriteAnimator;
+using Amazeit.SpriteAnimator;
 using DG.Tweening;
 using LudumDare52.Npc.Movement.Waypoints;
 using UnityEngine;

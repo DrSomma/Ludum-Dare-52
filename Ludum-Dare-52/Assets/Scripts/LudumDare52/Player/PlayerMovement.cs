@@ -1,4 +1,4 @@
-using AmazeIt.SpriteAnimator;
+using Amazeit.SpriteAnimator;
 using LudumDare52.Systems.Manager;
 using UnityEngine;
 

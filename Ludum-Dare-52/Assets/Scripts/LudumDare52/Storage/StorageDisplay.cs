@@ -2,6 +2,8 @@
 using System.Linq;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Entitys;
+using LudumDare52.Entitys.Interactable;
 using LudumDare52.Systems;
 using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;

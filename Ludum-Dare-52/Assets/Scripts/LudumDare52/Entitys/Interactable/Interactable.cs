@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace LudumDare52
+namespace LudumDare52.Entitys.Interactable
 {
     public class Interactable : MonoBehaviour
     {

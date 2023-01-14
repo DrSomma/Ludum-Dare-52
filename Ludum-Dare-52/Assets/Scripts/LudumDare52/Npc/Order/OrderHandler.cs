@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Entitys.Interactable;
 using LudumDare52.Npc.Movement;
 using LudumDare52.Storage;
 using LudumDare52.Storage.Money;

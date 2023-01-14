@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazeit.Utilities.Random;
 using LudumDare52.Animals;
+using LudumDare52.Entitys;
 using LudumDare52.Systems;
 using UnityEngine;
 

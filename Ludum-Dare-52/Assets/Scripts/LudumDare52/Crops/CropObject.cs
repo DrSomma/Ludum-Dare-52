@@ -1,4 +1,5 @@
 ﻿using System;
+using LudumDare52.Entitys.Interactable;
 using LudumDare52.Storage;
 using LudumDare52.Systems;
 using UnityEngine;

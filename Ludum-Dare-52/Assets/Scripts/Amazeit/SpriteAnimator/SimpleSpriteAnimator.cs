@@ -4,7 +4,7 @@ using System.Linq;
 using Amazeit.SpriteAnimator.ScriptableObject;
 using UnityEngine;
 
-namespace AmazeIt.SpriteAnimator
+namespace Amazeit.SpriteAnimator
 {
     public class SimpleSpriteAnimator : BaseAnimator
     {

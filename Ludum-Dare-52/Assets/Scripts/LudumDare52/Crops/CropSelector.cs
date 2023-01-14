@@ -3,6 +3,7 @@ using System.Linq;
 using Amazeit.Utilities.Singleton;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
+using LudumDare52.Entitys.Interactable;
 using LudumDare52.Player;
 using LudumDare52.Systems;
 using UnityEngine;
