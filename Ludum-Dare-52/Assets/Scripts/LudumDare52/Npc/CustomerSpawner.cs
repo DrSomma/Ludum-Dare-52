@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Amazeit.Utilities;
@@ -7,7 +6,6 @@ using Amazeit.Utilities.Random;
 using LudumDare52.Npc.Order;
 using LudumDare52.Systems.Manager;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace LudumDare52.Npc
 {
@@ -48,12 +46,11 @@ namespace LudumDare52.Npc
             {
                 if (_coroutine != null)
                 {
-                    
-                StopCoroutine(_coroutine);
+                    StopCoroutine(_coroutine);
                 }
             }
 
-            if (state == GameState.DayEnd)
+            if (state is GameState.DayEnd or GameState.GameOver)
             {
                 _canSpawn = false;
             }
@@ -61,16 +58,22 @@ namespace LudumDare52.Npc
 
         private void StartLoop()
         {
-            if(_coroutine != null)
+            if (_coroutine != null)
+            {
                 return;
+            }
+
             _canSpawn = true;
             _coroutine = StartCoroutine(SpawnLoop());
         }
 
         private void Spawn()
         {
-            if(!_canSpawn)
+            if (!_canSpawn)
+            {
                 return;
+            }
+
             GameObject npc = Instantiate(npcPrefab.Random());
             npc.transform.position = transform.position;
             npc.GetComponent<CustomerOrderContainer>().SetOrder(OrderManager.GetNewOrder());
@@ -98,6 +101,7 @@ namespace LudumDare52.Npc
                     yield return new WaitForSeconds(Random.Range(minInclusive: SpawnDelayMinInSeconds, maxInclusive: SpawnDelayMaxInSeconds));
                 }
             }
+
             Debug.Log("Spawnloop done");
             _coroutine = null;
         }

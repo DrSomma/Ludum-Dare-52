@@ -61,15 +61,12 @@ namespace LudumDare52.Player
 
         private void OnGameStateUpdate(GameState newState)
         {
-            if (newState == GameState.Running)
-            {
-                _canMove = true;
-            }
-
-            if (newState == GameState.Pause || newState == GameState.DayEnd)
-            {
-                _canMove = false;
-            }
+            _canMove = newState switch
+                       {
+                           GameState.Running => true,
+                           GameState.Pause or GameState.DayEnd or GameState.GameOver => false,
+                           _ => _canMove
+                       };
         }
 
         protected virtual void MovePlayer()

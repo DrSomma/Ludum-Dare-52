@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using DG.Tweening;
 using LudumDare52.DayNightCycle;
@@ -33,12 +34,12 @@ public class DayEndDisplay : MonoBehaviour
 
     private void OnStateUpdate(GameState state)
     {
-        if (state == GameState.DayEnd)
+        switch (state)
         {
-            ShowUi();
-        }else if (state == GameState.Running)
-        {
-            HideUi();
+            case GameState.DayEnd: ShowUi();
+                break;
+            case GameState.Running: HideUi();
+                break;
         }
     }
 
