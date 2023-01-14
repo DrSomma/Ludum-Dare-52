@@ -17,6 +17,9 @@ namespace LudumDare52.Crops
         [SerializeField]
         private GameObject holderPrefab;
 
+        [SerializeField]
+        private GameObject fieldSelector;
+
         private readonly List<UiSelectContainer> _selectContainers = new();
 
         private CanvasGroup _canvasGroup;
@@ -107,10 +110,14 @@ namespace LudumDare52.Crops
         {
             if (interactable != null && interactable.gameObject.CompareTag("CropSpace"))
             {
+                fieldSelector.SetActive(true);
+                fieldSelector.transform.position = interactable.transform.position;
                 ShowUi();
             }
             else
             {
+                fieldSelector.SetActive(false);
+                fieldSelector.transform.position = Vector3.zero;
                 HideUi();
             }
         }
