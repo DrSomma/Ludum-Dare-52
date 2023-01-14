@@ -76,14 +76,14 @@ namespace LudumDare52.Cheat
 
     public class CheatMenu : MonoBehaviour
     {
-        private static readonly KeyCode[] KeyCodes = {KeyCode.F2, KeyCode.F3,KeyCode.F4,KeyCode.F5,KeyCode.F6};
+        private static readonly KeyCode[] KeyCodes = {KeyCode.F2, KeyCode.F3, KeyCode.F4, KeyCode.F5, KeyCode.F6};
 
         [SerializeField]
         private TextMeshProUGUI txtCheats;
 
         [SerializeField]
         private TextMeshProUGUI txtDebug;
-        
+
         [SerializeField]
         private CanvasGroup uiContainer;
 
@@ -94,6 +94,8 @@ namespace LudumDare52.Cheat
         private Item egg;
 
         private readonly List<ICheat> _cheats = new();
+
+        private float _avgFrameRate;
 
         private bool _isActiv;
 
@@ -114,13 +116,11 @@ namespace LudumDare52.Cheat
                     onActiv: () => { TimeManager.Instance.TimeDayMultiplier = 15; },
                     onInactive: () => { TimeManager.Instance.TimeDayMultiplier = 1; }));
             _cheats.Add(new Cheat(DisplayName: "spawn egg", Hotkey: KeyCodes[2], OnTrigger: () => { WorldEntiySpawner.Instance.Spawn(item: egg, position: player.transform.position); }));
-            _cheats.Add(new Cheat(DisplayName: "add 50  <sprite=0>", Hotkey: KeyCodes[3], OnTrigger: () => { MoneyManager.Instance.AddMoney(50);}));
+            _cheats.Add(new Cheat(DisplayName: "add 50  <sprite=0>", Hotkey: KeyCodes[3], OnTrigger: () => { MoneyManager.Instance.AddMoney(50); }));
             SetUiActiv();
             UpdateUi();
         }
 
-        private float _avgFrameRate;
-        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F1))
@@ -136,13 +136,13 @@ namespace LudumDare52.Cheat
 
             _avgFrameRate = Time.frameCount / Time.time;
 
-            
+
             foreach (ICheat cheat in _cheats.Where(cheat => Input.GetKeyDown(cheat.Hotkey)))
             {
                 cheat.Trigger();
                 UpdateUi();
             }
-            
+
             UpdateDebugUi();
         }
 

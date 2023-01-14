@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Amazeit.Utilities.Random;
 using LudumDare52.Crops.ScriptableObject;
-using LudumDare52.DayNightCycle;
 using LudumDare52.Progress;
 using LudumDare52.Systems;
 using LudumDare52.Systems.Manager;

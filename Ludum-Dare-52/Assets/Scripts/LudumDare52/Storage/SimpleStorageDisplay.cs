@@ -17,7 +17,7 @@ namespace LudumDare52.Storage
         private Dictionary<SpriteRenderer, Item> _slots;
 
         public int SlotCount => displaySlots.Count;
-        
+
         public void RegisterContainer(ItemStorageContainer c)
         {
             _slots = displaySlots.ToDictionary<SpriteRenderer, SpriteRenderer, Item>(keySelector: x => x, elementSelector: _ => null);
@@ -42,7 +42,7 @@ namespace LudumDare52.Storage
             SpriteRenderer entity = entityKeyValuePair.Key;
 
             entity.sprite = item.DisplaySprite;
-            
+
             _slots[entityKeyValuePair.Key] = item;
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.placeItemInStorage);
 

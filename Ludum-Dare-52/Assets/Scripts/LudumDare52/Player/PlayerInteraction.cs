@@ -15,11 +15,11 @@ namespace LudumDare52.Player
         [SerializeField]
         private LayerMask layerMask;
 
-        public Action<Interactable> OnNearestChange;
-
         private Interactable _nearest;
 
         private Collider2D[] _results;
+
+        public Action<Interactable> OnNearestChange;
         private Vector2 PlayerCenterPosWithOffset => transform.position + Vector3.up * 0.5f;
 
         private void Start()
@@ -37,7 +37,8 @@ namespace LudumDare52.Player
             if (Input.GetMouseButtonDown(0))
             {
                 _nearest.TriggerLeftClick();
-            }else if (Input.GetMouseButtonDown(1))
+            }
+            else if (Input.GetMouseButtonDown(1))
             {
                 _nearest.TriggerRightClick();
             }
@@ -56,7 +57,7 @@ namespace LudumDare52.Player
             while (true)
             {
                 int countNear = Physics2D.OverlapCircleNonAlloc(point: PlayerCenterPosWithOffset, radius: minDistance, results: _results, layerMask: layerMask);
-                if(countNear > 0)
+                if (countNear > 0)
                 {
                     newNearst = _results.Where(x => x != null).OrderBy(x => Vector2.Distance(a: x.transform.position, b: PlayerCenterPosWithOffset)).First().GetComponent<Interactable>();
                     if (_nearest != newNearst)
@@ -65,6 +66,7 @@ namespace LudumDare52.Player
                         {
                             _nearest.TriggerPlayerLeft();
                         }
+
                         _nearest = newNearst;
                         _nearest.TriggerPlayerIsClose();
                         OnNearestChange?.Invoke(newNearst);
@@ -77,8 +79,10 @@ namespace LudumDare52.Player
                         _nearest.TriggerPlayerLeft();
                         OnNearestChange?.Invoke(null);
                     }
+
                     _nearest = null;
                 }
+
                 yield return new WaitForSeconds(0.1f);
             }
         }

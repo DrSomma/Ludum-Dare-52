@@ -12,11 +12,11 @@ namespace LudumDare52.Entitys
 
         [SerializeField]
         private BaseAnimation spawnAnimation;
-    
+
         public Item Item { get; private set; }
 
         public bool IsSpawend { get; private set; }
-    
+
         private void OnDestroy()
         {
             transform.DOKill();
@@ -26,10 +26,7 @@ namespace LudumDare52.Entitys
         {
             Item = item;
             spriterenderer.sprite = item.DisplaySprite;
-            spawnAnimation.DoAnimation(position, () =>
-            {
-                IsSpawend = true;
-            });
+            spawnAnimation.DoAnimation(position: position, callback: () => { IsSpawend = true; });
         }
     }
 }

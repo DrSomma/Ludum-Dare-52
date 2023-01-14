@@ -27,7 +27,7 @@ namespace LudumDare52.ItemTransformer
         {
             interactable.OnLeftClick += OnLeftClick;
         }
-        
+
         private void OnLeftClick()
         {
             if (!containerInput.HasSpace || !MainStorage.Instance.Container.HasItem(input))
@@ -37,7 +37,7 @@ namespace LudumDare52.ItemTransformer
 
             MainStorage.Instance.Container.TryRemoveFromStorage(input);
             containerInput.Storage.AddToStorage(input);
-            
+
             StartCoroutine(Produce());
         }
 

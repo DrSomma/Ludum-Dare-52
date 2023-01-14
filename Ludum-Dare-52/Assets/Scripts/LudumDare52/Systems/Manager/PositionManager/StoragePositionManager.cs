@@ -10,12 +10,12 @@ namespace LudumDare52.Systems.Manager.PositionManager
         {
             CalculatePositions();
         }
-        
+
         public override List<Vector2> GetPositonList()
         {
             return Positions.OrderByDescending(pos => pos.y).ThenBy(pos => pos.x).ToList();
         }
-        
+
         protected override void AddPositons(Vector2 tile)
         {
             Positions.Add(tile + new Vector2(x: 1f, y: 1f));

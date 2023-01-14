@@ -12,7 +12,7 @@ namespace LudumDare52.Entitys.Animations
         {
             _transform = transform;
         }
-    
+
         public abstract void DoAnimation(Vector2 position, Action callback);
     }
 }

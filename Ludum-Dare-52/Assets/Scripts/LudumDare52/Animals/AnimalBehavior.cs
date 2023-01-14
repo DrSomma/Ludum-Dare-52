@@ -14,11 +14,11 @@ namespace LudumDare52.Animals
         [SerializeField]
         private ItemTransformerProgressDisplay progressBar;
 
-        public ItemTransformerProgressDisplay ProgressDisplay => progressBar;
-
         private Coroutine _currentLoop;
 
         private AnimalGoal _goal;
+
+        public ItemTransformerProgressDisplay ProgressDisplay => progressBar;
 
         public bool CanProcessing => _goal == AnimalGoal.Idle;
 

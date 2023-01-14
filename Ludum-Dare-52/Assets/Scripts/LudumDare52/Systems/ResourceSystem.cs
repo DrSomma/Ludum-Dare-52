@@ -12,12 +12,6 @@ namespace LudumDare52.Systems
 
         [SerializeField]
         private GameObject storageEntiyContainerPrefab;
-        
-        public Crop[] CropsList { get; private set; }
-        public Item[] ItemList { get; private set; }
-        public BaseWaypointHandler RandomNpcWaypointSystem => randomNpcWaypointSystem;
-
-        public GameObject StorageEntiyContainerPrefab => storageEntiyContainerPrefab;
 
 
         public AudioClip plantCrop;
@@ -28,6 +22,12 @@ namespace LudumDare52.Systems
         public AudioClip dayStart;
         public AudioClip collectItem;
         public AudioClip placeItemInStorage;
+
+        public Crop[] CropsList { get; private set; }
+        public Item[] ItemList { get; private set; }
+        public BaseWaypointHandler RandomNpcWaypointSystem => randomNpcWaypointSystem;
+
+        public GameObject StorageEntiyContainerPrefab => storageEntiyContainerPrefab;
 
         protected override void Awake()
         {

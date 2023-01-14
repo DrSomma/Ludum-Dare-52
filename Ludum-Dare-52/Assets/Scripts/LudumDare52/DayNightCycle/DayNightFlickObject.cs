@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +7,13 @@ namespace LudumDare52.DayNightCycle
     {
         [SerializeField]
         private List<DayNightCycleEntity> dayNightCycleEntities;
+
         [SerializeField]
         private List<GameObject> objectsToActivateWhenEnterNightTime;
+
         [SerializeField]
         private List<GameObject> objectsToActivateWhenEnterDayTime;
-        
+
         public void TurnOff()
         {
             foreach (DayNightCycleEntity dayNightCycleEntity in dayNightCycleEntities)

@@ -9,12 +9,12 @@ namespace LudumDare52.Storage
     {
         [SerializeField]
         private StoragePositionManager positionManager;
-        
+
         [SerializeField]
         private ItemStorageContainer container;
-        
+
         public ItemStorageContainer Container => container;
-        
+
         private void Start()
         {
             OnNewDay(-1);
@@ -27,6 +27,5 @@ namespace LudumDare52.Storage
             int size = positionManager.Count;
             container.SetStorageSize(size);
         }
-        
     }
 }

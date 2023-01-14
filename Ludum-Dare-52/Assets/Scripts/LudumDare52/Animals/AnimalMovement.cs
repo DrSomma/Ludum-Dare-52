@@ -28,12 +28,12 @@ namespace LudumDare52.Animals
         {
             _currentWaypoint = _target;
             _target = waypoins.GetNext();
-            await MoveToPosition(_target.IdleDelay, _target.pos, _target.SpeedFactor);
+            await MoveToPosition(delay: _target.IdleDelay, pos: _target.pos, speedFactor: _target.SpeedFactor);
         }
 
         public async Task MoveToPosition(Vector2 postion)
         {
-            await MoveToPosition(0, postion, 2f);
+            await MoveToPosition(delay: 0, pos: postion, speedFactor: 2f);
         }
 
         private Task MoveToPosition(float delay, Vector2 pos, float speedFactor)

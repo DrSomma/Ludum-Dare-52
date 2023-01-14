@@ -12,11 +12,7 @@ namespace LudumDare52.Entitys.Animations
             Sequence sq = DOTween.Sequence();
             sq.Append(_transform.DOScale(endValue: 0, duration: 0));
             sq.Append(_transform.DOScale(endValue: endScale, duration: 0.3f).SetEase(Ease.OutBounce));
-            sq.OnComplete(() =>
-            {
-            
-                callback?.Invoke();
-            });
+            sq.OnComplete(() => { callback?.Invoke(); });
         }
     }
 }

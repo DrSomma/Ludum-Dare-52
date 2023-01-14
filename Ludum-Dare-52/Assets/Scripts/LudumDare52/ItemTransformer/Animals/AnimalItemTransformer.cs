@@ -18,7 +18,7 @@ namespace LudumDare52.ItemTransformer.Animals
         [SerializeField]
         private AudioClip prozessingDone;
 
-        
+
         protected override IEnumerator Produce()
         {
             while (!animals.Any(x => x.CanProcessing))
@@ -28,7 +28,6 @@ namespace LudumDare52.ItemTransformer.Animals
 
             AnimalBehavior animal = animals.Where(x => x.CanProcessing).RandomElement();
 
-            
 
             Vector2 foodPos = transform.position;
             Task task = animal.Eat(foodPos);

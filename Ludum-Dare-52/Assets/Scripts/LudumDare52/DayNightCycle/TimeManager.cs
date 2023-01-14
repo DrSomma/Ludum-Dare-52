@@ -25,7 +25,7 @@ namespace LudumDare52.DayNightCycle
         public float TimeGrowMultiplier { get; set; } = 1;
         public float TimeDayMultiplier { get; set; } = 1;
         public float DayTimeInPercent { get; private set; }
-        
+
         // public float GameDayPercent => _time / 
 
         protected override void Awake()

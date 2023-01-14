@@ -2,19 +2,18 @@ using System.Collections.Generic;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Entitys.Interactable;
-using LudumDare52.Npc.Movement;
 using UnityEngine;
 
 namespace LudumDare52.Npc.Order
 {
     internal class UiRow
     {
-        public List<UiOrderItem> items { get; }
-
         public UiRow()
         {
             items = new List<UiOrderItem>();
         }
+
+        public List<UiOrderItem> items { get; }
     }
 
     public class OrderDisplay : MonoBehaviour
@@ -46,7 +45,7 @@ namespace LudumDare52.Npc.Order
             container.OnOrderUpdate += OnOrderUpdate;
             interactable.OnPlayerEnter += OnPlayerIsClose;
             interactable.OnPlayerExit += OnPlayerLeft;
-            uiContainer.GetComponent<CanvasGroup>().DOFade(0, 0);
+            uiContainer.GetComponent<CanvasGroup>().DOFade(endValue: 0, duration: 0);
             interactable.OnCanInteractChanged += OnCanInteractChanged;
         }
 
@@ -64,12 +63,12 @@ namespace LudumDare52.Npc.Order
 
         private void HideOrder()
         {
-            uiContainer.GetComponent<CanvasGroup>().DOFade(0, 0.2f);
+            uiContainer.GetComponent<CanvasGroup>().DOFade(endValue: 0, duration: 0.2f);
         }
 
         private void ShowOrder()
         {
-            uiContainer.GetComponent<CanvasGroup>().DOFade(1, 0.2f);
+            uiContainer.GetComponent<CanvasGroup>().DOFade(endValue: 1, duration: 0.2f);
         }
 
         private void OnOrderUpdate(Item obj)
@@ -89,14 +88,14 @@ namespace LudumDare52.Npc.Order
             uiContainer.transform.DOScale(endValue: 2, duration: 0.3f);
             canvas.sortingOrder = 1;
         }
-        
+
         private void OnPlayerLeft()
         {
             uiContainer.DOKill();
             uiContainer.transform.DOScale(endValue: 1, duration: 0.3f);
             canvas.sortingOrder = 0;
         }
-        
+
 
         private void OnNewOrder(Order newOrder)
         {
@@ -105,7 +104,7 @@ namespace LudumDare52.Npc.Order
             foreach (KeyValuePair<Item, int> orderItem in newOrder.OrderList)
             {
                 GameObject row = Instantiate(original: uiOrderRowPrefab, parent: uiContainer, worldPositionStays: false);
-                UiRow uirow = new UiRow();
+                UiRow uirow = new();
                 for (int i = 0; i < orderItem.Value; i++)
                 {
                     GameObject itemContainer = Instantiate(original: uiOrderItemPrefab, parent: row.transform, worldPositionStays: false);

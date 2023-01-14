@@ -27,6 +27,5 @@ namespace LudumDare52.DayNightCycle
         {
             txtDay.text = day.ToString();
         }
-        
     }
 }

@@ -11,7 +11,7 @@ namespace LudumDare52.Entitys
 
         public void Spawn(Item item, Vector2 position)
         {
-            GameObject entiy = Instantiate(worldEntiyPrefab, position, Quaternion.identity);
+            GameObject entiy = Instantiate(original: worldEntiyPrefab, position: position, rotation: Quaternion.identity);
             EntiyContainer worldEnity = entiy.GetComponent<EntiyContainer>();
             worldEnity.SetEnity(item: item, position: position);
         }

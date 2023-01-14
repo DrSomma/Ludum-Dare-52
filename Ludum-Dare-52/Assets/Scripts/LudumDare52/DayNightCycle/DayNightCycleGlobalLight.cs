@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 namespace LudumDare52.DayNightCycle
@@ -8,10 +7,10 @@ namespace LudumDare52.DayNightCycle
     {
         [SerializeField]
         private Light2D globalLight;
-        
+
         [SerializeField]
         private Gradient lightColor;
-        
+
         private void Update()
         {
             globalLight.color = lightColor.Evaluate(TimeManager.Instance.DayTimeInPercent);

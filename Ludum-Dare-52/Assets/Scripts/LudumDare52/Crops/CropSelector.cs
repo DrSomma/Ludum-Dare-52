@@ -92,7 +92,7 @@ namespace LudumDare52.Crops
 
             void Clean()
             {
-                foreach (var container in _selectContainers)
+                foreach (UiSelectContainer container in _selectContainers)
                 {
                     container.SetSelected(false);
                 }

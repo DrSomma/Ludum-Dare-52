@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using LudumDare52.Storage;
 using UnityEngine;
 
 namespace LudumDare52.Crops.ScriptableObject
@@ -13,7 +12,7 @@ namespace LudumDare52.Crops.ScriptableObject
 
         public Sprite[] stages;
     }
-    
+
     [CreateAssetMenu(fileName = "New Item")]
     public class Item : UnityEngine.ScriptableObject
     {
