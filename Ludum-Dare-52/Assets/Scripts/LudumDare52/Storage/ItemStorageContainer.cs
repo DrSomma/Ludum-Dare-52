@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using LudumDare52.Crops.ScriptableObject;
-using LudumDare52.Systems.Manager;
-using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;
 
 namespace LudumDare52.Storage
 {
-    
     public class Storage<T> where T : class
     {
-        private T[] _storageList;
         private int _maxStorage;
-        public Action<T, int> OnAddToStorage;  //T storagePos
-        public Action<T, int> OnRemoveFromStorage;  //T storagePos
-        public Action OnClearStorage; 
+        private T[] _storageList;
+        public Action<T, int> OnAddToStorage; //T storagePos
+        public Action OnClearStorage;
+        public Action<T, int> OnRemoveFromStorage; //T storagePos
 
         public Storage(int space)
         {
@@ -37,40 +33,36 @@ namespace LudumDare52.Storage
                 if (_storageList[i] == null)
                 {
                     _storageList[i] = newItem;
-                    OnAddToStorage?.Invoke(newItem, i);
+                    OnAddToStorage?.Invoke(arg1: newItem, arg2: i);
                     break;
                 }
             }
-
-           
         }
 
         public bool TryRemoveFromStorage(T entity)
         {
-
-            
             for (int i = 0; i < _storageList.Length; i++)
             {
                 if (_storageList[i] != null && _storageList[i] == entity)
                 {
                     _storageList[i] = null;
-                    OnRemoveFromStorage?.Invoke(entity, i);
+                    OnRemoveFromStorage?.Invoke(arg1: entity, arg2: i);
                     return true;
                 }
             }
 
             return false;
         }
-        
+
         public bool RemoveFromStorageByIndex(int index)
         {
             if (_storageList[index] != null)
             {
                 _storageList[index] = null;
-                OnRemoveFromStorage?.Invoke(_storageList[index], index);
+                OnRemoveFromStorage?.Invoke(arg1: _storageList[index], arg2: index);
                 return true;
             }
-            
+
 
             return false;
         }
@@ -105,7 +97,7 @@ namespace LudumDare52.Storage
         {
             Storage = new Storage<Item>(StartSize);
         }
-        
+
         public void SetStorageSize(int newsize)
         {
             Storage.SetSize(newsize);
@@ -125,7 +117,7 @@ namespace LudumDare52.Storage
         {
             return Storage.TryRemoveFromStorage(entity: item);
         }
-        
+
         public bool RemoveFromStorageByIndex(int index)
         {
             return Storage.RemoveFromStorageByIndex(index);

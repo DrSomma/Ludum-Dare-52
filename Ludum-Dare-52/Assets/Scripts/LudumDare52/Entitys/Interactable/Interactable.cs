@@ -7,12 +7,13 @@ namespace LudumDare52.Entitys.Interactable
     {
         [SerializeField]
         private bool canInteractOnStart = true;
-        
+
+        public Action<bool> OnCanInteractChanged;
+        public Action OnLeftClick;
+
         public Action OnPlayerEnter;
         public Action OnPlayerExit;
-        public Action OnLeftClick;
         public Action OnRightClick;
-        public Action<bool> OnCanInteractChanged;
 
         public bool CanInteract { get; private set; }
 
@@ -31,7 +32,7 @@ namespace LudumDare52.Entitys.Interactable
         {
             OnPlayerEnter?.Invoke();
         }
-        
+
         public void TriggerPlayerLeft()
         {
             OnPlayerExit?.Invoke();
@@ -41,7 +42,7 @@ namespace LudumDare52.Entitys.Interactable
         {
             OnLeftClick?.Invoke();
         }
-        
+
         public void TriggerRightClick()
         {
             OnRightClick?.Invoke();

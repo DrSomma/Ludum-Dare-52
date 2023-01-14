@@ -36,9 +36,11 @@ namespace LudumDare52.DayNightCycle
         {
             switch (state)
             {
-                case GameState.DayEnd: ShowUi();
+                case GameState.DayEnd:
+                    ShowUi();
                     break;
-                case GameState.Running: HideUi();
+                case GameState.Running:
+                    HideUi();
                     break;
             }
         }
@@ -54,7 +56,7 @@ namespace LudumDare52.DayNightCycle
         {
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.progess);
 
-        
+
             int nextDay = GameManager.Instance.Day + 1;
 
             foreach (Transform child in uiUnlockContainer.transform)
@@ -78,7 +80,7 @@ namespace LudumDare52.DayNightCycle
                 }
             }
 
-            txtDay.text = (nextDay-1).ToString();
+            txtDay.text = (nextDay - 1).ToString();
 
             canvasGroup.DOFade(endValue: 1, duration: 0.5f);
             canvasGroup.blocksRaycasts = true;

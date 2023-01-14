@@ -41,12 +41,12 @@ namespace LudumDare52.Entitys.Interactable
             {
                 return;
             }
-        
+
             if (_size == -1)
             {
                 _size = transform.localScale.x;
             }
-        
+
             transform.DOKill();
             transform.DOScale(endValue: _size, duration: 0.3f);
         }

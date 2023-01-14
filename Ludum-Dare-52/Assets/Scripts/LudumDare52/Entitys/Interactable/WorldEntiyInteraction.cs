@@ -14,12 +14,12 @@ namespace LudumDare52.Entitys.Interactable
         [SerializeField]
         private EntiyContainer entiyContainer;
 
-        private Item Item => entiyContainer.Item;
+        private bool _isCollected;
         private bool _playerIsClose;
 
         private Transform _transform;
 
-        private bool _isCollected;
+        private Item Item => entiyContainer.Item;
 
         private void Start()
         {

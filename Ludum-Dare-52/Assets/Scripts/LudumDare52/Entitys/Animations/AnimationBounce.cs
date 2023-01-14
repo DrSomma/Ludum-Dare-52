@@ -9,7 +9,7 @@ namespace LudumDare52.Entitys.Animations
     {
         [SerializeField]
         private Rigidbody2D rb;
-    
+
         public override void DoAnimation(Vector2 position, Action callback)
         {
             float endScale = _transform.localScale.x;
@@ -19,11 +19,7 @@ namespace LudumDare52.Entitys.Animations
             Sequence sq = DOTween.Sequence();
             sq.Append(rb.DOJump(endValue: endPos, jumpPower: 1, numJumps: 2, duration: 0.5f));
             sq.Join(transform.DOScale(endValue: endScale, duration: 0.3f));
-            sq.OnComplete(() =>
-            {
-            
-                callback?.Invoke();
-            });
+            sq.OnComplete(() => { callback?.Invoke(); });
         }
     }
 }
