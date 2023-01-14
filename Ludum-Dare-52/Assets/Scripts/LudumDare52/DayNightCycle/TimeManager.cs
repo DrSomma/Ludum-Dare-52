@@ -1,4 +1,3 @@
-using System;
 using Amazeit.Utilities.Singleton;
 using LudumDare52.Systems.Manager;
 using UnityEngine;
@@ -8,44 +7,30 @@ namespace LudumDare52.DayNightCycle
     public class TimeManager : Singleton<TimeManager>
     {
         [SerializeField]
-        private float DayLengthInSeconds = 90;
+        private float playtimeDayLengthInSeconds = 90;
 
         [SerializeField]
-        private int StartHour = 6;
+        private int startHour = 6;
 
         [SerializeField]
-        private int EndHour = 22;
+        private int endHour = 22;
 
-        [SerializeField]
-        private int StartDawnHour = 18;
+        private float _dayLengthInSeconds;
 
-        [Tooltip("The dawn hour is the time, the dawn finished. After this, the darkness will not grow anymore.")]
-        [SerializeField]
-        private int EndDawnHour = 21;
+        private float _endTimeInSeconds;
 
         private float _time;
         private bool _timeIsTicking;
 
-        private int dayLengthInGameHours;
-        private int durationOfDawnInGameHours;
-
-        public Action onEnterDayTime;
-        private bool onEnterDayTimeEventFired;
-        public Action<float> onEnterNightTime;
-        private bool onEnterNightTimeEventFired;
-        
         public float TimeGrowMultiplier { get; set; } = 1;
         public float TimeDayMultiplier { get; set; } = 1;
+        public float DayTimeInPercent { get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
             GameManager.Instance.OnStateUpdate += OnStateUpdate;
-
-            ValidateFieldsAndWarn();
-
-            dayLengthInGameHours = EndHour - StartHour;
-            durationOfDawnInGameHours = EndDawnHour - StartDawnHour;
+            ResetTime();
         }
 
         private void Update()
@@ -56,77 +41,39 @@ namespace LudumDare52.DayNightCycle
             }
 
             _time += Time.deltaTime * TimeDayMultiplier;
-            if (_time >= DayLengthInSeconds)
+            DayTimeInPercent = _time / _dayLengthInSeconds;
+            if (!(_time >= _endTimeInSeconds))
             {
-                _time = DayLengthInSeconds;
-                GameManager.Instance.SetState(GameState.DayEnd);
-            }
-            else
-            {
-                if (Math.Abs(_time - DayLengthInSeconds / dayLengthInGameHours * (StartDawnHour - StartHour)) < 0.1f && !onEnterNightTimeEventFired)
-                {
-                    onEnterNightTime?.Invoke(DayLengthInSeconds / dayLengthInGameHours * durationOfDawnInGameHours);
-                    onEnterNightTimeEventFired = true;
-                    onEnterDayTimeEventFired = false;
-                }
-            }
-        }
-
-        private void ValidateFieldsAndWarn()
-        {
-            if (DayLengthInSeconds < 1)
-            {
-                Debug.LogWarning($"The field {nameof(DayLengthInSeconds)} should be greater than 0.");
+                return;
             }
 
-            if (EndHour <= StartHour)
-            {
-                Debug.LogWarning($"The field {nameof(EndHour)} should be greater than the field {nameof(StartHour)} ({StartHour}).");
-            }
-
-            if (EndDawnHour <= StartDawnHour)
-            {
-                Debug.LogWarning($"The field {nameof(EndDawnHour)} should be greater than the field {nameof(StartDawnHour)} ({StartDawnHour}).");
-            }
-
-            if (StartDawnHour < StartHour || StartDawnHour > EndHour)
-            {
-                Debug.LogWarning($"The field {nameof(StartDawnHour)} should be within the range of {StartHour} and {EndHour}.");
-            }
-
-            if (EndDawnHour < StartHour || EndDawnHour > EndHour)
-            {
-                Debug.LogWarning($"The field {nameof(EndDawnHour)} should be within the range of {StartHour} and {EndHour}.");
-            }
+            _time = _endTimeInSeconds;
+            GameManager.Instance.SetState(GameState.DayEnd);
         }
 
         private void OnStateUpdate(GameState obj)
         {
             _timeIsTicking = obj == GameState.Running;
-
-            if (obj == GameState.Running && !onEnterDayTimeEventFired)
-            {
-                onEnterDayTimeEventFired = true;
-                onEnterDayTime?.Invoke();
-            }
         }
 
         public void ResetTime()
         {
-            _time = 0;
-            onEnterDayTime?.Invoke();
-            onEnterDayTimeEventFired = true;
-            onEnterNightTimeEventFired = false;
+            int dayLengthInGameHours = endHour - startHour;
+            float lenghtOneHour = playtimeDayLengthInSeconds / dayLengthInGameHours;
+            _dayLengthInSeconds = lenghtOneHour * 24f;
+
+            _endTimeInSeconds = lenghtOneHour * endHour;
+
+
+            DayTimeInPercent = startHour / 24f;
+            _time = lenghtOneHour * startHour;
         }
 
         public string GetTimeAsBeautifulString()
         {
-            float dayTimeInPercentCache = _time / DayLengthInSeconds;
-            int timeRange = dayLengthInGameHours;
-
-            int hours = (int) (dayTimeInPercentCache * timeRange);
-            int minutes = (int) ((dayTimeInPercentCache * timeRange - hours) * 60);
-            return $"{hours + StartHour:00}:{minutes:00}";
+            int hours = (int) (DayTimeInPercent * 24);
+            int minutes = (int) ((DayTimeInPercent * 24 - hours) * 60);
+            return $"{hours:00}:{minutes:00}";
         }
     }
 }

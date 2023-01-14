@@ -257,10 +257,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789e37d029e6df446815c60e7b5817d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DayNightCycleEntities: []
-  ObjectsToActivateWhenEnterNightTime:
+  dayNightCycleEntities: []
+  objectsToActivateWhenEnterNightTime:
   - {fileID: 8443691277064319766}
-  ObjectsToActivateWhenEnterDayTime:
+  objectsToActivateWhenEnterDayTime:
   - {fileID: 3187728203636974083}
 --- !u!1 &8443691277064319766
 GameObject:

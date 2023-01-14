@@ -158,14 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789e37d029e6df446815c60e7b5817d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DayNightCycleEntities:
-  - DaySprite: {fileID: 21300000, guid: 78e6437d7ce5e554aaa4bfa7e094aa72, type: 3}
-    NightSprite: {fileID: 21300000, guid: 3e1d8c68a8834394684ae482fbe344fc, type: 3}
-    SpriteRenderer: {fileID: 6770846204186075279}
-  ObjectsToActivateWhenEnterNightTime:
+  dayNightCycleEntities: []
+  objectsToActivateWhenEnterNightTime:
   - {fileID: 6481810756722358964}
-  ObjectsToActivateWhenEnterDayTime: []
-  IsDayTime: 0
+  objectsToActivateWhenEnterDayTime: []
 --- !u!1 &8562127055940838771
 GameObject:
   m_ObjectHideFlags: 0
