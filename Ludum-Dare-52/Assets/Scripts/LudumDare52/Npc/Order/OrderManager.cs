@@ -14,7 +14,7 @@ namespace LudumDare52.Npc.Order
     {
         public static Order GetNewOrder()
         {
-            (int min, int max) = LevelScaleManager.Instance.GetMinMaxCrops(TimeManager.Instance.Day);
+            (int min, int max) = LevelScaleManager.Instance.GetMinMaxCrops(GameManager.Instance.Day);
             Item[] filteredList = ResourceSystem.Instance.ItemList.Where(x => Progressmanager.Instance.IsActiv(x)).ToArray();
             Item[] orderList = filteredList.Random(countMin: min, countMax: max);
             return new Order(orderList);

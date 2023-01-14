@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Amazeit.Utilities.Singleton;
+using LudumDare52.Systems.Manager;
 using LudumDare52.Systems.Manager.PositionManager;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -25,28 +26,15 @@ namespace LudumDare52.Progress
         [SerializeField]
         private List<FieldProgessStep> upgradeSteps;
 
-        private int _upgradeLevel;
-
         [SerializeField]
         private FieldPositionManager positionManager;
-        
+
         protected void Start()
         {
-            Progressmanager.Instance.OnUpdate += OnUpdate;
-            _upgradeLevel = Progressmanager.Instance.GetFieldUpgradeLevel();
+            GameManager.Instance.OnStartDay += OnStartDay;
 
-            Debug.Log(_upgradeLevel);
-            
             //clear field
             fieldMap.ClearAllTiles();
-
-            for (int index = 0; index < _upgradeLevel; index++)
-            {
-                FieldProgessStep step = upgradeSteps[index];
-                UpgradeField(step);
-            }
-
-            positionManager.OnUpgradeField();
         }
 
         private void OnDrawGizmosSelected()
@@ -71,15 +59,22 @@ namespace LudumDare52.Progress
             }
         }
 
-        private void OnUpdate(ProgressStep step)
+        private void OnStartDay(int day)
         {
-            if (!step.upgradeField || _upgradeLevel + 1 >= upgradeSteps.Count)
+            ProgressStep? step = Progressmanager.Instance.GetStep(day);
+            if (!step.HasValue || !step.Value.upgradeField)
             {
                 return;
             }
 
-            _upgradeLevel++;
-            int levelIndex = _upgradeLevel - 1;
+            int upgradeLevel = Progressmanager.Instance.GetFieldUpgradeLevel();
+            if (upgradeLevel >= upgradeSteps.Count)
+            {
+                Debug.LogWarning("more field upgrades than there were defined upgrades");
+                return;
+            }
+
+            int levelIndex = upgradeLevel - 1;
             UpgradeField(upgradeSteps[levelIndex]);
             positionManager.OnUpgradeField();
         }

@@ -15,6 +15,7 @@ namespace LudumDare52.Storage
         private int _maxStorage;
         public Action<T, int> OnAddToStorage;  //T storagePos
         public Action<T, int> OnRemoveFromStorage;  //T storagePos
+        public Action OnClearStorage; 
 
         public Storage(int space)
         {
@@ -78,6 +79,7 @@ namespace LudumDare52.Storage
         {
             _maxStorage = size;
             _storageList = new T[size];
+            OnClearStorage?.Invoke();
         }
 
         public bool HasEntiy(T entity)
@@ -93,8 +95,6 @@ namespace LudumDare52.Storage
 
     public class ItemStorageContainer : MonoBehaviour
     {
-        // [Tooltip("use this if u dont use a BasePositionManager")]
-        // [SerializeField]
         private const int StartSize = 0;
 
         public bool HasSpace => Storage.HasSpace;
@@ -130,6 +130,5 @@ namespace LudumDare52.Storage
         {
             return Storage.RemoveFromStorageByIndex(index);
         }
-        
     }
 }

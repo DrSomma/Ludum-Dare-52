@@ -54,7 +54,7 @@ public class DayEndDisplay : MonoBehaviour
         AudioSystem.Instance.PlaySound(ResourceSystem.Instance.progess);
 
         
-        int nextDay = TimeManager.Instance.Day;
+        int nextDay = GameManager.Instance.Day + 1;
 
         foreach (Transform child in uiUnlockContainer.transform)
         {
@@ -92,6 +92,6 @@ public class DayEndDisplay : MonoBehaviour
 
     public void OnStartNewDayClicked()
     {
-        GameManager.Instance.StartNextDay();
+        GameManager.Instance.StartDayNext();
     }
 }

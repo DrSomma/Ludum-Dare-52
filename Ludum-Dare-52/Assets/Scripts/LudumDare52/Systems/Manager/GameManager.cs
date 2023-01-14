@@ -19,16 +19,19 @@ namespace LudumDare52.Systems.Manager
 
     public class GameManager : Singleton<GameManager>
     {
+        public Action<int> OnStartDay; //day
         public Action<GameState> OnStateUpdate;
-        public Action OnNewDay;
-        
+
         public GameState State { get; private set; }
+
+        public int Day { get; set; } = 1;
 
         protected override void Awake()
         {
             base.Awake();
             OnStateUpdate = null;
             State = GameState.Init;
+            Day = 1;
         }
 
         private void Start()
@@ -39,7 +42,7 @@ namespace LudumDare52.Systems.Manager
         private IEnumerator StartGame()
         {
             yield return new WaitForEndOfFrame();
-            StartNextDay();
+            StartDay();
         }
 
         public void SetState(GameState state)
@@ -52,7 +55,7 @@ namespace LudumDare52.Systems.Manager
                     state = GameState.GameOver;
                 }
             }
-            
+
             State = state;
             OnStateUpdate?.Invoke(state);
         }
@@ -62,14 +65,25 @@ namespace LudumDare52.Systems.Manager
             return !MoneyManager.Instance.HasRequiertMoney;
         }
 
-        public void StartNextDay()
+        private void StartDay()
         {
             //Todo: nutze das Event für alles
             AudioSystem.Instance.PlaySound(ResourceSystem.Instance.dayStart);
             TimeManager.Instance.ResetTime();
             MoneyManager.Instance.Reset();
+            OnStartDay?.Invoke(Day);
             SetState(GameState.Running);
-            OnNewDay?.Invoke();
+        }
+
+        public void StartDayNext()
+        {
+            Day++;
+            StartDay();
+        }
+
+        public void RestartDay()
+        {
+            StartDay();
         }
     }
 }

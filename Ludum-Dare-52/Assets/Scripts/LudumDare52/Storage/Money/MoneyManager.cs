@@ -1,6 +1,5 @@
 ﻿using System;
 using Amazeit.Utilities.Singleton;
-using LudumDare52.DayNightCycle;
 using LudumDare52.Systems.Manager;
 
 namespace LudumDare52.Storage.Money
@@ -31,7 +30,7 @@ namespace LudumDare52.Storage.Money
         {
             if (obj == GameState.Running)
             {
-                LevelMoney = LevelScaleManager.Instance.GetDayMoney(TimeManager.Instance.Day);
+                LevelMoney = LevelScaleManager.Instance.GetDayMoney(GameManager.Instance.Day);
                 OnUpdateMoney?.Invoke(arg1: 0, arg2: Money, arg3: LevelMoney);
             }
         }

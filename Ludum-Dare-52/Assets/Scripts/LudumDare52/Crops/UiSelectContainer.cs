@@ -1,5 +1,6 @@
 ﻿using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Progress;
+using LudumDare52.Systems.Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,12 +24,13 @@ namespace LudumDare52.Crops
 
         private void Start()
         {
-            Progressmanager.Instance.OnUpdate += OnUpdate;
+            GameManager.Instance.OnStartDay += OnStartDay;
         }
 
-        private void OnUpdate(ProgressStep progressStep)
+        private void OnStartDay(int day)
         {
-            if (progressStep.crop == null && _crop == progressStep.crop)
+            ProgressStep? progressStep = Progressmanager.Instance.GetStep(day);
+            if (!progressStep.HasValue || progressStep.Value.crop != _crop)
             {
                 return;
             }

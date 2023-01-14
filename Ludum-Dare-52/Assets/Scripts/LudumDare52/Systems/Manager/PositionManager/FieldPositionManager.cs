@@ -9,38 +9,45 @@ namespace LudumDare52.Systems.Manager.PositionManager
         [SerializeField]
         private GameObject cropPrefab;
 
-        private HashSet<Vector2> _cropIsOnPos;
+        private Dictionary<Vector2, GameObject> _gridPosToCropEntity;
 
         protected void Awake()
         {
-            _cropIsOnPos = new HashSet<Vector2>();
+            _gridPosToCropEntity = new Dictionary<Vector2, GameObject>();
         }
 
         public void OnUpgradeField()
         {
+            RemoveAllCrops();
             CalculatePositions();
             SpawnCropsSlots();
+        }
+
+        private void RemoveAllCrops()
+        {
+            foreach (GameObject crops in _gridPosToCropEntity.Values)
+            {
+                Destroy(crops);
+            }
+
+            _gridPosToCropEntity.Clear();
         }
 
         private void SpawnCropsSlots()
         {
             foreach (Vector2 position in Positions)
             {
-                if (_cropIsOnPos.Contains(position))
+                if (_gridPosToCropEntity.ContainsKey(position))
                 {
                     continue;
                 }
 
                 GameObject newCropObj = Instantiate(cropPrefab);
                 newCropObj.transform.position = position - Vector2.up * 0.2f;
-                _cropIsOnPos.Add(position);
+                _gridPosToCropEntity.Add(key: position, value: newCropObj);
             }
         }
 
-        // public Vector2 GetNearestCropPos(Vector2 playerPos)
-        // {
-        //     return Positions.OrderBy(x => Vector2.Distance(a: x, b: playerPos)).First();
-        // }
 
         public override List<Vector2> GetPositonList()
         {

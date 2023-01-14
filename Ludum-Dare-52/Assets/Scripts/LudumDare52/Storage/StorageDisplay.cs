@@ -29,6 +29,22 @@ namespace LudumDare52.Storage
             _slots = positionManager.GetPositonList().ToDictionary<Vector2, Vector2, StorageDisplayEntity>(keySelector: x => x, elementSelector: _ => null);
             container.Storage.OnAddToStorage += OnAddToStorage;
             container.Storage.OnRemoveFromStorage += OnRemoveFromStorage;
+            container.Storage.OnClearStorage += OnClearStorage;
+        }
+
+        private void OnClearStorage()
+        {
+            foreach (Vector2 pos in _slots.Keys.ToList())
+            {
+                StorageDisplayEntity entity = _slots[pos];
+                if (entity == null)
+                {
+                    continue;
+                }
+
+                DestroyImmediate(entity.GameObject);
+                _slots[pos] = null;
+            }
         }
 
 

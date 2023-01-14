@@ -32,22 +32,7 @@ namespace LudumDare52.Progress
             base.Awake();
             _progressSteps = progressSteps.ToDictionary(x => x.day, x => x);
         }
-
-        private void Start()
-        {
-            GameManager.Instance.OnStateUpdate += OnDayEnd;
-        }
-
-        private void OnDayEnd(GameState state)
-        {
-            int today = TimeManager.Instance.Day;
-            if (state != GameState.DayEnd || !_progressSteps.ContainsKey(today))
-            {
-                return;
-            }
-            OnUpdate?.Invoke(_progressSteps[today]);
-        }
-
+        
         public ProgressStep? GetStep(int day)
         {
             if (_progressSteps.TryGetValue(day, out var step))
@@ -61,13 +46,13 @@ namespace LudumDare52.Progress
         
         public bool IsActiv(Item item)
         {
-            int today = TimeManager.Instance.Day;
+            int today = GameManager.Instance.Day;
             return _progressSteps.Values.Any(x => x.crop == item && today >= x.day);
         }
         
         public int GetFieldUpgradeLevel()
         {
-            int today = TimeManager.Instance.Day;
+            int today = GameManager.Instance.Day;
             return _progressSteps.Values.Count(x => today >= x.day && x.upgradeField);
         }
     }

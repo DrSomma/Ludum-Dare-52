@@ -17,11 +17,11 @@ namespace LudumDare52.Storage
         
         private void Start()
         {
-            OnNewDay();
-            GameManager.Instance.OnNewDay += OnNewDay;
+            OnNewDay(-1);
+            GameManager.Instance.OnStartDay += OnNewDay;
         }
 
-        private void OnNewDay()
+        private void OnNewDay(int day)
         {
             positionManager.ReCalculatePositions();
             int size = positionManager.Count;

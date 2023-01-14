@@ -14,8 +14,8 @@ namespace LudumDare52.DayNightCycle
 
         private void Start()
         {
-            GameManager.Instance.OnStateUpdate += OnDayDone;
-            SetDay();
+            GameManager.Instance.OnStartDay += SetDay;
+            SetDay(1);
         }
 
         private void Update()
@@ -23,19 +23,10 @@ namespace LudumDare52.DayNightCycle
             txtTime.text = TimeManager.Instance.GetTimeAsBeautifulString();
         }
 
-        private void OnDayDone(GameState state)
+        private void SetDay(int day)
         {
-            if (state != GameState.DayEnd)
-            {
-                return;
-            }
-
-            SetDay();
+            txtDay.text = day.ToString();
         }
-
-        private void SetDay()
-        {
-            txtDay.text = TimeManager.Instance.Day.ToString();
-        }
+        
     }
 }

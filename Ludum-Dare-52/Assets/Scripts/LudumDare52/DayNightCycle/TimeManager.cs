@@ -33,8 +33,7 @@ namespace LudumDare52.DayNightCycle
         private bool onEnterDayTimeEventFired;
         public Action<float> onEnterNightTime;
         private bool onEnterNightTimeEventFired;
-
-        public int Day { get; private set; }
+        
         public float TimeGrowMultiplier { get; set; } = 1;
         public float TimeDayMultiplier { get; set; } = 1;
 
@@ -42,7 +41,6 @@ namespace LudumDare52.DayNightCycle
         {
             base.Awake();
             GameManager.Instance.OnStateUpdate += OnStateUpdate;
-            Day = 1;
 
             ValidateFieldsAndWarn();
 
@@ -61,7 +59,6 @@ namespace LudumDare52.DayNightCycle
             if (_time >= DayLengthInSeconds)
             {
                 _time = DayLengthInSeconds;
-                Day++;
                 GameManager.Instance.SetState(GameState.DayEnd);
             }
             else
