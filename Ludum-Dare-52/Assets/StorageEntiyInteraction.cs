@@ -12,7 +12,7 @@ public class StorageEntiyInteraction : MonoBehaviour
     private EntiyContainer entiyContainer;
 
     private bool _deledWasTriggerted;
-    private float _size;
+    private float _size = -1;
 
     public int SlotIndex { get; set; }
 
@@ -21,7 +21,6 @@ public class StorageEntiyInteraction : MonoBehaviour
         interactable.OnPlayerEnter += OnPlayerIsClose;
         interactable.OnPlayerExit += OnPlayerExit;
         interactable.OnRightClick += OnRightClick;
-        _size = transform.localScale.x;
     }
 
     private void OnRightClick()
@@ -41,7 +40,12 @@ public class StorageEntiyInteraction : MonoBehaviour
         {
             return;
         }
-
+        
+        if (_size == -1)
+        {
+            _size = transform.localScale.x;
+        }
+        
         transform.DOKill();
         transform.DOScale(endValue: _size, duration: 0.3f);
     }
@@ -51,6 +55,11 @@ public class StorageEntiyInteraction : MonoBehaviour
         if (!interactable.CanInteract)
         {
             return;
+        }
+
+        if (_size == -1)
+        {
+            _size = transform.localScale.x;
         }
 
         transform.DOKill();
