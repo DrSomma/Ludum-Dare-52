@@ -1412,7 +1412,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'F1: GrowTime'
+  m_text: 'F1: Open Cheats'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 142a31073f30a1846b7a277275504adc, type: 2}
   m_sharedMaterial: {fileID: 6542985573204415048, guid: 142a31073f30a1846b7a277275504adc, type: 2}
