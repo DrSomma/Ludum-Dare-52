@@ -138,8 +138,9 @@ namespace LudumDare52.Cheat
             {
                 cheat.Trigger();
                 UpdateUi();
-                UpdateDebugUi();
             }
+            
+            UpdateDebugUi();
         }
 
         private void UpdateDebugUi()
@@ -148,13 +149,13 @@ namespace LudumDare52.Cheat
             builder.Append("FPS: ");
             builder.Append(_avgFrameRate);
             builder.Append("\n");
-            builder.Append("Time (24h):");
-            builder.Append(TimeManager.Instance.DayTimeInPercent);
+            builder.Append("Time (24h): ");
+            builder.Append($"Value: {TimeManager.Instance.DayTimeInPercent:P2}.");
             builder.Append("\n");
             builder.Append("GameState:");
             builder.Append(GameManager.Instance.State);
             builder.Append("\n");
-            txtCheats.text = builder.ToString();
+            txtDebug.text = builder.ToString();
         }
 
         private void SetUiActiv()
