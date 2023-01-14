@@ -5,6 +5,7 @@ using System.Text;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.DayNightCycle;
+using LudumDare52.Systems.Manager;
 using TMPro;
 using UnityEngine;
 
@@ -79,6 +80,9 @@ namespace LudumDare52.Cheat
         private TextMeshProUGUI txtCheats;
 
         [SerializeField]
+        private TextMeshProUGUI txtDebug;
+        
+        [SerializeField]
         private CanvasGroup uiContainer;
 
         [SerializeField]
@@ -112,6 +116,8 @@ namespace LudumDare52.Cheat
             UpdateUi();
         }
 
+        private float _avgFrameRate;
+        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F1))
@@ -125,11 +131,30 @@ namespace LudumDare52.Cheat
                 return;
             }
 
+            _avgFrameRate = Time.frameCount / Time.time;
+
+            
             foreach (ICheat cheat in _cheats.Where(cheat => Input.GetKeyDown(cheat.Hotkey)))
             {
                 cheat.Trigger();
                 UpdateUi();
+                UpdateDebugUi();
             }
+        }
+
+        private void UpdateDebugUi()
+        {
+            StringBuilder builder = new();
+            builder.Append("FPS: ");
+            builder.Append(_avgFrameRate);
+            builder.Append("\n");
+            builder.Append("Time (24h):");
+            builder.Append(TimeManager.Instance.DayTimeInPercent);
+            builder.Append("\n");
+            builder.Append("GameState:");
+            builder.Append(GameManager.Instance.State);
+            builder.Append("\n");
+            txtCheats.text = builder.ToString();
         }
 
         private void SetUiActiv()
