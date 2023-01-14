@@ -5,6 +5,7 @@ using System.Text;
 using DG.Tweening;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.DayNightCycle;
+using LudumDare52.Storage.Money;
 using LudumDare52.Systems.Manager;
 using TMPro;
 using UnityEngine;
@@ -112,6 +113,7 @@ namespace LudumDare52.Cheat
                     onActiv: () => { TimeManager.Instance.TimeDayMultiplier = 15; },
                     onInactive: () => { TimeManager.Instance.TimeDayMultiplier = 1; }));
             _cheats.Add(new Cheat(DisplayName: "spawn egg", Hotkey: KeyCodes[2], OnTrigger: () => { WorldEntiySpawner.Instance.Spawn(item: egg, position: player.transform.position); }));
+            _cheats.Add(new Cheat(DisplayName: "add 50  <sprite=0>", Hotkey: KeyCodes[3], OnTrigger: () => { MoneyManager.Instance.AddMoney(50);}));
             SetUiActiv();
             UpdateUi();
         }

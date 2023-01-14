@@ -1366,7 +1366,7 @@ GameObject:
   - component: {fileID: 478087802}
   - component: {fileID: 478087801}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtCheatHotkey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1431,7 +1431,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: fb3e08e6a07894e4aa81f297c59732c9, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
