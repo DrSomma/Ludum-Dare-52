@@ -8,7 +8,7 @@ namespace LudumDare52.Systems.Manager
     {
         //TODO: Fast and dirty
         [SerializeField]
-        private int[] MoneyPerDay = {100, 200, 350, 400, 500, 600, 900, 999, 999};
+        private int[] MoneyPerDay = {50, 75, 100, 100, 120, 120, 150, 150, 200};
 
         [SerializeField]
         private int[] CropScaling = {2, 3, 4, 4, 5, 6, 7, 7};

@@ -112,7 +112,7 @@ namespace LudumDare52.Crops
             if (interactable != null && interactable.gameObject.CompareTag("CropSpace"))
             {
                 fieldSelector.SetActive(true);
-                fieldSelector.transform.position = interactable.transform.position;
+                fieldSelector.transform.position = interactable.transform.position + Vector3.up * 0.2f;
                 ShowUi();
             }
             else
