@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Amazeit.Utilities.Random;
 using LudumDare52.Crops.ScriptableObject;
 using LudumDare52.Progress;
@@ -8,9 +10,18 @@ using UnityEngine;
 
 namespace LudumDare52.Npc.Order
 {
-    //Todo: mach ne Factory 
+    [Serializable]
+    public class DayOrder
+    {
+        [SerializeField]
+        private List<Order> order;
+    }
+    
     public class OrderManager : MonoBehaviour
     {
+        [SerializeField]
+        private List<DayOrder> _orders;
+
         public static Order GetNewOrder()
         {
             (int min, int max) = LevelScaleManager.Instance.GetMinMaxCrops(GameManager.Instance.Day);

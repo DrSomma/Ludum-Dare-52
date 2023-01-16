@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LudumDare52.Crops.ScriptableObject;
 
 namespace LudumDare52.Npc.Order
 {
+    [Serializable]
     public class Order
     {
         private readonly int _allOrderItemsCount;
