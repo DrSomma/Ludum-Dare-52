@@ -12630,9 +12630,9 @@ MonoBehaviour:
   npcPrefab:
   - {fileID: 3720086770032763808, guid: ab3dac8679491634e86bc81dc2fd6522, type: 3}
   orderManager: {fileID: 1510452048}
-  MaxCustomers: 3
-  SpawnDelayMinInSeconds: 5
-  SpawnDelayMaxInSeconds: 10
+  maxCustomers: 3
+  spawnDelayMinInSeconds: 5
+  spawnDelayMaxInSeconds: 10
 --- !u!114 &1510452048
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Amazeit.Utilities;
 using Amazeit.Utilities.Random;
@@ -18,21 +17,51 @@ namespace LudumDare52.Npc
         private OrderManager orderManager;
 
         [SerializeField]
-        private int MaxCustomers = 3;
+        private int maxCustomers = 3;
 
         [SerializeField]
-        private float SpawnDelayMinInSeconds = 10f;
+        private float spawnDelayMinInSeconds = 5f;
 
         [SerializeField]
-        private float SpawnDelayMaxInSeconds = 20f;
+        private float spawnDelayMaxInSeconds = 10f;
 
         private readonly List<GameObject> _npcs = new();
         private bool _canSpawn;
-        private Coroutine _coroutine;
+
+        private float _nextSpawnCooldownInSeconds;
 
         private void Awake()
         {
             GameManager.Instance.OnStateUpdate += OnStateUpdate;
+            GameManager.Instance.OnStartDay += OnStartDay;
+        }
+
+        private void Update()
+        {
+            if (!_canSpawn)
+            {
+                return;
+            }
+
+            if (_nextSpawnCooldownInSeconds > 0)
+            {
+                _nextSpawnCooldownInSeconds -= Time.deltaTime;
+                return;
+            }
+
+            if (_npcs.Count() >= maxCustomers)
+            {
+                return;
+            }
+
+            Spawn();
+            _nextSpawnCooldownInSeconds = Random.Range(minInclusive: spawnDelayMinInSeconds, maxInclusive: spawnDelayMaxInSeconds);
+        }
+
+        private void OnStartDay(int obj)
+        {
+            StartLoop();
+            _nextSpawnCooldownInSeconds = 0;
         }
 
         private void OnStateUpdate(GameState state)
@@ -44,36 +73,27 @@ namespace LudumDare52.Npc
 
             if (state == GameState.Pause)
             {
-                if (_coroutine != null)
-                {
-                    StopCoroutine(_coroutine);
-                }
+                StopLoop();
             }
 
             if (state is GameState.DayEnd or GameState.GameOver)
             {
-                _canSpawn = false;
+                StopLoop();
             }
         }
 
         private void StartLoop()
         {
-            if (_coroutine != null)
-            {
-                return;
-            }
-
             _canSpawn = true;
-            _coroutine = StartCoroutine(SpawnLoop());
+        }
+
+        private void StopLoop()
+        {
+            _canSpawn = false;
         }
 
         private void Spawn()
         {
-            if (!_canSpawn)
-            {
-                return;
-            }
-
             GameObject npc = Instantiate(npcPrefab.Random());
             npc.transform.position = transform.position;
             npc.GetComponent<CustomerOrderContainer>().SetOrder(OrderManager.GetNewOrder());
@@ -84,26 +104,6 @@ namespace LudumDare52.Npc
         private void OnNpcDestroyed(GameObject npc)
         {
             _npcs.Remove(npc);
-        }
-
-        private IEnumerator SpawnLoop()
-        {
-            Debug.Log("Spawnloop start");
-            while (_canSpawn)
-            {
-                if (_npcs.Count() >= MaxCustomers)
-                {
-                    yield return new WaitForSeconds(1);
-                }
-                else
-                {
-                    Spawn();
-                    yield return new WaitForSeconds(Random.Range(minInclusive: SpawnDelayMinInSeconds, maxInclusive: SpawnDelayMaxInSeconds));
-                }
-            }
-
-            Debug.Log("Spawnloop done");
-            _coroutine = null;
         }
     }
 }
