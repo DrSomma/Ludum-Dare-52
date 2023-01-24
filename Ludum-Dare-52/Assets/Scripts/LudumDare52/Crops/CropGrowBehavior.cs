@@ -44,10 +44,10 @@ namespace LudumDare52.Crops
 
             _currentStageGrowTime = 0;
             _currentStage++;
-            
+            spriteRenderer.sprite = Crop.stages[_currentStage];
+
             if (_currentStage < Crop.stages.Length - 1)
             {
-                spriteRenderer.sprite = Crop.stages[_currentStage];
                 return;
             }
 
