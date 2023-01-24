@@ -17,6 +17,8 @@ namespace LudumDare52.Npc.Order
 
         public Dictionary<Item, int> OrderList { get; }
         public Dictionary<Item, int> ProgressList { get; }
+        
+        public bool IsPaid { get; set; }
 
         public void FulfillItemOrder(Item orderItemKey)
         {

@@ -51,11 +51,12 @@ namespace LudumDare52.Npc.Order
                 AudioSystem.Instance.PlayCantSound();
             }
 
-            if (!order.IsOrderFullfilled())
+            if (!order.IsOrderFullfilled() || order.IsPaid)
             {
                 return;
             }
 
+            order.IsPaid = true;
             AddMoney(order.GetValue());
             _movement.SendCustomerHome();
         }
