@@ -269,8 +269,8 @@ MonoBehaviour:
   delayMin: 4
   delayMax: 8
   bounds:
-    m_Center: {x: 4.83, y: -3.22, z: 0}
-    m_Extent: {x: 2.26, y: 1.32, z: 0}
+    m_Center: {x: 6.44, y: -1.73, z: 0}
+    m_Extent: {x: 2.12, y: 2.42, z: 0}
 --- !u!1 &134303573
 GameObject:
   m_ObjectHideFlags: 0
